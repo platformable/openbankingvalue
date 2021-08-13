@@ -8,8 +8,6 @@ import {ValueContext}from '../context/valueContext'
 
 const Tool = ({data}) => {
 
-  console.log(data.records)
-
   const [user,setUser]= useContext(ValueContext)
   const {selectedTypeOfValue} = user;
   const filteredList = data.records.filter((record)=>record.fields.Category===selectedTypeOfValue)
@@ -64,7 +62,7 @@ const handleBeneficiaryList=()=>{
 /* HANDLE FLUNCTIONS */
 
 const handleRegions = (value) =>{
-  console.log("value",value)
+ 
   if (value==="All"){
     setIsRegionFilterActive(false)
     setSelectedRegion(value)
@@ -115,7 +113,6 @@ useEffect(()=>{
     setFilter(filteredByBeneficiary)
   }
 
-  console.log("isBeneficiaryFilterActive",isBeneficiaryFilterActive)
   if(isRegionFilterActive && !isBeneficiaryFilterActive){  
     setFilter(filteredByRegion)
   } 
@@ -296,7 +293,8 @@ useEffect(()=>{
 </div>    
 {/* end of form */}
 
-{filter ? <Card content={filter} user={user}/> : <section className="container mx-auto"><h3 className="text-center font-black text-4xl my-5">No values registered</h3></section>}
+{filter ? <Card content={filter} user={user}/> : <section className="container mx-auto">
+  <h3 className="text-center font-black text-4xl my-5">No values registered</h3></section>}
 
 
     
@@ -316,8 +314,6 @@ export async function getStaticProps(context) {
         }
     })
     const data = await res.json()
-    
-  
     if (!data) {
       return {
         notFound: true,
