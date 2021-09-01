@@ -2,11 +2,14 @@ import React from 'react';
 
 const Card = ({content,user}) => {
 
+
+
   const {selectedTypeOfValue} = user
  
 
     return (
       <>
+     
       {content.length===0 ? <section className="container mx-auto"><h3 className="text-center font-black text-4xl my-5">No values registered</h3></section> : 
     
       <section className="text-gray-600 body-font cards">
@@ -28,18 +31,22 @@ const Card = ({content,user}) => {
                       </svg>
                       
                     </div>
-                    <h2 className="text-gray-900 text-lg title-font font-medium">{item.fields.Country}</h2>
+                    <h2 className="text-gray-900 text-lg title-font font-medium">{selectedTypeOfValue}</h2>
                  {'  '} <p>  </p>
                   </div>
                   <div className="flex-grow">
-                    <p className="leading-relaxed text-sm break-words">{item.fields['Data Point']}</p>
-                    <a className="mt-3 text-russian-violet-500 inline-flex items-center">{item.fields.Region}
-                  
-                     
-                    </a>
+                  <p className="leading-relaxed text-sm break-words title-font">Data point: {item.fields['Data point'] =="" ? "numbers" : item.fields['Data point']}</p>
+                    <p className="leading-relaxed text-sm break-words">{item.fields['Data point narrative']}</p>
+                    <p className="mt-3 text-russian-violet-500 inline-flex items-center">Region: {item.fields['Region (from Country)']}</p>
                   </div>
-                  <div><p className="block">{item.fields.Category}</p></div>
-                  <div><p className="block">{item.fields['Who benefits?']}</p></div>
+              
+                 {/*  <div><p className="block">{item.fields.Country}</p></div> */}
+                 <div><a href={`${item.fields['Source link']}`} className="text-sm">Source Link</a></div>
+                 {item.fields['Who benefits?'].map((ben,index)=>{
+                    return(<li>{ben}</li>)
+                 })}
+              {/*    <div><p className="block text-sm">${item.fields['Who benefits?']}</p></div> */}
+                
                 </div>
               </div>
               )})
