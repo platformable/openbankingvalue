@@ -224,7 +224,7 @@ useEffect(()=>{
     <ul className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm" tabindex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3">
    
       <li className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 cursor-pointer hover:bg-purple-50" id="listbox-option-0" role="option"
-      onClick={()=>handleRegions("All")}
+      onClick={()=>handleValues("All")}
       >
         <div className="flex items-center">
           <img 
