@@ -10,9 +10,10 @@ const PrevTool = ({data}) => {
 
   const [user,setUser]= useContext(ValueContext)
   const {selectedTypeOfValue} = user;
-  const filteredList = data.records.filter((record)=>record.fields.Category===selectedTypeOfValue)
-  const filteredCategoryList = data.records.filter((record)=>record.fields['Cluster Category'].includes(selectedTypeOfValue))
-  console.log("filteredCategoryList",filteredCategoryList)
+  const categoryList = data.records.filter((record,index)=>record.fields['Cluster Category']!=="" && record.fields['Cluster Category']!==undefined)
+/*   const filteredList = data.records.filter((record)=>record.fields.Category===selectedTypeOfValue) */
+  const filteredCategoryList = categoryList.filter((record)=>record.fields['Cluster Category'].includes(selectedTypeOfValue))
+
   const [loading,setLoading]=useState(false)
 
   /* WHEN USERS SELECT A REGION OR BENEFICIARY */
@@ -28,9 +29,10 @@ const PrevTool = ({data}) => {
   
 
   /* FILTERS */
-  const filteredByRegion = filteredList.filter(region=>region.fields.Region===selectedRegion)
-  const filteredByBeneficiary = filteredList.filter(beneficiary=>beneficiary.fields['Who benefits?']===selectedBeneficiary)  
-  const filterByRegionAndBeneficiary = filteredList.filter(item=>item.fields.Region===selectedRegion && item.fields['Who benefits?']===selectedBeneficiary)
+  
+  const filteredByRegion = categoryList.filter(region=>region.fields.Region===selectedRegion)
+  const filteredByBeneficiary = categoryList.filter(beneficiary=>beneficiary.fields['Who benefits?']===selectedBeneficiary)  
+  const filterByRegionAndBeneficiary = categoryList.filter(item=>item.fields.Region===selectedRegion && item.fields['Who benefits?']===selectedBeneficiary)
 
 /* GET REGIONS CLEAN LIST */
 const allRegions = new Set([])
