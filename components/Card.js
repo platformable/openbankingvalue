@@ -43,8 +43,13 @@ const Card = ({content,user}) => {
                  {/*  <div><p className="block">{item.fields.Country}</p></div> */}
                  <div><a href={`${item.fields['Source link']}`} className="text-sm">Source Link</a></div>
                  {item.fields['Who benefits?'].map((ben,index)=>{
-                    return(<li>{ben}</li>)
+                    return(<li>Beneficiary: {ben}</li>)
                  })}
+                 {
+                   item.fields['ISO Country Code'].map((country,index)=>{
+                     return(<span key={index} class="inline-block items-center ">{country}</span>)
+                   })
+                 }
               {/*    <div><p className="block text-sm">${item.fields['Who benefits?']}</p></div> */}
                 
                 </div>

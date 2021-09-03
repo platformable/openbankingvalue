@@ -8,7 +8,10 @@ import {ValueContext}from '../context/valueContext'
 
 const Tool = ({data}) => {
 
+  console.log("data.records",data.records)
+
   const [whoBenefits,setWhoBenefits]=useState([])
+  const [countryList,setCountryList]=useState([])
   const [user,setUser]= useContext(ValueContext)
 
   const {selectedTypeOfValue} = user;
@@ -25,9 +28,9 @@ const Tool = ({data}) => {
   
     let typeOfValues = [...new Set(separatedCategories)];
 
-
+ 
   const categoryList = data.records.filter((record,index)=>record.fields['Cluster Category']!=="" && record.fields['Cluster Category']!==undefined)
-  const filteredCategoryList = categoryList.filter((record)=>record.fields['Cluster Category'].includes(selectedTypeOfValue));
+  const filteredCategoryList = selectedTypeOfValue==="All" ? categoryList : categoryList.filter((record)=>record.fields['Cluster Category'].includes(selectedTypeOfValue));
 
 
 
@@ -48,7 +51,7 @@ const Tool = ({data}) => {
   
 
   /* FILTERS */
-  const filteredByRegion = filteredCategoryList.filter(region=>region.fields['Region (from Country)'][0]===selectedRegion)
+  const filteredByRegion = filteredCategoryList.filter(region=>region.fields['Region (from Country)'].includes(selectedRegion))
   const filteredByBeneficiary = filteredCategoryList.filter(beneficiary=>beneficiary.fields['Who benefits?'].includes(beneficiaryy))  
   const filterByRegionAndBeneficiary = filteredCategoryList.filter(item=>item.fields['Region (from Country)'][0]===selectedRegion && item.fields['Who benefits?'].includes(beneficiaryy))
   
@@ -127,7 +130,7 @@ const handleBeneficiary = (value) =>{
     setBeneficiaryy(value)
     setBeneficiaryList(!beneficiaryList)
   } else {
-    console.log(value)
+  
   setLoading(true)
   setSelectedBeneficiary(value.fields.Name)
   setBeneficiaryy(value.id)
@@ -153,6 +156,23 @@ useEffect(()=>{
     .then(res=>setWhoBenefits(res))
   }
   getData()
+
+  function getCountries(){
+    fetch('https://api.airtable.com/v0/appHMNZpRfMeHIZGc/LOOKUP%20Countries%20and%20regions',{
+      method:'GET',
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':`Bearer ${process.env.NEXT_PUBLIC_AIRTABLE_KEY}`
+      }
+    })
+    .then(response=>response.json())
+    .then(res=>setCountryList(res))
+  }
+  getCountries()
+
+  if(selectedTypeOfValue==="All"){
+    setFilter(data.records)
+  }
 
   if(isRegionFilterActive){  
     setFilter(filteredByRegion)
@@ -185,10 +205,10 @@ useEffect(()=>{
   selectedBeneficiary,
   isfilteredCategoryListActive,
   beneficiaryy,
-  selectedTypeOfValue
+  selectedTypeOfValue,
 ])
 
-
+console.log("countryList",countryList)
     return (
 
         <Layout>
