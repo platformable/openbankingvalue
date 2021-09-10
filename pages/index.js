@@ -11,7 +11,6 @@ import { ValueContext } from "../context/valueContext";
 export default function Home({ data }) {
   const allData = data.records;
 
-
   const router = useRouter();
   const [user, setUser] = useContext(ValueContext);
 
@@ -164,6 +163,7 @@ export default function Home({ data }) {
 }
 
 export async function getStaticProps(context) {
+
   const res = await fetch(
     `https://api.airtable.com/v0/appHMNZpRfMeHIZGc/Value%20Generated`,
     {

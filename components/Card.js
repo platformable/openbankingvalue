@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Card = ({content,user}) => {
+const Card = ({content,user,offset,handleNextPage,handleBackPage,routerLocation}) => {
 
-
+console.log("content",content)
 
   const {selectedTypeOfValue} = user
  
@@ -12,10 +12,26 @@ const Card = ({content,user}) => {
      
       {content.length===0 ? <section className="container mx-auto"><h3 className="text-center font-black text-4xl my-5">No values registered</h3></section> : 
     
+    
       <section className="text-gray-600 body-font cards">
-            
+           
         <div className="container py-10 mx-auto">
+          
+
+        {offset !== "" && routerLocation == "/tool" ? "" : <button
+                  onClick={() => handleBackPage()}
+                  className="inline-flex text-xs text-white bg-btn-russian-violet border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded mr-2"
+                >
+                  Prev Page
+                </button> }
+        {offset !== "" && content.length > 9?  <button
+                  onClick={() => handleNextPage()}
+                  className="inline-flex text-xs text-white bg-btn-russian-violet border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded "
+                >
+                  Next Page
+                </button> :""}
           <div className="flex flex-col text-center w-full mb-20">
+          
             <h2 className="text-xs  tracking-widest font-medium title-font mb-1 text-gray-900">Value example</h2>
             <h1 className="sm:text-3xl text-2xl font-medium title-font text-russian-violet-500">{selectedTypeOfValue}</h1>
           </div>

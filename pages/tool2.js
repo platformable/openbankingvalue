@@ -6,16 +6,13 @@ import { ValueContext } from "../context/valueContext";
 
 const Tool = ({ data }) => {
 
+  const test="perro wey"
   const router = useRouter();
-
-  const routerLocation = router.asPath;
-
-  console.log("router",router)
 
   const [whoBenefits, setWhoBenefits] = useState([]);
   const [countryList, setCountryList] = useState([]);
   const [user, setUser] = useContext(ValueContext);
-  const [offset, setOffset] = useState(data.offset);
+  const [offset, setOffset] = useState("" || data.offset);
 
   const { selectedTypeOfValue } = user;
 
@@ -112,17 +109,14 @@ const Tool = ({ data }) => {
   };
 
 
-  const handleNextPage = () =>{
-      setOffset(data.offset)
-      router.push({
-        pathname:'/tool',
-        query: {offset}
-      });
+  const updateOffset = (e) =>{
+    console.log("updating")
+    setOffset(e)
+    router.push({
+      pathname:'/tool',
+      query: {offset}
+    });
   }
-
-  const handleBackPage = () =>{
- router.back()
-}
   /* HANDLE FLUNCTIONS */
 
   const handleValues = (value) => {
@@ -166,12 +160,6 @@ const Tool = ({ data }) => {
   };
 
   useEffect(() => {
-    console.log(data.offset)
-    if(offset === offset){
-      setOffset(data.offset)
-    } else {
-      setOffset("")
-    }
     function getBeneficiay() {
       fetch(
         "https://api.airtable.com/v0/appHMNZpRfMeHIZGc/LOOKUP%20Stakeholders",
@@ -239,10 +227,7 @@ const Tool = ({ data }) => {
     isfilteredCategoryListActive,
     beneficiaryy,
     selectedTypeOfValue,
-    offset,
-    data,
-    data.offset,
-    router
+    offset
   ]);
 
 
@@ -546,13 +531,7 @@ const Tool = ({ data }) => {
       {/* end of form */}
 
       {filter ? (
-        <Card content={filter} 
-        user={user}  
-        offset={offset} 
-        handleNextPage={handleNextPage} 
-        handleBackPage={handleBackPage}
-        routerLocation={routerLocation}
-        />
+        <Card content={filter} user={user}  offset={offset} updateOffset={updateOffset}/>
       ) : (
         <section className="container mx-auto">
           <h3 className="text-center font-black text-4xl my-5">
@@ -569,18 +548,12 @@ export default Tool;
 
 
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
  
-const getquery = await context;
-console.log("offset",getquery.query.offset)
-const offset= "" || await getquery.query.offset;
-
-const noOffsetUrl="https://api.airtable.com/v0/appHMNZpRfMeHIZGc/Value%20Generated?pageSize=50"
-const OffsetUrl=`https://api.airtable.com/v0/appHMNZpRfMeHIZGc/Value%20Generated?pageSize=10&offset=${offset}`
-
+console.log(context.query)
   
   const res = await fetch(
-    offset===undefined ? noOffsetUrl : OffsetUrl,
+    `https://api.airtable.com/v0/appHMNZpRfMeHIZGc/Value%20Generated?pageSize=50`,
     {
       method: "GET",
       headers: {
