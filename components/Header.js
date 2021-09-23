@@ -11,7 +11,7 @@ const Header = () => {
         <Link href="/">
         <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
       
-          <span className="text-xl -ml-6">Platformable Open Banking Value Tool</span>
+          <span className="text-xl -ml-6 md:p-0 px-5">Platformable Open Banking Value Tool</span>
         </a>
         </Link>
       {/*   <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
