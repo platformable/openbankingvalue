@@ -85,6 +85,10 @@ img {
 .text-russian-violet-dark {
   color:var(--russian-violet-dark);
 }
+
+.text-main-color {
+  color:var(--russian-violet-dark);
+}
 /* .cards p {
   font-size: 12px;
 } */

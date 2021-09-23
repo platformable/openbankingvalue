@@ -194,7 +194,7 @@ useEffect(() => {
                          <p className="bg-red-orange-dark hover:bg-blue-700 text-white text-xs py-1 px-5 rounded">{selectedTypeOfValue === "All" ? item.fields['Cluster Category'][0] : selectedTypeOfValue }</p>
                          </div>
                         <div className="flex-grow">
-                          <p className="leading-relaxed text-3xl font-black text-center break-words title-font">
+                          <p className="leading-relaxed text-3xl font-black text-main-color text-center break-words title-font">
                             {item.fields["Data point"] == ""
                               ? "numbers"
                               : item.fields["Data point"]}
