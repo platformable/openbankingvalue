@@ -68,8 +68,6 @@ useEffect(() => {
   
     getValueImage()
 
-
-
     function getMapImage(){
       if(selectedRegion === "All"){
    
@@ -124,7 +122,7 @@ useEffect(() => {
                   <h3 className="text-center my-5 text-2xl">{selectedTypeOfValue === "All" ? "All Values" : selectedTypeOfValue}</h3>
                   <p className="text-xs px-10">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Est, ad! Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, quia.
+                    Est, ad! Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae.
                   </p>
                 </div>
 
