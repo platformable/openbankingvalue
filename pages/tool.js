@@ -19,7 +19,7 @@ const Tool = ({ data }) => {
   
 
   const { selectedTypeOfValue } = user ;
-  console.log("selectedTypeOfValue2",selectedTypeOfValue)
+
 
   /* GET category custers CLEAN LIST */
   const allCategories = new Set([]);
@@ -146,12 +146,14 @@ const Tool = ({ data }) => {
       setIsRegionFilterActive(false);
       setSelectedRegion(value);
       setRegionsList(!openRegionList);
+      typeof window !== undefined && window.localStorage.setItem("region",value)
     } else {
       setLoading(true);
       setfilteredCategoryListActive(false);
       setIsRegionFilterActive(true);
       setSelectedRegion(value);
       setRegionsList(!openRegionList);
+      typeof window !== undefined && window.localStorage.setItem("region",value)
     }
   };
 
@@ -175,6 +177,10 @@ const Tool = ({ data }) => {
  if(typeof window !== undefined && selectedTypeOfValue===""){
    setUser({...user,selectedTypeOfValue:window.localStorage.getItem("value")})
  }
+
+ if(typeof window !== undefined && selectedRegion !=="" || selectedRegion===selectedRegion){
+  setSelectedRegion(window.localStorage.getItem("region"))
+}
 
     if(offset === offset){
       setOffset(data.offset)
