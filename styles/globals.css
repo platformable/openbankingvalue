@@ -65,6 +65,26 @@ img {
   width:12px;
 }
 
+.img-thumbnail img{
+  max-width:125px !important;
+}
+
+.img-thumb {
+  width:100px;
+  height: auto;
+}
+
+.bg-red-orange-dark {
+  background-color:var(--red-orange-dark);
+}
+
+.text-red-orange-dark {
+  color:var(--red-orange-dark);
+}
+
+.text-russian-violet-dark {
+  color:var(--russian-violet-dark);
+}
 /* .cards p {
   font-size: 12px;
 } */
