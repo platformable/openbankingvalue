@@ -14,7 +14,7 @@ import europeMap from '../public/europeMap.png'
 import apacMap from '../public/apacMap.png'
 import northAmericaMap from '../public/northAmericaMap.png'
 import southAmericaMap from '../public/southAmericaMap.png'
-import allMaps from '../public/allMaps.png'
+import allMaps from '../public/allRegMap.png'
 
 import socIcon from "../public/societyIcon.png";
 
@@ -104,7 +104,7 @@ useEffect(() => {
     <>
       {content.length === 0 ? (
         <section className="container mx-auto">
-          <h3 className="text-center font-black text-4xl my-5">
+          <h3 className="text-center font-black text-russian-violet-dark  text-4xl my-5">
             No values registered
           </h3>
         </section>
@@ -119,7 +119,7 @@ useEffect(() => {
                   <Image src={valueImage} alt="platformable" />
                   </div>
 
-                  <h3 className="text-center my-5 text-2xl">{selectedTypeOfValue === "All" ? "All Values" : selectedTypeOfValue}</h3>
+                  <h3 className="text-center my-5 text-2xl text-russian-violet-dark ">{selectedTypeOfValue === "All" ? "All Values" : selectedTypeOfValue}</h3>
                   <p className="text-xs px-10">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                     Est, ad! Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae.
