@@ -163,12 +163,14 @@ const Tool = ({ data }) => {
       setSelectedBeneficiary("");
       setBeneficiaryy(value);
       setBeneficiaryList(!beneficiaryList);
+      typeof window !== undefined && window.localStorage.setItem("beneficiary",value.id)
     } else {
       setLoading(true);
       setSelectedBeneficiary(value.fields.Name);
       setBeneficiaryy(value.id);
       setIsBeneficiaryFilterActive(true);
       setBeneficiaryList(!beneficiaryList);
+      typeof window !== undefined && window.localStorage.setItem("beneficiary",value.id)
     }
   };
 
@@ -180,6 +182,10 @@ const Tool = ({ data }) => {
 
  if(typeof window !== undefined && selectedRegion !=="" || selectedRegion===selectedRegion){
   setSelectedRegion(window.localStorage.getItem("region"))
+}
+
+if(typeof window !== undefined && selectedBeneficiary !=="" || selectedBeneficiary===selectedBeneficiary){
+  setSelectedBeneficiary(window.localStorage.getItem("beneficiary"))
 }
 
     if(offset === offset){
@@ -473,6 +479,22 @@ const Tool = ({ data }) => {
                 <span className="ml-3 block truncate">
                   {selectedBeneficiary
                     ? selectedBeneficiary
+                    .replace(undefined,"All")
+                    .replace("rec0sHRLympDzhHnH","Api Providers: Banks")
+                    .replace("rec5WiyYl7YkjHSnf","API Providers: Fintech")
+                  .replace("rec808UArs5s8nqQP", "API Consumers: Banks")
+                  .replace("rec9PyeqBvGC7ssLq", "Indirec Beneficiary: enviroment")
+                  .replace("recAIDs80H80vO6zI", "API Industry")
+                  .replace("recGjYPts2AXBvgUW", "Indirec Beneficiary: society")
+                  .replace("recQqQHW7I9e4H6Ju", "API consumers: marketplaces")
+                  .replace("recTrXIJjD4cdGdtF", "End Users: SMEs")
+                  .replace("recZ4yww4nzLpCZKU", "Underserved")
+                  .replace("recdVZ1R1TZMEjO8", "API consumers: Aggregators")
+                  .replace("recn3CQWbTyoFPspd", "End users: Enterprises")
+                  .replace("recskLXhgf2j6jZxy", "End Users: Solo traders")
+                  .replace("recvXrHSkmQruF4Mx", "API consumers: Fintech")
+                  .replace("recwO2o2RPPSU3g5i", "Indirec beneficiares: Economy")
+                  .replace("recyrgiHgoF346Tra","End Users: individuals / households")
                     : "Select Beneficiary"}
                 </span>
               </span>

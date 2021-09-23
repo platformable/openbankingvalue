@@ -143,7 +143,28 @@ useEffect(() => {
                   <Image src={valueImage} alt="platformable" />
                   </div>
 
-                  <h3 className="text-center my-5 text-2xl">{selectedBeneficiary === "" || selectedBeneficiary === "All" ? "All Beneficiaries" : selectedBeneficiary}</h3>
+                  <h3 className="text-center my-5 text-2xl">{selectedBeneficiary === "" || selectedBeneficiary === "All" ? "All Beneficiaries" : 
+                  selectedBeneficiary
+                  .replace(undefined,"All")
+                  .replace("rec0sHRLympDzhHnH","Api Providers: Banks")
+                  .replace("rec5WiyYl7YkjHSnf","API Providers: Fintech")
+                  .replace("rec808UArs5s8nqQP", "API Consumers: Banks")
+                  .replace("rec9PyeqBvGC7ssLq", "Indirec Beneficiary: enviroment")
+                  .replace("recAIDs80H80vO6zI", "API Industry")
+                  .replace("recGjYPts2AXBvgUW", "Indirec Beneficiary: society")
+                  .replace("recQqQHW7I9e4H6Ju", "API consumers: marketplaces")
+                  .replace("recTrXIJjD4cdGdtF", "End Users: SMEs")
+                  .replace("recZ4yww4nzLpCZKU", "Underserved")
+                  .replace("recdVZ1R1TZMEjO8", "API consumers: Aggregators")
+                  .replace("recn3CQWbTyoFPspd", "End users: Enterprises")
+                  .replace("recskLXhgf2j6jZxy", "End Users: Solo traders")
+                  .replace("recvXrHSkmQruF4Mx", "API consumers: Fintech")
+                  .replace("recwO2o2RPPSU3g5i", "Indirec beneficiares: Economy")
+                  .replace("recyrgiHgoF346Tra","End Users: individuals / households")
+                  
+                  
+                  }
+                  </h3>
                   <p className="text-xs px-10">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                     Est, ad! Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, quia.
