@@ -7,17 +7,19 @@ import { ValueContext } from "../context/valueContext";
 const Tool = ({ data }) => {
 
   const router = useRouter();
-
+  const [user, setUser] = useContext(ValueContext)
   const routerLocation = router.asPath;
 
 
 
   const [whoBenefits, setWhoBenefits] = useState([]);
   const [countryList, setCountryList] = useState([]);
-  const [user, setUser] = useContext(ValueContext);
-  const [offset, setOffset] = useState(data.offset);
 
-  const { selectedTypeOfValue } = user;
+  const [offset, setOffset] = useState(data.offset);
+  
+
+  const { selectedTypeOfValue } = user ;
+  console.log("selectedTypeOfValue2",selectedTypeOfValue)
 
   /* GET category custers CLEAN LIST */
   const allCategories = new Set([]);
@@ -105,6 +107,7 @@ const Tool = ({ data }) => {
 
   const handleValuesList = () => {
     setValuesList(!openValuesList);
+    typeof window !== undefined && window.localStorage.setItem("value",selectedTypeOfValue)
   };
 
   const handleBeneficiaryList = () => {
@@ -129,10 +132,12 @@ const Tool = ({ data }) => {
     if (value === "All") {
       setUser({ ...user, selectedTypeOfValue: value });
       setValuesList(!openValuesList);
+      typeof window !== undefined && window.localStorage.setItem("value",value)
     } else {
       setLoading(true);
       setUser({ ...user, selectedTypeOfValue: value });
       setValuesList(!openValuesList);
+      typeof window !== undefined && window.localStorage.setItem("value",value)
     }
   };
 
@@ -166,6 +171,10 @@ const Tool = ({ data }) => {
   };
 
   useEffect(() => {
+
+ if(typeof window !== undefined && selectedTypeOfValue===""){
+   setUser({...user,selectedTypeOfValue:window.localStorage.getItem("value")})
+ }
 
     if(offset === offset){
       setOffset(data.offset)
@@ -242,13 +251,24 @@ const Tool = ({ data }) => {
     offset,
     data,
     data.offset,
-    router
+    router,
+    user
   ]);
+
+/*   useEffect(() => {
+    if(typeof window !== undefined){
+      window.localStorage.setItem("value",selectedTypeOfValue)
+      window.localStorage.setItem("region",selectedRegion)
+      window.localStorage.setItem("beneficiary",selectedBeneficiary)
+    }
+  
+    }, [selectedTypeOfValue,selectedRegion,selectedBeneficiary]); */
 
 
   return (
     <Layout>
       <div className="container mx-auto grid md:grid-cols-3 gap-4 grid-cols-1 py-10">
+
         <div className="md:my-5 mt-5 bank-form-list md:px-0 px-5">
           <label
             id="listbox-label"

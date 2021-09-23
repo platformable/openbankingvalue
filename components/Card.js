@@ -30,7 +30,7 @@ const Card = ({
 }) => {
   const { selectedTypeOfValue } = user;
 
-  console.log("selectedRegion",selectedRegion)
+
   const [valueImage,setValueImage]=useState(efficiencyImg)
   const [map,setMap]=useState(allMaps)
 

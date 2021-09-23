@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext,useEffect } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
@@ -23,10 +23,19 @@ export default function Home({ data }) {
   const router = useRouter();
   const [user, setUser] = useContext(ValueContext);
 
+  let {selectedTypeOfValue} =user;
+
   function handleValue(value, url) {
+   
     setUser({ ...user, selectedTypeOfValue: value });
+    typeof window !== undefined && window.localStorage.setItem("value",value)
+    typeof window !== undefined && window.localStorage.setItem("region","All")
+    typeof window !== undefined && window.localStorage.setItem("beneficiary","All")
     router.push(url);
   }
+
+
+
 
   /* GET category custers CLEAN LIST */
   const allCategories = new Set([]);
