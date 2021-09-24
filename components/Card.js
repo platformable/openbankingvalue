@@ -204,24 +204,33 @@ useEffect(() => {
                 </h1>
                 
               </div>
-              <div className="flex flex-wrap -m-4">
+
+
+            
+
+
+
+              <div className="flex flex-wrap md:-m-4 px-5">
                 {content.map((item, index) => {
                   return (
-                    <div className="p-4 md:w-1/3" key={index}>
+                    <div className="p-4 md:w-1/3 "  key={index}>
                       <div className="flex rounded-lg h-full bg-gray-100 p-8 flex-col ">
-                        <div className="flex  items-stretch bg-reg-50 justify-end mb-5"> 
+                        <div className="flex  bg-reg-50 justify-end mb-5"> 
                          <p className="bg-red-orange-dark hover:bg-blue-700 text-white text-xs py-1 px-5 rounded">{selectedTypeOfValue === "All" ? item.fields['Cluster Category'][0] : selectedTypeOfValue }</p>
                          </div>
-                        <div className="flex-grow">
+                        <div className="md:flex-grow flex-grow-0 whitespace-normal break-words flex-wrap">
                           <p className="leading-relaxed text-3xl font-black text-main-color text-center break-words title-font">
                             {item.fields["Data point"] == ""
                               ? "numbers"
                               : item.fields["Data point"]}
                           </p>
-                          <p className="leading-relaxed text-sm break-words">
+                          <p className="leading-relaxed text-sm break-words break-all flex-wrap whitespace-normal">
                             {item.fields["Data point narrative"]}
                           </p>
                         </div>
+                 {/*        <div className="md:flex-grow whitespace-pre-line break-words flex-wrap">
+                       <p> {item.fields["Data point narrative"]}</p>
+                     </div> */}
 
                       <div className="cards-bottom flex justify-between mt-5">
                         <div className="cards-logo">
