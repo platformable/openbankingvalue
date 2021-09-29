@@ -3,6 +3,7 @@ import Layout from "../components/Layout";
 import Card from "../components/Card";
 import { useRouter } from "next/router";
 import { ValueContext } from "../context/valueContext";
+import Head from "next/head";
 
 const Tool = ({ data }) => {
 
@@ -195,7 +196,7 @@ if(typeof window !== undefined && selectedBeneficiary !=="" || selectedBeneficia
     }
     function getBeneficiay() {
       fetch(
-        "https://api.airtable.com/v0/appHMNZpRfMeHIZGc/LOOKUP%20Stakeholders",
+        "https://api.airtable.com/v0/appHMNZpRfMeHIZGc/LOOKUP%20Value%20stakeholders",
         {
           method: "GET",
           headers: {
@@ -276,9 +277,13 @@ if(typeof window !== undefined && selectedBeneficiary !=="" || selectedBeneficia
   
     }, [selectedTypeOfValue,selectedRegion,selectedBeneficiary]); */
 
-
+console.log("whoBenefits",whoBenefits)
   return (
     <Layout>
+        <Head>
+        <title>Platformable Value Generated Tool</title>
+        <meta name="description" content="Platformable Value Generated Tool" />
+      </Head>
       <div className="container mx-auto grid md:grid-cols-3 gap-4 grid-cols-1 py-10">
 
         <div className="md:my-5 mt-5 bank-form-list md:px-0 px-5">
