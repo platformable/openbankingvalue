@@ -5,7 +5,8 @@ export const ValueContext = createContext()
 
 export const ValueContextProvider = ({children})=>{
     const [user,setUser]=useState({
-        selectedTypeOfValue:""
+        selectedTypeOfValue:"",
+        typeOfValues:[]
     })
     return(
     <ValueContext.Provider value={[user,setUser]}>

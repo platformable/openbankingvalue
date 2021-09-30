@@ -5,7 +5,6 @@ import styles from "../styles/Home.module.css";
 import Layout from "../components/Layout";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useAppContext } from "../context/userContext";
 import { ValueContext } from "../context/valueContext";
 
 import heroImg from "../public/heroImg.png";
@@ -48,6 +47,8 @@ export default function Home({ data }) {
   const separatedCategories = joinCategories.split(",");
 
   let typeOfValues = [...new Set(separatedCategories)];
+
+
 
   /* GET regions CLEAN LIST */
   const allRegions = new Set([]);

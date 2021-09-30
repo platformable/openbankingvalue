@@ -32,7 +32,19 @@ const Tool = ({ data }) => {
   const joinCategories = categoryArray.join();
   const separatedCategories = joinCategories.split(",");
 
-  let typeOfValues = [...new Set(separatedCategories)];
+
+  /* const typeOfValues = [...new Set(separatedCategories)]; */
+
+
+  /* console.log("typeOfValues",typeOfValues) */
+  const typeOfValues = [
+    'Efficiency/cost reduction',
+    'Network optimisation',
+    'Revenue growth',
+    'Financial health of customers',
+    'Increased innovation',
+    'Reduced inequality'
+  ]
 
   const categoryList = data.records.filter(
     (record, index) =>
@@ -263,7 +275,6 @@ if(typeof window !== undefined && selectedBeneficiary !=="" || selectedBeneficia
     selectedTypeOfValue,
     offset,
     data,
-    data.offset,
     router,
     user
   ]);
@@ -277,7 +288,7 @@ if(typeof window !== undefined && selectedBeneficiary !=="" || selectedBeneficia
   
     }, [selectedTypeOfValue,selectedRegion,selectedBeneficiary]); */
 
-console.log("whoBenefits",whoBenefits)
+
   return (
     <Layout>
         <Head>
@@ -618,6 +629,7 @@ const offset= "" || await getquery.query.offset;
 
 const noOffsetUrl="https://api.airtable.com/v0/appHMNZpRfMeHIZGc/Value%20Generated?pageSize=100"
 const OffsetUrl=`https://api.airtable.com/v0/appHMNZpRfMeHIZGc/Value%20Generated?pageSize=100&offset=${offset}`
+
 
   
   const res = await fetch(

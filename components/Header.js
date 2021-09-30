@@ -1,7 +1,5 @@
-import Image from 'next/image'
 import Link from 'next/link'
-import { useContext } from 'react';
-import { ValueContext } from '../context/valueContext';
+
 
 const Header = () => {
   
@@ -14,12 +12,6 @@ const Header = () => {
           <span className="text-xl -ml-6 md:p-0 px-5">Platformable Open Banking Value Tool</span>
         </a>
         </Link>
-      {/*   <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-          <a className="mr-5"><Link href="/" className="mr-5 hover:text-gray-900">Home</Link></a>
-          <a className="mr-5"><Link href="/tool" className="mr-5 hover:text-gray-900">About</Link></a>
-          <a className="mr-5 hover:text-gray-900">The Tool</a>
-          <a href=""></a>
-        </nav> */}
          </div>
     </header>
   );
