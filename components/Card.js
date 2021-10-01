@@ -215,8 +215,8 @@ useEffect(() => {
                   return (
                     <div className="p-4 md:w-1/3 "  key={index}>
                       <div className="flex rounded-lg h-full bg-gray-100 p-8 flex-col ">
-                        <div className="flex  bg-reg-50 justify-end mb-5"> 
-                         <p className="bg-red-orange-dark hover:bg-blue-700 text-white text-xs py-1 px-5 rounded">{selectedTypeOfValue === "All" ? item.fields['Cluster Category'][0] : selectedTypeOfValue }</p>
+                        <div className="flex  justify-end mb-5"> 
+                         <p className="bg-red-orange-dark text-white text-xs py-1 px-5 rounded">{selectedTypeOfValue === "All" ? item.fields['Cluster Category'][0] : selectedTypeOfValue }</p>
                          </div>
                         <div className="md:flex-grow flex-grow-0 whitespace-normal break-words flex-wrap">
                           <p className="leading-relaxed text-3xl font-black text-main-color text-center break-words title-font">
