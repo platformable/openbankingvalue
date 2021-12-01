@@ -1,4 +1,4 @@
-import React, {useEffect,useState} from "react";
+import React, {useEffect,useState,useContext} from "react";
 import Image from "next/image";
 
 import efficiencyImg from "../public/efficiencyImg.png";
@@ -16,11 +16,12 @@ import northAmericaMap from '../public/northAmericaMap.png'
 import southAmericaMap from '../public/southAmericaMap.png'
 import allMaps from '../public/allRegMap.png'
 
+import { ValueContext } from "../context/valueContext";
+
 import socIcon from "../public/societyIcon.png";
 
 const Card = ({
   content,
-  user,
   offset,
   handleNextPage,
   handleBackPage,
@@ -28,11 +29,29 @@ const Card = ({
   selectedRegion,
   selectedBeneficiary
 }) => {
+
+  const [user,setUser]=useContext(ValueContext);
   const { selectedTypeOfValue } = user;
 
 
   const [valueImage,setValueImage]=useState(efficiencyImg)
   const [map,setMap]=useState(allMaps)
+
+  const handleCards = (item)=>{
+
+user.favorites.push(item)
+/*  setUser({...user,...user.favorites,item}) */
+/* setUser({...user,favorites:item}) */
+
+ console.log(user)
+    const cards = typeof window !== undefined && document.querySelectorAll(".valueCard");
+/*     console.log(cards)
+    cards.forEach((element)=> {
+      element.addEventListener("click", ()=>{
+          element.style.border="2px solid #000";
+      }, false);
+  }) */
+  }
 
 useEffect(() => {
   
@@ -96,8 +115,11 @@ useEffect(() => {
       }
     
       getMapImage()
-}, [selectedTypeOfValue, map,selectedRegion]);
 
+}, [selectedTypeOfValue, map,selectedRegion,user.favorites]);
+
+
+  
   
 
   return (
@@ -213,18 +235,18 @@ useEffect(() => {
               <div className="flex flex-wrap md:-m-4 px-5">
                 {content.map((item, index) => {
                   return (
-                    <div className="p-4 md:w-1/3 "  key={index}>
-                      <div className="flex rounded-lg h-full bg-gray-100 p-8 flex-col ">
+                    <div className="p-4 md:w-1/3 "  key={index} onClick={()=>handleCards(item)}>
+                      <div className="flex rounded-lg h-full bg-gray-100 p-8 flex-col valueCard">
                         <div className="flex  justify-end mb-5"> 
                          <p className="bg-red-orange-dark text-white text-xs py-1 px-5 rounded">{selectedTypeOfValue === "All" ? item.fields['Cluster Category'][0] : selectedTypeOfValue }</p>
                          </div>
-                        <div className="md:flex-grow flex-grow-0 whitespace-normal break-words flex-wrap">
-                          <p className="leading-relaxed text-3xl font-black text-main-color text-center break-words title-font">
+                        <div className="md:flex-grow flex-grow-0 whitespace-normal flex-wrap">
+                          <p className="leading-relaxed text-3xl font-black text-main-color text-center  title-font">
                             {item.fields["Data point"] == ""
                               ? "numbers"
                               : item.fields["Data point"]}
                           </p>
-                          <p className="leading-relaxed text-sm break-words break-all flex-wrap whitespace-normal">
+                          <p className="leading-relaxed text-sm  break-all md:break-words flex-wrap whitespace-normal">
                             {item.fields["Data point narrative"]}
                           </p>
                         </div>

@@ -12,6 +12,7 @@ const Header = () => {
           <span className="text-xl -ml-6 md:p-0 px-5">Platformable Open Banking Value Tool</span>
         </a>
         </Link>
+        <Link href="/test">Test</Link>
          </div>
     </header>
   );

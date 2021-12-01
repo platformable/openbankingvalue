@@ -102,17 +102,17 @@ export default function Home({ data }) {
               Type of value
             </p>
           </div>
-     {/*      <button
-            onClick={() => handleValue("All", "/tool")}
+          <button
+            onClick={() => handleValue("All", "/tools")}
             className="btn bg-purple-500 rounded-xl text-white px-10 py-5"
           >
             All
-          </button> */}
+          </button>
           <div className="grid md:grid-cols-3 grid-cols-1 gap-4 justify-center md:px-0 px-5">
 
             <div
               className="grid justify-center bg-white p-10 shadow-md rounded-lg cursor-pointer"
-              onClick={() => handleValue("Efficiency/cost reduction", "/tool")}
+              onClick={() => handleValue("Efficiency/cost reduction", "/tools")}
             >
               <div className="img-thumbnail grid justify-center">
                 <Image src={efficiencyImg} alt="platformable" />
@@ -125,7 +125,7 @@ export default function Home({ data }) {
 
             <div
               className="grid justify-center bg-white p-10 shadow-md rounded-lg cursor-pointer"
-              onClick={() => handleValue("Network optimisation", "/tool")}
+              onClick={() => handleValue("Network optimisation", "/tools")}
             >
               <div className="img-thumbnail grid justify-center ">
                 <Image
@@ -141,7 +141,7 @@ export default function Home({ data }) {
 
             <div
               className="grid justify-center bg-white p-10 shadow-md rounded-lg cursor-pointer"
-              onClick={() => handleValue("Revenue growth", "/tool")}
+              onClick={() => handleValue("Revenue growth", "/tools")}
             >
               <div className="img-thumbnail grid justify-center ">
                 <Image
@@ -158,7 +158,7 @@ export default function Home({ data }) {
             <div
               className="grid justify-center bg-white p-10 shadow-md rounded-lg cursor-pointer"
               onClick={() =>
-                handleValue("Financial health of customers", "/tool")
+                handleValue("Financial health of customers", "/tools")
               }
             >
               <div className="img-thumbnail grid justify-center ">
@@ -176,7 +176,7 @@ export default function Home({ data }) {
             <div
               className="grid justify-center bg-white p-10 shadow-md rounded-lg cursor-pointer"
               onClick={() =>
-                handleValue("increased innovation", "/tool")
+                handleValue("increased innovation", "/tools")
               }
             >
               <div className="img-thumbnail grid justify-center ">
@@ -193,7 +193,7 @@ export default function Home({ data }) {
             </div>
             <div
               className="grid justify-center bg-white p-10 shadow-md rounded-lg cursor-pointer"
-              onClick={() => handleValue("Reduced inequality", "/tool")}
+              onClick={() => handleValue("Reduced inequality", "/tools")}
             >
               <div className="img-thumbnail grid justify-center ">
                 <Image
