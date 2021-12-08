@@ -3,8 +3,8 @@ import Image from "next/image";
 
 export default function Footer() {
     return (
-        <section className="container mx-auto flex justify-center py-5 bg-gray-50">
-        <footer className="">
+        <section className="py-5 bg-gray-200">
+        <footer className="container mx-auto flex justify-center">
           <a
             href="https://platformable.com"
             target="_blank"

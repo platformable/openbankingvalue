@@ -75,15 +75,19 @@ img {
 }
 
 .bg-russian-violet-dark {
-  background-color:var(--russian-violet-dark);
+  background-color:var(--russian-violet-dark) !important;
+}
+
+.li-bg-russian-violet-dark:hover {
+  background-color:var(--russian-violet-dark) !important;
 }
 .bg-red-orange-dark {
   background-color:var(--red-orange-dark);
 }
 
-.bg-red-orange-dark:hover {
+/* .bg-red-orange-dark {
   background-color:var(--russian-violet-dark);
-}
+} */
 
 .text-red-orange-dark {
   color:var(--red-orange-dark);
@@ -99,3 +103,8 @@ img {
 /* .cards p {
   font-size: 12px;
 } */
+
+.data-point a {
+  border-bottom: 1px solid var(--russian-violet-dark);
+
+}
