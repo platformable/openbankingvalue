@@ -174,7 +174,7 @@ const Card = ({
       </section>
 
       <section className="pagination my-5">
-        <div className="container mx-auto flex justify-end">
+        <div className="container mx-auto flex md:justify-end justify-center">
           {pagination ? (
             <button
               className="btn bg-red-orange-dark px-5 py-2 rounded text-white"
