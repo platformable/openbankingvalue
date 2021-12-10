@@ -12,7 +12,7 @@ const Tools = ({data,pagination}) => {
    const [filteredData,setFilteredData]=useState([] || data.records)
 
 const [clientOffset,setClientOffset]=useState(data.offset)
-    const { selectedTypeOfValue } = user;
+    const { selectedTypeOfValue,favorites } = user;
    const router = useRouter();
    const routerLocation = router.asPath;
 

@@ -6,6 +6,7 @@ export const ValueContext = createContext()
 export const ValueContextProvider = ({children})=>{
     const [user,setUser]=useState({
         selectedTypeOfValue:"",
+        name:"",
         typeOfValues:[],
         favorites:[]
     })

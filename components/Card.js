@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext,useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import efficiencyImg from "../public/efficiencyImg.png";
@@ -15,6 +15,8 @@ import northAmericaMap from "../public/northAmericaMap.png";
 import southAmericaMap from "../public/southAmericaMap.png";
 import allMaps from "../public/allRegMap.png";
 import ReactMarkdown from "react-markdown";
+import html2canvas from 'html2canvas';
+
 
 import { ValueContext } from "../context/valueContext";
 
@@ -27,11 +29,12 @@ const Card = ({
   handleBackPage,
   routerLocation,
   selectedRegion,
-  selectedBeneficiary,
+  selectedBeneficiary
 }) => {
   const router = useRouter();
   const [user, setUser] = useContext(ValueContext);
   const { selectedTypeOfValue } = user;
+  const [cardId,setCardId]=useState("")
 
   const [valueImage, setValueImage] = useState(efficiencyImg);
   const [map, setMap] = useState(allMaps);
@@ -43,6 +46,43 @@ const Card = ({
     });
   };
 
+  const handleSelected = (item)=>{
+
+    const isFavorite = user.favorites.filter(favorites=>favorites.id===item.id)
+    if(isFavorite.length>0){
+      const result = user.favorites.filter(favorites=>favorites.id!==item.id)
+      setUser({...user,favorites:result})
+    } else {
+      setUser({...user,favorites:[...user.favorites,item]})
+    }
+  
+
+  }
+  const printRef = React.useRef();
+
+  const handleDownloadImage = async (element)=>{
+    const item = document.getElementById(element.id);
+    const canvas = await html2canvas(item,{
+      imageTimeout:0,
+      allowTaint:true
+    });
+
+    const data = canvas.toDataURL(1.0);
+    const link = document.createElement('a');
+
+    if (typeof link.download === 'string') {
+      link.href = data;
+      link.download = 'card.png';
+      link.click();
+    } else {
+      window.open(data);
+    }
+  }
+
+    
+
+
+  
   useEffect(() => {
     function getValueImage() {
       if (selectedTypeOfValue === "All") {
@@ -107,6 +147,7 @@ const Card = ({
 
   return (
     <>
+
 
       {content?.length === 0 ? (
         <section className="container mx-auto">
@@ -205,10 +246,10 @@ const Card = ({
         <div className="card-container grid gap-4 md:grid-cols-3 grid-cols-1 my-5">
           {content?.map((item, index) => {
             return (
-              <div className="card bg-gray-100 rounded py-5 flex flex-col px-5 md:mx-0 mx-5">
+              <div id={item.id}className="card bg-gray-100 rounded py-5 flex flex-col px-5 md:mx-0 mx-5" ref={printRef} /* onClick={()=>handleSelected(item)} */>
                 <div className="card-top">
                   <div className="flex  md:justify-end justify-center mb-5 mr-5">
-                    <p className="bg-red-orange-dark text-white text-xs py-1 px-5 rounded">
+                    <p className="bg-red-orange-dark text-white text-xs pt-2 pb-2 px-5 rounded">
                       {selectedTypeOfValue === "All"
                         ? item?.fields["Cluster Category"][0]
                         : selectedTypeOfValue}
@@ -229,6 +270,7 @@ const Card = ({
                 <div className="cards-bottom flex justify-between mt-5">
                   <div className="cards-logo">
                     <Image
+                    className="company-logo"
                       src={
                         item.fields["Logo (from Fintech involved)"]
                           ? item.fields["Logo (from Fintech involved)"][0]
@@ -257,10 +299,11 @@ const Card = ({
                     <Image src={allRegionsMap} alt="PLatformable" />
                   </div>
                 </div>
-                <div>
+                <div className="flex justify-between">
                   <a href={`${item.fields["Source link"]}`} className="text-xs">
                     Source Link
                   </a>
+                  <div><img src="./downloadIcon.png" alt=""  width="16" className="cursor-pointer" onClick={()=>handleDownloadImage(item)}/></div>
                 </div>
               </div>
             );

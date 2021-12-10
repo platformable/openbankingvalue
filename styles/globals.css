@@ -108,3 +108,7 @@ img {
   border-bottom: 1px solid var(--russian-violet-dark);
 
 }
+
+.company-logo {
+  max-width:10px !important;
+}
