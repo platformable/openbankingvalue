@@ -7,7 +7,7 @@ import revenueGrowthImg from "../public/revenueGrowthImg.png";
 import financialHealthImg from "../public/financialHealthImg.png";
 import increasedInnovationImg from "../public/increaseInnovationImg.png";
 import reducedInequalityImg from "../public/reduceInequalityImg.png";
-import allRegionsMap from "../public/allRegionsMap.png";
+import allRegionsMap from "../public/allRegMap.png";
 import africaMapImg from "../public/africaMapImg.png";
 import europeMap from "../public/europeMap.png";
 import apacMap from "../public/apacMap.png";
@@ -62,12 +62,9 @@ const Card = ({
 
   const handleDownloadImage = async (element)=>{
     const item = document.getElementById(element.id);
-    const canvas = await html2canvas(item,{
-      imageTimeout:0,
-      allowTaint:true
-    });
+    const canvas = await html2canvas(item,{allowTaint : true});
 
-    const data = canvas.toDataURL(1.0);
+    const data = canvas.toDataURL("image/png", 1)
     const link = document.createElement('a');
 
     if (typeof link.download === 'string') {
@@ -245,6 +242,7 @@ const Card = ({
       <div className="container mx-auto">
         <div className="card-container grid gap-4 md:grid-cols-3 grid-cols-1 my-5">
           {content?.map((item, index) => {
+            console.log("item",item)
             return (
               <div id={item.id}className="card bg-gray-100 rounded py-5 flex flex-col px-5 md:mx-0 mx-5" ref={printRef} /* onClick={()=>handleSelected(item)} */>
                 <div className="card-top">
@@ -268,35 +266,33 @@ const Card = ({
                   </p>
                 </div>
                 <div className="cards-bottom flex justify-between mt-5">
-                  <div className="cards-logo">
-                    <Image
+                  <div className="cards-logo" >
+                  
+                  {item.fields["Logo (from Fintech involved)"]?
+                  
+                  <img src={item.fields["Logo (from Fintech involved)"][0]
+                  .thumbnails.large.url} alt="" />
+                          : <img src="../societyIcon.png" alt="" />}
+                    {/* <Image
                     className="company-logo"
                       src={
                         item.fields["Logo (from Fintech involved)"]
                           ? item.fields["Logo (from Fintech involved)"][0]
-                              .thumbnails.small.url
+                              .thumbnails.large.url
                           : socIcon
                       }
-                      width={
-                        item.fields["Logo (from Fintech involved)"]
-                          ? parseInt(
-                              item.fields["Logo (from Fintech involved)"][0]
-                                .thumbnails.small.width
-                            )
-                          : 36
-                      }
-                      height={
-                        item.fields["Logo (from Fintech involved)"]
-                          ? parseInt(
-                              item.fields["Logo (from Fintech involved)"][0]
-                                .thumbnails.small.height
-                            )
-                          : 36
-                      }
-                    />
+                     layout="fill"
+                     objectFit='contain'
+                    /> */}
                   </div>
                   <div className="cards-map">
-                    <Image src={allRegionsMap} alt="PLatformable" />
+                  <img src="../allRegMap.png" alt="" />
+                   {/*  <Image src={allRegionsMap} 
+                    alt="PLatformable" 
+                    width={36}
+                    height={36}
+                    /> */}
+
                   </div>
                 </div>
                 <div className="flex justify-between">
