@@ -33,6 +33,7 @@ const Card = ({
 }) => {
   const router = useRouter();
   const [user, setUser] = useContext(ValueContext);
+  const [isHidden,setIsHidden]=useState(false)
   const { selectedTypeOfValue } = user;
   const [cardId,setCardId]=useState("")
 
@@ -61,8 +62,9 @@ const Card = ({
   const printRef = React.useRef();
 
   const handleDownloadImage = async (element)=>{
+  
     const item = document.getElementById(element.id);
-    const canvas = await html2canvas(item,{allowTaint : true});
+    const canvas = await html2canvas(item,{allowTaint : true,useCORS:true});
 
     const data = canvas.toDataURL("image/png", 1)
     const link = document.createElement('a');
@@ -74,6 +76,7 @@ const Card = ({
     } else {
       window.open(data);
     }
+   
   }
 
     
@@ -242,9 +245,11 @@ const Card = ({
       <div className="container mx-auto">
         <div className="card-container grid gap-4 md:grid-cols-3 grid-cols-1 my-5">
           {content?.map((item, index) => {
-            console.log("item",item)
             return (
-              <div id={item.id}className="card bg-gray-100 rounded py-5 flex flex-col px-5 md:mx-0 mx-5" ref={printRef} /* onClick={()=>handleSelected(item)} */>
+              
+              <div id={item.id} className="card bg-gray-100 rounded py-5 flex flex-col  px-5 md:mx-0 mx-5" /* onClick={()=>handleSelected(item)} */>
+     
+              
                 <div className="card-top">
                   <div className="flex  md:justify-end justify-center mb-5 mr-5">
                     <p className="bg-red-orange-dark text-white text-xs pt-2 pb-2 px-5 rounded">
@@ -262,40 +267,22 @@ const Card = ({
                   </p>
                   <p className="leading-relaxed text-sm px-5 data-point my-3">
                   <ReactMarkdown children={item.fields["Data point narrative"]}  />  
-          {/*         {item.fields["Data point narrative"]} */}
                   </p>
                 </div>
                 <div className="cards-bottom flex justify-between mt-5">
                   <div className="cards-logo" >
-                  
                   {item.fields["Logo (from Fintech involved)"]?
-                  
                   <img src={item.fields["Logo (from Fintech involved)"][0]
-                  .thumbnails.large.url} alt="" />
-                          : <img src="../societyIcon.png" alt="" />}
-                    {/* <Image
-                    className="company-logo"
-                      src={
-                        item.fields["Logo (from Fintech involved)"]
-                          ? item.fields["Logo (from Fintech involved)"][0]
-                              .thumbnails.large.url
-                          : socIcon
-                      }
-                     layout="fill"
-                     objectFit='contain'
-                    /> */}
+                  .thumbnails.large.url} alt="" crossorigin="*"/>
+                  :<img src="../societyIcon.png" alt="" crossorigin="*"/>}
                   </div>
                   <div className="cards-map">
-                  <img src="../allRegMap.png" alt="" />
-                   {/*  <Image src={allRegionsMap} 
-                    alt="PLatformable" 
-                    width={36}
-                    height={36}
-                    /> */}
-
+                  <img src="../allRegMap.png" alt="" crossorigin="anonymous" />
                   </div>
                 </div>
-                <div className="flex justify-between">
+           
+    
+                <div className={`flex justify-between mt-2 ${isHidden ? "invisible" : ""}`} data-html2canvas-ignore>
                   <a href={`${item.fields["Source link"]}`} className="text-xs">
                     Source Link
                   </a>
