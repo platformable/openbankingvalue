@@ -129,12 +129,12 @@ useEffect(()=>{
   }
 
   if(selectedTypeOfValue !=="All" && selectedRegion !=="All" && selectedBeneficiary==="All"){
-    const result = data?.records.filter(item=>item.fields['Cluster Category']?.includes(selectedTypeOfValue) && item.fields['Region (from Country)'].includes(selectedRegion))
+    const result = data?.records.filter(item=>item.fields['Cluster Category']?.includes(selectedTypeOfValue) && item.fields['Region (from Country)']?.includes(selectedRegion))
     setFilteredData(result)
   }
 
   if(selectedTypeOfValue !=="All" && selectedRegion !=="All" && selectedBeneficiary!=="All"){
-    const result = data?.records.filter(item=>item.fields['Cluster Category']?.includes(selectedTypeOfValue) && item.fields['Region (from Country)'].includes(selectedRegion) && item.fields['Who benefits?'].includes(beneficiaryId) ) 
+    const result = data?.records.filter(item=>item.fields['Cluster Category']?.includes(selectedTypeOfValue) && item.fields['Region (from Country)']?.includes(selectedRegion) && item.fields['Who benefits?']?.includes(beneficiaryId) ) 
     setFilteredData(result)
   }
 
@@ -145,7 +145,7 @@ useEffect(()=>{
   }
 
   if(selectedTypeOfValue ==="All" && selectedRegion !=="All" && selectedBeneficiary!=="All"){
-    const result = data?.records.filter(item=> item.fields['Region (from Country)']?.includes(selectedRegion) && item.fields['Who benefits?'].includes(beneficiaryId)) 
+    const result = data?.records.filter(item=> item.fields['Region (from Country)']?.includes(selectedRegion) && item.fields['Who benefits?']?.includes(beneficiaryId)) 
     setFilteredData(result)
   }
 
@@ -156,7 +156,7 @@ useEffect(()=>{
   }
 
   if(selectedTypeOfValue !=="All" && selectedRegion ==="All" && selectedBeneficiary !=="All"){
-    const result = data?.records.filter(item=>item.fields['Cluster Category']?.includes(selectedTypeOfValue)  && item.fields['Who benefits?'].includes(beneficiaryId) ) 
+    const result = data?.records.filter(item=>item.fields['Cluster Category']?.includes(selectedTypeOfValue)  && item.fields['Who benefits?']?.includes(beneficiaryId) ) 
     setFilteredData(result)
   }
   
