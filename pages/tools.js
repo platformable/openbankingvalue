@@ -124,39 +124,39 @@ useEffect(()=>{
   }
 
   if(selectedTypeOfValue !=="All" && selectedRegion ==="All" && selectedBeneficiary==="All"){
-    const result = data?.records.filter(item=>item.fields['Cluster Category'].includes(selectedTypeOfValue))
+    const result = data?.records.filter(item=>item?.fields['Cluster Category']?.includes(selectedTypeOfValue))
     setFilteredData(result)
   }
 
   if(selectedTypeOfValue !=="All" && selectedRegion !=="All" && selectedBeneficiary==="All"){
-    const result = data?.records.filter(item=>item.fields['Cluster Category'].includes(selectedTypeOfValue) && item.fields['Region (from Country)'].includes(selectedRegion))
+    const result = data?.records.filter(item=>item.fields['Cluster Category']?.includes(selectedTypeOfValue) && item.fields['Region (from Country)'].includes(selectedRegion))
     setFilteredData(result)
   }
 
   if(selectedTypeOfValue !=="All" && selectedRegion !=="All" && selectedBeneficiary!=="All"){
-    const result = data?.records.filter(item=>item.fields['Cluster Category'].includes(selectedTypeOfValue) && item.fields['Region (from Country)'].includes(selectedRegion) && item.fields['Who benefits?'].includes(beneficiaryId) ) 
+    const result = data?.records.filter(item=>item.fields['Cluster Category']?.includes(selectedTypeOfValue) && item.fields['Region (from Country)'].includes(selectedRegion) && item.fields['Who benefits?'].includes(beneficiaryId) ) 
     setFilteredData(result)
   }
 
   /* filter based on region */
   if(selectedTypeOfValue ==="All" && selectedRegion !=="All" && selectedBeneficiary==="All"){
-    const result = data?.records.filter(item=> item.fields['Region (from Country)'].includes(selectedRegion)) 
+    const result = data?.records.filter(item=> item.fields['Region (from Country)']?.includes(selectedRegion)) 
     setFilteredData(result)
   }
 
   if(selectedTypeOfValue ==="All" && selectedRegion !=="All" && selectedBeneficiary!=="All"){
-    const result = data?.records.filter(item=> item.fields['Region (from Country)'].includes(selectedRegion) && item.fields['Who benefits?'].includes(beneficiaryId)) 
+    const result = data?.records.filter(item=> item.fields['Region (from Country)']?.includes(selectedRegion) && item.fields['Who benefits?'].includes(beneficiaryId)) 
     setFilteredData(result)
   }
 
   /* filter based on beneficiary */
   if(selectedTypeOfValue ==="All" && selectedRegion ==="All" && selectedBeneficiary !=="All"){
-    const result = data?.records.filter(item=> item.fields['Who benefits?'].includes(beneficiaryId)) 
+    const result = data?.records.filter(item=> item.fields['Who benefits?']?.includes(beneficiaryId)) 
     setFilteredData(result)
   }
 
   if(selectedTypeOfValue !=="All" && selectedRegion ==="All" && selectedBeneficiary !=="All"){
-    const result = data?.records.filter(item=>item.fields['Cluster Category'].includes(selectedTypeOfValue)  && item.fields['Who benefits?'].includes(beneficiaryId) ) 
+    const result = data?.records.filter(item=>item.fields['Cluster Category']?.includes(selectedTypeOfValue)  && item.fields['Who benefits?'].includes(beneficiaryId) ) 
     setFilteredData(result)
   }
   

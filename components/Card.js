@@ -210,7 +210,7 @@ const Card = ({
                   <div className="flex  md:justify-end justify-center mb-5 mr-5">
                     <p className="bg-red-orange-dark text-white text-xs py-1 px-5 rounded">
                       {selectedTypeOfValue === "All"
-                        ? item?.fields["Cluster Category"][0]
+                        ? item?.fields["Cluster Category"]
                         : selectedTypeOfValue}
                     </p>
                   </div>
