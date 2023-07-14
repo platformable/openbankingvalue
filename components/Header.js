@@ -7,10 +7,10 @@ const Header = () => {
     <header className="text-gray-600 body-font  bg-gray-50">
       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
         <Link href="/">
-        <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+        <div className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
       
           <span className="text-xl -ml-6 md:p-0 px-5">Platformable Open Banking Value Tool</span>
-        </a>
+        </div>
         </Link>
   {/*       <Link href="/test">Test</Link> */}
          </div>
