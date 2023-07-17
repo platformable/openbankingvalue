@@ -1,57 +1,104 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useMemo } from "react";
 import Layout from "../components/Layout";
 import Card from "../components/Card";
 import { useRouter } from "next/router";
 import { ValueContext } from "../context/valueContext";
 import Head from "next/head";
 
-const Tools = ({data,pagination}) => {
+const Tools = ({ data, pagination }) => {
+  console.log(data)
+  const [user, setUser] = useContext(ValueContext);
 
-   const [user, setUser] = useContext(ValueContext)
+  const [filteredData, setFilteredData] = useState(data.records);
 
-   const [filteredData,setFilteredData]=useState([] || data.records)
+  const [clientOffset, setClientOffset] = useState(data.offset);
+  const { selectedTypeOfValue, typeOfValues,favorites } = user;
+  const router = useRouter();
+  const routerLocation = router.asPath;
 
-const [clientOffset,setClientOffset]=useState(data.offset)
-    const { selectedTypeOfValue,favorites } = user;
-   const router = useRouter();
-   const routerLocation = router.asPath;
+  const [loading, setLoading] = useState(false);
+  const [selectedRegion, setSelectedRegion] = useState("All");
+  const [selectedBeneficiary, setSelectedBeneficiary] = useState("All");
+  const [beneficiaryId, setBeneficiaryId] = useState("All");
+
+  const arrayOfFIlters =  [
+    // (item) => {
+    //    return Object.entries(typeOfValues).filter(([key,value]) => value === true ).map(([label, value])=> {
+    //     return item.fields["Cluster Category"]?.every(cluster => cluster === label)
+    //   })
+      // console.log(data)
+      // return true
+    // },
+    (item) => {
+      if(typeOfValues['all'] === true ) return true;
+      return Object.entries(typeOfValues)?.filter(([key, value]) => value).every(([key, value]) => item.fields["Cluster Category"]?.includes(key)) 
+    },
+    
+
+    // (item) => selectedRegion.map(type=> item.fields["Region (from Country)"]?.includes(type)),
+    // (item) => beneficiaryId.map(type=> item. fields["Who benefits?"]?.includes(type)),
+
+    // (item) => selectedTypeOfValue !== 'All' ? item.fields["Cluster Category"]?.includes(selectedTypeOfValue) : true ,
+    // (item) => selectedRegion !== 'All' ? item.fields["Region (from Country)"]?.includes(selectedRegion) : true,
+    // (item) => beneficiaryId !== 'All' ? item.fields["Who benefits?"]?.includes(beneficiaryId) : true ,
+  ]
+  const filterResults = (arr, populatedData ) => {
+    if (arr.length < 1) return;
+
+    const [firstFilter, ...rest] = arr;
+
+    const newData = populatedData.filter((r) => firstFilter(r) );
+
+    setFilteredData(newData)
+    
+    
+    return filterResults([...rest], newData);
+  };
+    console.log(filteredData)
+    // console.log(typeOfValues)
 
 
-   const [loading, setLoading] = useState(false);
- const [selectedRegion,setSelectedRegion]=useState("All")
- const [selectedBeneficiary,setSelectedBeneficiary]=useState("All")
+  const [whoBenefits, setWhoBenefits] = useState([]);
 
-  const [whoBenefits,setWhoBenefits]=useState([]);
-  
-  const [liveData,setLiveData]=useState([])
+  useEffect(() => {
+    // if(filteredData.length < 1 ) {
+      filterResults(arrayOfFIlters, data?.records)
+    // }
+    // else {
+      // filterResults(arrayOfFIlters, filteredData)
+    // }
+
+  },
+    [selectedTypeOfValue,typeOfValues, selectedRegion, beneficiaryId]
+  );
 
   const [openRegionList, setRegionsList] = useState(false);
   const [openValuesList, setValuesList] = useState(false);
   const [beneficiaryList, setBeneficiaryList] = useState(false);
-  const [beneficiaryId,setBeneficiaryId]=useState("")
 
-  const typeOfValues = [
-    'Efficiency/cost reduction',
-    'Network optimisation',
-    'Revenue growth',
-    'Financial health of customers',
-    'Increased innovation',
-    'Reduced inequality',
-/*     'Environment improvements',
+  const typeOfValues_oldvar = {
+    "all": true,
+    "Efficiency/cost reduction":false,
+    "Network optimisation":false,
+    "Revenue growth":false,
+    "Financial health of customers":false,
+    "Increased innovation":false,
+    "Reduced inequality":false
+    /*     'Environment improvements',
     'Local economic development' */
-  ]
+};
 
   const regions = [
-    'APAC',
-    'Eastern Europe & Russia',
-    'Africa',
-    'Europe',
-    'Latin America',
-    'Middle East',
-    'Eastern Europe & Russia',
-    'North America'
-  ]
- /*  const getData = ()=> {
+    "APAC",
+    "Eastern Europe & Russia",
+    "Africa",
+    "Europe",
+    "Latin America",
+    "Middle East",
+    "Eastern Europe & Russia",
+    "North America",
+  ];
+  /*  const getData = ()=> {
 
     fetch('https://api.airtable.com/v0/appHMNZpRfMeHIZGc/Value%20Generated',
     {
@@ -66,14 +113,12 @@ const [clientOffset,setClientOffset]=useState(data.offset)
 
 } */
 
-/* function handleOptions (){
+  /* function handleOptions (){
   if(selectedTypeOfValue==="All" && selectedRegion==="All" && selectedBeneficiary==="All"){setTest(data)}
 
   if(selectedTypeOfValue!=="All" && selectedRegion==="All" && selectedBeneficiary==="All"){setTest(data.filter(bank=>bank.fields['Cluster Category'].includes(selectedTypeOfValue)))
   }
 } */
-
- 
 
   /* select box LISTS */
   const handleRegionsList = () => {
@@ -82,103 +127,58 @@ const [clientOffset,setClientOffset]=useState(data.offset)
 
   const handleValuesList = () => {
     setValuesList(!openValuesList);
-    typeof window !== undefined && window.localStorage.setItem("value",selectedTypeOfValue)
+    typeof window !== undefined &&
+      window.localStorage.setItem("value", selectedTypeOfValue);
   };
 
   const handleBeneficiaryList = () => {
     setBeneficiaryList(!beneficiaryList);
   };
 
-
   /* Get FUNCTIONS */
+  const handleBeneficiary = (beneficiary) => {
+    if (beneficiary === 'All') {
+      setBeneficiaryId('All');
+      setSelectedBeneficiary('All')
+    }
+    else {
+      setBeneficiaryId(beneficiary.id)
+      setSelectedBeneficiary(beneficiary.fields.Name);
+    }
+  };
 
+  useEffect(() => {
+    console.log('getting beneficiary')
+    function getBeneficiary() {
+      fetch(
+        "https://api.airtable.com/v0/appHMNZpRfMeHIZGc/LOOKUP%20Value%20stakeholders",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_AIRTABLE_KEY}`,
+          },
+        }
+      )
+        .then((response) => response.json())
+        .then((res) => setWhoBenefits(res));
+    }
 
-  function getBeneficiary() {
-    fetch(
-      "https://api.airtable.com/v0/appHMNZpRfMeHIZGc/LOOKUP%20Value%20stakeholders",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${process.env.NEXT_PUBLIC_AIRTABLE_KEY}`,
-        },
-      }
-    )
-      .then((response) => response.json())
-      .then((res) => setWhoBenefits(res));
-  }
-
-
-const handleBeneficiary=(beneficiary)=>{
-  setBeneficiaryId(beneficiary.id)
-  setSelectedBeneficiary(beneficiary.fields.Name)
-}
-
-
-
-useEffect(()=>{
-  if(selectedTypeOfValue==="All" && selectedRegion ==="All" && selectedRegion==="All"){
-
-    setFilteredData(data.records)
-
-  }
-
-  if(selectedTypeOfValue !=="All" && selectedRegion ==="All" && selectedBeneficiary==="All"){
-    const result = data?.records.filter(item=>item.fields['Cluster Category']?.includes(selectedTypeOfValue))
-    setFilteredData(result)
-  }
-
-  if(selectedTypeOfValue !=="All" && selectedRegion !=="All" && selectedBeneficiary==="All"){
-    const result = data?.records.filter(item=>item.fields['Cluster Category']?.includes(selectedTypeOfValue) && item.fields['Region (from Country)']?.includes(selectedRegion))
-    setFilteredData(result)
-  }
-
-  if(selectedTypeOfValue !=="All" && selectedRegion !=="All" && selectedBeneficiary!=="All"){
-    const result = data?.records.filter(item=>item.fields['Cluster Category']?.includes(selectedTypeOfValue) && item.fields['Region (from Country)']?.includes(selectedRegion) && item.fields['Who benefits?']?.includes(beneficiaryId) ) 
-    setFilteredData(result)
-  }
-
-  /* filter based on region */
-  if(selectedTypeOfValue ==="All" && selectedRegion !=="All" && selectedBeneficiary==="All"){
-    const result = data?.records.filter(item=> item.fields['Region (from Country)']?.includes(selectedRegion)) 
-    setFilteredData(result)
-  }
-
-  if(selectedTypeOfValue ==="All" && selectedRegion !=="All" && selectedBeneficiary!=="All"){
-    const result = data?.records.filter(item=> item.fields['Region (from Country)']?.includes(selectedRegion) && item.fields['Who benefits?']?.includes(beneficiaryId)) 
-    setFilteredData(result)
-  }
-
-  /* filter based on beneficiary */
-  if(selectedTypeOfValue ==="All" && selectedRegion ==="All" && selectedBeneficiary !=="All"){
-    const result = data?.records.filter(item=> item.fields['Who benefits?']?.includes(beneficiaryId)) 
-    setFilteredData(result)
-  }
-
-  if(selectedTypeOfValue !=="All" && selectedRegion ==="All" && selectedBeneficiary !=="All"){
-    const result = data?.records.filter(item=>item.fields['Cluster Category']?.includes(selectedTypeOfValue)  && item.fields['Who benefits?']?.includes(beneficiaryId) ) 
-    setFilteredData(result)
-  }
+    
+    getBeneficiary()
+  }, [])
+ 
   
 
-getBeneficiary();
-
-},[selectedTypeOfValue,selectedRegion,selectedBeneficiary,data,pagination])
-
-
-
-
   return (
-
- 
     <Layout>
-        <Head>
+      <Head>
         <title>Platformable Value Generated Tool</title>
         <meta name="description" content="Platformable Value Generated Tool" />
       </Head>
-      
-      <div className="container mx-auto grid md:grid-cols-3 gap-4 grid-cols-1 py-10" >
-      <div className="md:my-5 mt-5 bank-form-list md:px-0 px-5">
+
+      <div className="container mx-auto grid md:grid-cols-3 gap-4 grid-cols-1 py-10">
+        <div className="md:my-5 mt-5 bank-form-list md:px-0 px-5">
           <label
             id="listbox-label"
             className="block text-sm font-medium text-gray-700"
@@ -193,7 +193,6 @@ getBeneficiary();
               aria-expanded="true"
               aria-labelledby="listbox-label"
               onClick={handleValuesList}
-          
             >
               <span className="flex items-center">
                 <span className="ml-3 block truncate text-white hover:text-russian-violet-dark">
@@ -208,7 +207,7 @@ getBeneficiary();
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
-                  ariaHidden="true"
+                  aria-hidden="true"
                 >
                   <path
                     fillRule="evenodd"
@@ -219,7 +218,6 @@ getBeneficiary();
               </span>
             </button>
 
-
             {openValuesList && (
               <ul
                 className="absolute z-10 mt-1 w-full bg-red-orange-dark shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
@@ -227,30 +225,47 @@ getBeneficiary();
                 role="listbox"
                 aria-labelledby="listbox-label"
                 aria-activedescendant="listbox-option-3"
-                onMouseLeave={()=>setValuesList(!openValuesList)}
+                onMouseLeave={() => setValuesList(!openValuesList)}
               >
                 <li
                   className="text-white  li-bg-russian-violet-dark select-none relative py-2 pl-3 pr-9 cursor-pointer"
                   id="listbox-option-0"
                   role="option"
-                  onClick={() => setUser({ ...user, selectedTypeOfValue: "All" })}
+                  onClick={() => {
+                      setUser({ ...user, selectedTypeOfValue: "All" })
+                      
+                      setUser({...user, typeOfValues: {...typeOfValues, 'all': !user.typeOfValues.all} })
+                    }
+                  }
                 >
                   <div className="flex items-center">
-                    <span className="font-normal ml-3 block truncate hover:text-white">All</span>
+                  <input type="checkbox"  onChange={(e) => {
+                            setUser({...user, typeOfValues: {...typeOfValues, 'all': !typeOfValues['all'] } })
+                        }} defaultChecked={typeOfValues['all']} checked={typeOfValues['all']}/>
+                    <span className="font-normal ml-3 block truncate hover:text-white">
+                      All
+                    </span>
                   </div>
                 </li>
-                {typeOfValues.map((value, index) => {
+                {Object.entries(typeOfValues).map(([label, value], index) => {
                   return (
                     <li
                       key={index}
-                      onClick={() => setUser({ ...user, selectedTypeOfValue: value })}
-                      className="text-white cursor-default select-none relative py-2 pl-3 pr-9 cursor-pointer li-bg-russian-violet-dark"
+                      onClick={() => {
+                        setUser({ ...user, selectedTypeOfValue: value.label })
+                        setUser({...user, typeOfValues: {...typeOfValues, [label]: !value} })
+                        }
+                      }
+                      className="text-white flex cursor-default select-none relative py-2 pl-3 pr-9 cursor-pointer li-bg-russian-violet-dark"
                       id="listbox-option-0"
                       role="option"
                     >
+                        <input type="checkbox" name={label} onChange={(e) => {
+                            setUser({...user, typeOfValues: {...typeOfValues, [label]: !value} })
+                        }} defaultChecked={typeOfValues[label]} checked={typeOfValues[label]}/>
                       <div className="flex items-center">
                         <span className="font-normal ml-3 block truncate hover:text-white">
-                          {value}
+                          {label}
                         </span>
                       </div>
                     </li>
@@ -260,7 +275,6 @@ getBeneficiary();
             )}
           </div>
         </div>
-    
 
         <div className="md:my-5 mt-5 bank-form-list md:px-0 px-5">
           <label
@@ -277,7 +291,6 @@ getBeneficiary();
               aria-expanded="true"
               aria-labelledby="listbox-label"
               onClick={handleRegionsList}
-             
             >
               <span className="flex items-center">
                 <span className="ml-3 block truncate">
@@ -290,7 +303,7 @@ getBeneficiary();
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
-                  ariaHidden="true"
+                  aria-hidden="true"
                 >
                   <path
                     fillRule="evenodd"
@@ -308,7 +321,7 @@ getBeneficiary();
                 role="listbox"
                 aria-labelledby="listbox-label"
                 aria-activedescendant="listbox-option-3"
-                onMouseLeave={()=>setRegionsList(!openRegionList)}
+                onMouseLeave={() => setRegionsList(!openRegionList)}
               >
                 <li
                   className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 cursor-pointer hover:bg-purple-50"
@@ -330,8 +343,6 @@ getBeneficiary();
                       role="option"
                     >
                       <div className="flex items-center">
-                        
-
                         <span className="font-normal ml-3 block truncate">
                           {region}
                         </span>
@@ -343,7 +354,6 @@ getBeneficiary();
             )}
           </div>
         </div>
-        
 
         <div className="md:my-5 values-form-list md:px-0 px-5">
           <label
@@ -374,7 +384,7 @@ getBeneficiary();
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
-                  ariaHidden="true"
+                  aria-hidden="true"
                 >
                   <path
                     fillRule="evenodd"
@@ -392,22 +402,20 @@ getBeneficiary();
                 role="listbox"
                 aria-labelledby="listbox-label"
                 aria-activedescendant="listbox-option-3"
-                onMouseLeave={()=>setBeneficiaryList(!beneficiaryList)}
+                onMouseLeave={() => setBeneficiaryList(!beneficiaryList)}
               >
                 <li
                   className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 cursor-pointer hover:bg-purple-50"
                   id="listbox-option-0"
                   role="option"
-                  onClick={() => setSelectedBeneficiary("All")}
+                  onClick={() => handleBeneficiary("All")}
                 >
                   <div className="flex items-center">
                     <span className="font-normal ml-3 block truncate">All</span>
                   </div>
-  
                 </li>
                 {whoBenefits &&
                   whoBenefits.records.map((beneficiary, index) => {
-
                     return (
                       <li
                         key={index}
@@ -420,7 +428,6 @@ getBeneficiary();
                           <span className="font-normal ml-3 block truncate">
                             {beneficiary.fields.Name}
                           </span>
-                         
                         </div>
                       </li>
                     );
@@ -430,18 +437,19 @@ getBeneficiary();
           </div>
         </div>
         {/* end of benefits */}
-       </div> 
+      </div>
 
-       {data && <div className="">
-        <Card 
-         content={filteredData} 
-         selectedRegion={selectedRegion} 
-         selectedBeneficiary={selectedBeneficiary}
-         clientOffset={clientOffset}
-         pagination={pagination}/>
-       </div>}
-
- 
+      {data && (
+        <div className="">
+          <Card
+            content={filteredData}
+            selectedRegion={selectedRegion}
+            selectedBeneficiary={selectedBeneficiary}
+            clientOffset={clientOffset}
+            pagination={pagination}
+          />
+        </div>
+      )}
     </Layout>
   );
 };
@@ -449,41 +457,32 @@ getBeneficiary();
 export default Tools;
 
 export async function getServerSideProps(context) {
+  const offset = "" || (await context.query.clientOffset);
 
+  console.log("context query", context.query);
 
+  const url =
+    offset === undefined
+      ? "https://api.airtable.com/v0/appHMNZpRfMeHIZGc/Value%20Generated"
+      : `https://api.airtable.com/v0/appHMNZpRfMeHIZGc/Value%20Generated?offset=${offset}`;
 
-const offset =  "" || await context.query.clientOffset
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.PLATFORMABLE_AIRTABLE_KEY}`,
+    },
+  });
+  const data = await res.json();
+  const pagination = (await data.offset) || null;
 
-console.log("context query", context.query)
-
-  
-  const url=offset===undefined ?"https://api.airtable.com/v0/appHMNZpRfMeHIZGc/Value%20Generated":
-  `https://api.airtable.com/v0/appHMNZpRfMeHIZGc/Value%20Generated?offset=${offset}`
- 
-    const res = await fetch(
-      url ,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.PLATFORMABLE_AIRTABLE_KEY}`,
-        },
-      }
-    );
-    const data = await res.json();
-    const pagination= await data.offset || null;
-
-
-   
-   
-
-    if (!data) {
-      return {
-        notFound: true,
-      };
-    }
-  
+  if (!data) {
     return {
-      props: { data,pagination },
+      notFound: true,
     };
   }
+
+  return {
+    props: { data, pagination },
+  };
+}

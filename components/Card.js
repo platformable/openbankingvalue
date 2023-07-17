@@ -162,8 +162,8 @@ const Card = ({
       <section className="bg-gray-50 md:py-20 py-10">
         <div className="container mx-auto">
           <div className="grid md:grid-cols-3 grid-cols-1 gap-4 md:px-0 px-5">
-            <div class="grid-item">
-              <div class="gridImg grid justify-center img-thumbnail">
+            <div className="grid-item">
+              <div className="gridImg grid justify-center img-thumbnail">
                 <Image src={valueImage} alt="platformable" />
               </div>
               <h3 className="text-center my-5 text-2xl text-russian-violet-dark ">
@@ -177,8 +177,8 @@ const Card = ({
                 Molestiae.
               </p>
             </div>
-            <div class="grid-item">
-              <div class="gridImg grid justify-center img-thumbnail">
+            <div className="grid-item">
+              <div className="gridImg grid justify-center img-thumbnail">
                 <Image src={map} alt="platformable" />
               </div>
 
@@ -194,8 +194,8 @@ const Card = ({
               </p>
             </div>
 
-            <div class="grid-item">
-              <div class="gridImg grid justify-center img-thumbnail">
+            <div className="grid-item">
+              <div className="gridImg grid justify-center img-thumbnail">
                 <Image src={valueImage} alt="platformable" />
               </div>
 
