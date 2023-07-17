@@ -6,7 +6,7 @@ import { ValueContext } from "../context/valueContext";
 import Head from "next/head";
 
 const Tools = ({ data, pagination }) => {
-  // console.log(data)
+  console.log(data)
   const [user, setUser] = useContext(ValueContext);
 
   const [filteredData, setFilteredData] = useState(data.records);
@@ -14,26 +14,46 @@ const Tools = ({ data, pagination }) => {
   const [clientOffset, setClientOffset] = useState(data.offset);
   const { selectedTypeOfValue, typeOfValues,favorites } = user;
   const router = useRouter();
-  const routerLocation = router.asPath;
-
-  const [loading, setLoading] = useState(false);
-  const [selectedRegion, setSelectedRegion] = useState("All");
+  // const routerLocation = router.asPath;
+  // const [loading, setLoading] = useState(false);
+  const [selectedRegion, setSelectedRegion] = useState({
+    "APAC": false,
+    "Eastern Europe & Russia": false,
+    "Africa": false,
+    "Europe": false,
+    "Latin America": false,
+    "Middle East": false,
+    "Eastern Europe & Russia": false,
+    "North America": false,
+    "all": true,
+  });
   const [selectedBeneficiary, setSelectedBeneficiary] = useState("All");
   const [beneficiaryId, setBeneficiaryId] = useState("All");
 
   const arrayOfFIlters =  [
     // Filter for each value of fields array (fields.[])
+    // Return always true if typeOfValues === true, Return existence of the typeOfValues == true in Cluster Category  
     (item) => {
       if(typeOfValues['all'] === true ) return true;
       return Object.entries(typeOfValues)?.filter(([key, value]) => value).every(([key, value]) => item.fields["Cluster Category"]?.includes(key)) 
     },
-    
 
-    // (item) => selectedRegion.map(type=> item.fields["Region (from Country)"]?.includes(type)),
+    // Filter for each value of fields array (fields.[])
+    // Return always true if selectedRegions === true, Return existence of the typeOfValues == true in Region (From country) 
+    (item) => {
+      if(selectedRegion['all'] === true ) return true;
+      return Object.entries(selectedRegion)?.filter(([key, value]) => value).every(([key, value]) => item.fields["Region (from Country)"]?.includes(key)) 
+    },
+
+    // Filter for each value of fields array (fields.[])
+    // Return always true if selectedRegions === true, Return existence of the typeOfValues == true in Region (From country) 
+    (item) => {
+      if(selectedRegion['all'] === true ) return true;
+      return Object.entries(selectedRegion)?.filter(([key, value]) => value).every(([key, value]) => item.fields["Region (from Country)"]?.includes(key)) 
+    },
+
     // (item) => beneficiaryId.map(type=> item. fields["Who benefits?"]?.includes(type)),
 
-    // (item) => selectedTypeOfValue !== 'All' ? item.fields["Cluster Category"]?.includes(selectedTypeOfValue) : true ,
-    // (item) => selectedRegion !== 'All' ? item.fields["Region (from Country)"]?.includes(selectedRegion) : true,
     // (item) => beneficiaryId !== 'All' ? item.fields["Who benefits?"]?.includes(beneficiaryId) : true ,
   ]
   const filterResults = (arr, populatedData ) => {
@@ -48,6 +68,8 @@ const Tools = ({ data, pagination }) => {
     return filterResults([...rest], newData);
   };
     console.log(filteredData)
+    console.log(selectedRegion)
+
 
 
   const [whoBenefits, setWhoBenefits] = useState([]);
@@ -75,7 +97,7 @@ const Tools = ({ data, pagination }) => {
     'Local economic development' */
 };
 
-  const regions = [
+  const regions_oldVar = [
     "APAC",
     "Eastern Europe & Russia",
     "Africa",
@@ -234,7 +256,7 @@ const Tools = ({ data, pagination }) => {
                     </span>
                   </div>
                 </li>
-                {Object.entries(typeOfValues).map(([label, value], index) => {
+                {typeOfValues && Object.entries(typeOfValues).map(([label, value], index) => {
                   return (
                     <li
                       key={index}
@@ -281,7 +303,7 @@ const Tools = ({ data, pagination }) => {
             >
               <span className="flex items-center">
                 <span className="ml-3 block truncate">
-                  {selectedRegion ? selectedRegion : "Select Region"}
+                  {selectedRegion['all'] ? 'All' : "Select Region"}
                 </span>
               </span>
               <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
@@ -314,24 +336,25 @@ const Tools = ({ data, pagination }) => {
                   className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 cursor-pointer hover:bg-purple-50"
                   id="listbox-option-0"
                   role="option"
-                  onClick={() => setSelectedRegion("All")}
+                  onClick={() => setSelectedRegion(prev => ({...selectedRegion, all: !prev.all}))}
                 >
                   <div className="flex items-center">
                     <span className="font-normal ml-3 block truncate">All</span>
                   </div>
                 </li>
-                {regions.map((region, index) => {
+                {Object.keys(selectedRegion).map((regionKey, index) => {
                   return (
                     <li
                       key={index}
-                      onClick={() => setSelectedRegion(region)}
-                      className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 cursor-pointer hover:bg-purple-50"
+                      onClick={() => setSelectedRegion(prev => ({...selectedRegion, [regionKey]: !prev[regionKey]}))}
+                      className="text-gray-900 flex cursor-default select-none relative py-2 pl-3 pr-9 cursor-pointer hover:bg-purple-50"
                       id="listbox-option-0"
                       role="option"
                     >
+                      <input type="checkbox"   defaultChecked={selectedRegion[regionKey]} checked={selectedRegion[regionKey]}/>
                       <div className="flex items-center">
                         <span className="font-normal ml-3 block truncate">
-                          {region}
+                          {regionKey}
                         </span>
                       </div>
                     </li>

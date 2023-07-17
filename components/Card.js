@@ -183,9 +183,9 @@ const Card = ({
               </div>
 
               <h3 className="text-center my-5 text-2xl">
-                {selectedRegion === "" || selectedRegion === "All"
+                {selectedRegion.all
                   ? "All Regions"
-                  : selectedRegion}
+                  : 'Select Region'}
               </h3>
               <p className="text-xs px-10">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est,
