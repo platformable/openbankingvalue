@@ -171,11 +171,11 @@ const Card = ({
                   ? "All Values"
                   : selectedTypeOfValue}
               </h3>
-              <p className="text-xs px-10">
+              {/* <p className="text-xs px-10">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est,
                 ad! Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Molestiae.
-              </p>
+              </p> */}
             </div>
             <div className="grid-item">
               <div className="gridImg grid justify-center img-thumbnail">
@@ -187,11 +187,11 @@ const Card = ({
                   ? "All Regions"
                   : 'Select Region'}
               </h3>
-              <p className="text-xs px-10">
+              {/* <p className="text-xs px-10">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est,
                 ad! Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Molestiae, quia.
-              </p>
+              </p> */}
             </div>
 
             <div className="grid-item">
@@ -204,11 +204,11 @@ const Card = ({
                   ? "All Beneficiaries"
                   : selectedBeneficiary}
               </h3>
-              <p className="text-xs px-10">
+              {/* <p className="text-xs px-10">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est,
                 ad! Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Molestiae, quia.
-              </p>
+              </p> */}
             </div>
           </div>
         </div>

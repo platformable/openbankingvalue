@@ -45,12 +45,7 @@ const Tools = ({ data, pagination }) => {
       return Object.entries(selectedRegion)?.filter(([key, value]) => value).every(([key, value]) => item.fields["Region (from Country)"]?.includes(key)) 
     },
 
-    // Filter for each value of fields array (fields.[])
-    // Return always true if selectedRegions === true, Return existence of the typeOfValues == true in Region (From country) 
-    (item) => {
-      if(selectedRegion['all'] === true ) return true;
-      return Object.entries(selectedRegion)?.filter(([key, value]) => value).every(([key, value]) => item.fields["Region (from Country)"]?.includes(key)) 
-    },
+    
 
     // (item) => beneficiaryId.map(type=> item. fields["Who benefits?"]?.includes(type)),
 
@@ -155,7 +150,7 @@ const Tools = ({ data, pagination }) => {
       setSelectedBeneficiary(beneficiary.fields.Name);
     }
   };
-
+console.log(selectedTypeOfValue)
   useEffect(() => {
     console.log('getting beneficiary')
     function getBeneficiary() {
@@ -178,6 +173,7 @@ const Tools = ({ data, pagination }) => {
   }, [])
  
   
+  console.log("label", user)
 
   return (
     <Layout>
@@ -241,14 +237,15 @@ const Tools = ({ data, pagination }) => {
                   id="listbox-option-0"
                   role="option"
                   onClick={() => {
-                      setUser({ ...user, selectedTypeOfValue: "All" })
+                      // setUser({ ...user, : "All" })
                       
-                      setUser({...user, typeOfValues: {...typeOfValues, 'all': !user.typeOfValues.all} })
+                      setUser({...user,typeOfValues: {...typeOfValues, 'all': !user.typeOfValues.all} })
                     }
                   }
                 >
                   <div className="flex items-center">
                   <input type="checkbox"  onChange={(e) => {
+                            // setUser({ ...user, selectedTypeOfValue: "All" })
                             setUser({...user, typeOfValues: {...typeOfValues, 'all': !typeOfValues['all'] } })
                         }} defaultChecked={typeOfValues['all']} checked={typeOfValues['all']}/>
                     <span className="font-normal ml-3 block truncate hover:text-white">
@@ -261,7 +258,8 @@ const Tools = ({ data, pagination }) => {
                     <li
                       key={index}
                       onClick={() => {
-                        setUser({ ...user, selectedTypeOfValue: value.label })
+
+                        setUser({ ...user, selectedTypeOfValue: label })
                         setUser({...user, typeOfValues: {...typeOfValues, [label]: !value} })
                         }
                       }
@@ -303,7 +301,7 @@ const Tools = ({ data, pagination }) => {
             >
               <span className="flex items-center">
                 <span className="ml-3 block truncate">
-                  {selectedRegion['all'] ? 'All' : "Select Region"}
+                  {selectedRegion['all'] ? 'All Regions' : "Select Region"}
                 </span>
               </span>
               <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
@@ -333,11 +331,13 @@ const Tools = ({ data, pagination }) => {
                 onMouseLeave={() => setRegionsList(!openRegionList)}
               >
                 <li
-                  className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 cursor-pointer hover:bg-purple-50"
+                  className="text-gray-900 flex cursor-default select-none relative py-2 pl-3 pr-9 cursor-pointer hover:bg-purple-50"
                   id="listbox-option-0"
                   role="option"
                   onClick={() => setSelectedRegion(prev => ({...selectedRegion, all: !prev.all}))}
                 >
+                  <input type="checkbox" defaultChecked={selectedRegion['all']} checked={selectedRegion['all']}/>
+
                   <div className="flex items-center">
                     <span className="font-normal ml-3 block truncate">All</span>
                   </div>
