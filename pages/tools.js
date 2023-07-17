@@ -6,7 +6,7 @@ import { ValueContext } from "../context/valueContext";
 import Head from "next/head";
 
 const Tools = ({ data, pagination }) => {
-  console.log(data)
+  // console.log(data)
   const [user, setUser] = useContext(ValueContext);
 
   const [filteredData, setFilteredData] = useState(data.records);
@@ -22,13 +22,7 @@ const Tools = ({ data, pagination }) => {
   const [beneficiaryId, setBeneficiaryId] = useState("All");
 
   const arrayOfFIlters =  [
-    // (item) => {
-    //    return Object.entries(typeOfValues).filter(([key,value]) => value === true ).map(([label, value])=> {
-    //     return item.fields["Cluster Category"]?.every(cluster => cluster === label)
-    //   })
-      // console.log(data)
-      // return true
-    // },
+    // Filter for each value of fields array (fields.[])
     (item) => {
       if(typeOfValues['all'] === true ) return true;
       return Object.entries(typeOfValues)?.filter(([key, value]) => value).every(([key, value]) => item.fields["Cluster Category"]?.includes(key)) 
@@ -51,23 +45,16 @@ const Tools = ({ data, pagination }) => {
 
     setFilteredData(newData)
     
-    
     return filterResults([...rest], newData);
   };
     console.log(filteredData)
-    // console.log(typeOfValues)
 
 
   const [whoBenefits, setWhoBenefits] = useState([]);
 
   useEffect(() => {
-    // if(filteredData.length < 1 ) {
+    // Repopulate from Server records to avoid empty data
       filterResults(arrayOfFIlters, data?.records)
-    // }
-    // else {
-      // filterResults(arrayOfFIlters, filteredData)
-    // }
-
   },
     [selectedTypeOfValue,typeOfValues, selectedRegion, beneficiaryId]
   );
