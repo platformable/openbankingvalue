@@ -9,7 +9,7 @@ const Header = () => {
         <Link href="/">
         <div className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
       
-          <span className="text-xl -ml-6 md:p-0 px-5">Platformable Open Banking Value Tool</span>
+          <span className="text-4xl -ml-6 md:p-0 px-5">Platformable Open Banking Value Tool</span>
         </div>
         </Link>
   {/*       <Link href="/test">Test</Link> */}

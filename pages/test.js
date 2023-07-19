@@ -4,7 +4,6 @@ import { ValueContext } from '../context/valueContext'
 
 export default function test() {
     const [user,setUser]=useContext(ValueContext)
-console.log(user)
     return (
         <div>
             <Layout>
