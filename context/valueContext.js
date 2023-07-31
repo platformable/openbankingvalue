@@ -27,6 +27,9 @@ export const ValueContextProvider = ({ children }) => {
       "Eastern Europe & Russia": false,
       "North America": false,
     },
+    selectedBeneficiaryId: {
+      All: true,
+    },
     favorites: [],
   });
   return (

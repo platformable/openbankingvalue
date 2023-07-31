@@ -8,7 +8,7 @@ export default function Filters  ({
     whoBenefits,
   }) {
     const [user, setUser] = useContext(ValueContext);
-    const { selectedTypeOfValue, typeOfValues, selectedRegion } = user;
+    const { selectedTypeOfValue, typeOfValues, selectedRegion, selectedBeneficiaryId } = user;
 
     const [openRegionList, setRegionList] = useState(true);
     const [openValuesList, setValuesList] = useState(true);
@@ -41,11 +41,11 @@ export default function Filters  ({
       // Filter for each value of fields array (fields.[])
       // Return always true if beneficaryId === true, Return existence of the typeOfValues == true in Region (From country)
       (item) => {
-        if (selectedRegion["All"] === true) return true;
-        return Object.entries(selectedRegion)
+        if (selectedBeneficiaryId["All"] === true) return true;
+        return Object.entries(selectedBeneficiaryId)
           ?.filter(([key, value]) => value)
           .every(([key, value]) =>
-            item.fields["Region (from Country)"]?.includes(key)
+            item.fields["Who benefits?"]?.includes(key)
           );
       },
   
