@@ -4,4 +4,4 @@ function getCountries({url}){
     .then(response=>console.log(response))
 }
 
-export const getCountries;
+export default getCountries;

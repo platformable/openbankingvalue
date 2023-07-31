@@ -9,7 +9,7 @@ body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
 }
-h1,h2,h3,h4,h5,h2 {
+h1,h2,h3,h4,h5{
   color:#1b014c;
 }
 
@@ -75,11 +75,12 @@ img {
 }
 
 .bg-russian-violet-dark {
-  background-color:var(--russian-violet-dark) !important;
+  background-color:var(--fluorecent-blue-light) !important;
 }
 
 .li-bg-russian-violet-dark:hover {
-  background-color:var(--russian-violet-dark) !important;
+  background-color:var(--fluorecent-blue-light) !important;
+  opacity: 0.7;
 }
 .bg-red-orange-dark {
   background-color:var(--red-orange-dark);
@@ -112,4 +113,9 @@ img {
   position:relative;
   max-width: 50px;
   height:auto;
+}
+.sticky {
+  position: sticky;
+    top: 20px;
+    z-index: 20;
 }

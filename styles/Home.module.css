@@ -110,3 +110,7 @@
 .cardtest {
   background-color:#0070f3;
 }
+ .bg_hero {
+  background: transparent linear-gradient(269deg, #FC912A 0%, #F157FF 100%) 0% 0% no-repeat padding-box;
+
+ }
