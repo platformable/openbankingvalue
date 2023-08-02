@@ -11,7 +11,6 @@ const AppliedFiltersLabels = () => {
     Object.entries(selectedBeneficiaryId).some(([key, value]) => key === 'All' ? false : value === true);
 
     const deleteFilter = (stateName, valueKey) => {
-      console.log(stateName, valueKey)
       setUser(prev => ({...prev, [stateName]: {...prev[stateName], [valueKey]: !prev[stateName][valueKey] }}))
     }
     return (
