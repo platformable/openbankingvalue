@@ -141,17 +141,17 @@ const ToolsResults = ({
                             .thumbnails.large.url
                         }
                         alt=""
-                        crossorigin="*"
+                        crossOrigin="*"
                       />
                     ) : (
-                      <img src="../societyIcon.png" alt="" crossorigin="*" />
+                      <img src="../societyIcon.png" alt="" crossOrigin="*" />
                     )}
                   </div>
                   <div className="cards-map">
                     <img
                       src="../allRegMap.png"
                       alt=""
-                      crossorigin="anonymous"
+                      crossOrigin="anonymous"
                     />
                   </div>
                 </div>

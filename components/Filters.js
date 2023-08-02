@@ -12,7 +12,7 @@ export default function Filters  ({
 
     const [openRegionList, setRegionList] = useState(true);
     const [openValuesList, setValuesList] = useState(true);
-    const [openBeneficiaryList, setBeneficiaryList] = useState(false);
+    const [openBeneficiaryList, setBeneficiaryList] = useState(true);
 
 
     const arrayOfFIlters = [
@@ -98,7 +98,7 @@ export default function Filters  ({
             {openValuesList && (
             <ul
               className=" z-10 mt-1 w-full  bg-green-100  rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 h-auto focus:outline-none sm:text-sm"
-              tabindex="-1"
+              tabIndex="-1"
               role="listbox"
               aria-labelledby="listbox-label"
               aria-activedescendant="listbox-option-3"
@@ -111,7 +111,7 @@ export default function Filters  ({
                     <li
                       key={index}
                       onClick={() => {
-                        setUser({ ...user, selectedTypeOfValue: label });
+                        // setUser({ ...user, selectedTypeOfValue: label });
                         setUser({
                           ...user,
                           typeOfValues: { ...typeOfValues, [label]: !value },
@@ -130,7 +130,7 @@ export default function Filters  ({
                             typeOfValues: { ...typeOfValues, [label]: !value },
                           });
                         }}
-                        defaultChecked={typeOfValues[label]}
+                        // defaultChecked={typeOfValues[label]}
                         checked={typeOfValues[label]}
                       />
                       <div className="flex items-center">
@@ -199,7 +199,7 @@ export default function Filters  ({
             {openRegionList && (
             <ul
               className=" z-10 mt-1 w-full   rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 h-auto focus:outline-none sm:text-sm"
-              tabindex="-1"
+              tabIndex="-1"
               role="listbox"
               aria-labelledby="listbox-label"
               aria-activedescendant="listbox-option-3"
@@ -225,8 +225,17 @@ export default function Filters  ({
                   >
                     <input
                       type="checkbox"
-                      defaultChecked={selectedRegion[regionKey]}
+                      // defaultChecked={selectedRegion[regionKey]}
                       checked={selectedRegion[regionKey]}
+                      onClick={() =>
+                        setUser((prev) => ({
+                          ...prev,
+                          selectedRegion: {
+                            ...prev.selectedRegion,
+                            [regionKey]: !prev.selectedRegion[regionKey],
+                          }
+                        }))
+                      }
                     />
                     <div className="flex items-center">
                       <span className="font-normal ml-3 block truncate">
@@ -296,7 +305,7 @@ export default function Filters  ({
             {openBeneficiaryList && (
             <ul
               className=" z-10 mt-1 w-full   rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 h-auto focus:outline-none sm:text-sm"
-              tabindex="-1"
+              tabIndex="-1"
               role="listbox"
               aria-labelledby="listbox-label"
               aria-activedescendant="listbox-option-3"
@@ -325,7 +334,7 @@ export default function Filters  ({
                       <input
                             type="checkbox"
                             // defaultChecked={selectedRegion[]}
-                            // checked={selectedRegion["all"]}
+                            checked={selectedRegion["All"]}
                           />
   
                       <div className="flex items-center">
