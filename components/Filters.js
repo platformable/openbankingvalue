@@ -5,53 +5,49 @@ export default function Filters  ({
     setFilteredData,
     data,
     handleBeneficiary,
-    whoBenefits,
   }) {
     const [user, setUser] = useContext(ValueContext);
     const { selectedTypeOfValue, typeOfValues, selectedRegion, selectedBeneficiaryId } = user;
 
     const [openRegionList, setRegionList] = useState(true);
     const [openValuesList, setValuesList] = useState(true);
-    const [openBeneficiaryList, setBeneficiaryList] = useState(false);
-
+    const [openBeneficiaryList, setBeneficiaryList] = useState(true);
 
     const arrayOfFIlters = [
       // Filter for each value of fields array (fields.[])
-      // Return always true if typeOfValues === true, Return existence of the typeOfValues == true in Cluster Category
+      // Return always true if typeOfValues.All === true, Return boolean existence of the typeOfValues == true in Cluster Category
       (item) => {
         if (typeOfValues["All"] === true) return true;
         return Object.entries(typeOfValues)
-          ?.filter(([key, value]) => value)
+          ?.filter(([key, value]) => value === true)
           .every(([key, value]) =>
             item.fields["Cluster Category"]?.includes(key)
           );
       },
   
       // Filter for each value of fields array (fields.[])
-      // Return always true if selectedRegion === true, Return existence of the selectedRegion == true in Region (From country)
+      // Return always true if selectedRegion.All === true, Return boolean existence of the selectedRegion == true in Region (From country)
       (item) => {
         if (selectedRegion["All"] === true) return true;
         return Object.entries(selectedRegion)
-          ?.filter(([key, value]) => value)
+          ?.filter(([key, value]) => value === true)
           .every(([key, value]) =>
             item.fields["Region (from Country)"]?.includes(key)
           );
       },
 
       // Filter for each value of fields array (fields.[])
-      // Return always true if beneficaryId === true, Return existence of the typeOfValues == true in Region (From country)
+      // Return always true if beneficaryId.All.isSelected === true, Return boolean existence of the selectedBeneficiaryId[beneficiary.id] == true in Who Benefitas? 
       (item) => {
-        if (selectedBeneficiaryId["All"] === true) return true;
-        return Object.entries(selectedBeneficiaryId)
-          ?.filter(([key, value]) => value)
-          .every(([key, value]) =>
-            item.fields["Who benefits?"]?.includes(key)
+        if (selectedBeneficiaryId["All"]['isSelected'] === true) return true;
+        return Object.values(selectedBeneficiaryId)
+          ?.filter((value) => value.isSelected === true)
+          .every((value) =>
+            item.fields["Who benefits?"]?.includes(value.id)
           );
       },
   
-      // (item) => beneficiaryId.map(type=> item. fields["Who benefits?"]?.includes(type)),
-  
-      // (item) => beneficiaryId !== 'All' ? item.fields["Who benefits?"]?.includes(beneficiaryId) : true ,
+     
     ];
     const filterResults = (arr, populatedData) => {
       if (arr.length < 1) return;
@@ -69,7 +65,7 @@ export default function Filters  ({
     useEffect(() => {
       // Repopulate from Server records to avoid empty data
       filterResults(arrayOfFIlters, data?.records);
-    }, [selectedTypeOfValue, data, typeOfValues, selectedRegion, whoBenefits]);
+    }, [selectedTypeOfValue, data, typeOfValues, selectedRegion, selectedBeneficiaryId]);
 
 
     return (
@@ -79,7 +75,7 @@ export default function Filters  ({
             id="listbox-label"
             className="block text-sm font-medium text-gray-700 flex justify-between pr-5 items-center"
           >
-            List of values
+            <strong className="text-lg">List of values</strong>
             <button
                 type="button"
                 className="relative   rounded-md  py-2 text-left cursor-default focus:outline-none sm:text-sm"
@@ -97,8 +93,8 @@ export default function Filters  ({
               
             {openValuesList && (
             <ul
-              className=" z-10 mt-1 w-full  bg-green-100  rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 h-auto focus:outline-none sm:text-sm"
-              tabindex="-1"
+              className=" z-10 mt-1 w-full rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 h-auto focus:outline-none sm:text-sm"
+              tabIndex="-1"
               role="listbox"
               aria-labelledby="listbox-label"
               aria-activedescendant="listbox-option-3"
@@ -111,7 +107,7 @@ export default function Filters  ({
                     <li
                       key={index}
                       onClick={() => {
-                        setUser({ ...user, selectedTypeOfValue: label });
+                        // setUser({ ...user, selectedTypeOfValue: label });
                         setUser({
                           ...user,
                           typeOfValues: { ...typeOfValues, [label]: !value },
@@ -123,6 +119,7 @@ export default function Filters  ({
                     >
                       <input
                         type="checkbox"
+                        className="orange-checkbox"
                         name={label}
                         onChange={(e) => {
                           setUser({
@@ -130,7 +127,7 @@ export default function Filters  ({
                             typeOfValues: { ...typeOfValues, [label]: !value },
                           });
                         }}
-                        defaultChecked={typeOfValues[label]}
+                        // defaultChecked={typeOfValues[label]}
                         checked={typeOfValues[label]}
                       />
                       <div className="flex items-center">
@@ -151,7 +148,8 @@ export default function Filters  ({
             id="listbox-label"
             className="block text-sm font-medium text-gray-700 flex justify-between pr-5 items-center"
           >
-            List of regions
+            <strong className="text-lg">List of regions</strong>
+            
             <button
                 type="button"
                 className="relative   rounded-md  py-2 text-left cursor-default focus:outline-none  sm:text-sm"
@@ -199,7 +197,7 @@ export default function Filters  ({
             {openRegionList && (
             <ul
               className=" z-10 mt-1 w-full   rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 h-auto focus:outline-none sm:text-sm"
-              tabindex="-1"
+              tabIndex="-1"
               role="listbox"
               aria-labelledby="listbox-label"
               aria-activedescendant="listbox-option-3"
@@ -225,8 +223,18 @@ export default function Filters  ({
                   >
                     <input
                       type="checkbox"
-                      defaultChecked={selectedRegion[regionKey]}
+                      className="pink-checkbox"
+                      // defaultChecked={selectedRegion[regionKey]}
                       checked={selectedRegion[regionKey]}
+                      onClick={() =>
+                        setUser((prev) => ({
+                          ...prev,
+                          selectedRegion: {
+                            ...prev.selectedRegion,
+                            [regionKey]: !prev.selectedRegion[regionKey],
+                          }
+                        }))
+                      }
                     />
                     <div className="flex items-center">
                       <span className="font-normal ml-3 block truncate">
@@ -246,7 +254,8 @@ export default function Filters  ({
             id="listbox-label"
             className="block text-sm font-medium text-gray-700 flex justify-between pr-5 items-center"
           >
-            Who Benefits?
+            <strong className="text-lg">Who Benefits?</strong>
+            
             <button
                 type="button"
                 className="relative   rounded-md  py-2 text-left cursor-default focus:outline-none  sm:text-sm"
@@ -296,44 +305,51 @@ export default function Filters  ({
             {openBeneficiaryList && (
             <ul
               className=" z-10 mt-1 w-full   rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 h-auto focus:outline-none sm:text-sm"
-              tabindex="-1"
+              tabIndex="-1"
               role="listbox"
               aria-labelledby="listbox-label"
               aria-activedescendant="listbox-option-3"
               // onMouseLeave={() => setBeneficiaryList((prev) => !prev)}
             >
-              <li
-                className="text-gray-900 li-bg-russian-violet-dark cursor-default select-none relative py-2 pl-3 pr-9 cursor-pointer hover:bg-purple-50"
-                id="listbox-option-0"
-                role="option"
-                onClick={() => handleBeneficiary("All")}
-              >
-                <div className="flex items-center">
-                  <span className="font-normal ml-3 block truncate">All</span>
-                </div>
-              </li>
-              {whoBenefits?.records?.length > 0 &&
-                whoBenefits?.records?.map((beneficiary, index) => {
+              
+              {Object.entries(selectedBeneficiaryId)?.map(([beneficiaryKey, beneficaryValue], index) => {
                   return (
                     <li
-                      key={index}
-                      onClick={() => handleBeneficiary(beneficiary)}
-                      className="text-gray-900 li-bg-russian-violet-dark cursor-default flex select-none relative py-2 pl-3 pr-9 cursor-pointer hover:bg-purple-50"
-                      id="listbox-option-0"
-                      role="option"
-                    >
-                      <input
-                            type="checkbox"
-                            // defaultChecked={selectedRegion[]}
-                            // checked={selectedRegion["all"]}
-                          />
-  
-                      <div className="flex items-center">
-                        <span className="font-normal ml-3 block truncate">
-                          {beneficiary.fields.Name}
-                        </span>
-                      </div>
-                    </li>
+                    key={index}
+                    onClick={() =>
+                      setUser((prev) => ({
+                        ...prev,
+                        selectedBeneficiaryId: {
+                          ...prev.selectedBeneficiaryId,
+                          [beneficiaryKey]: {...beneficaryValue, isSelected: !beneficaryValue.isSelected},
+                        }
+                      }))
+                    }
+                    className="text-gray-900 li-bg-russian-violet-dark flex cursor-default select-none relative py-2 pl-3 pr-9 cursor-pointer hover:bg-purple-50"
+                    id="listbox-option-0"
+                    role="option"
+                  >
+                    <input
+                      type="checkbox"
+                      className="yellow-checkbox"
+                      // defaultChecked={selectedBeneficiaryId[beneficiaryKey]}
+                      checked={beneficaryValue?.isSelected}
+                      onClick={() =>
+                        setUser((prev) => ({
+                          ...prev,
+                          selectedBeneficiaryId: {
+                            ...prev.selectedBeneficiaryId,
+                            [beneficiaryKey]: {...beneficaryValue, isSelected: !beneficaryValue.isSelected},
+                          }
+                        }))
+                      }
+                    />
+                    <div className="flex items-center">
+                      <span className="font-normal ml-3 block truncate">
+                        {beneficiaryKey}
+                      </span>
+                    </div>
+                  </li>
                   );
                 })}
             </ul>

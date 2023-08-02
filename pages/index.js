@@ -12,15 +12,13 @@ const Home = ({ data, pagination }) => {
   const [user, setUser] = useContext(ValueContext);
 
   const [filteredData, setFilteredData] = useState(data.records);
-  const [whoBenefits, setWhoBenefits] = useState([]);
   const [clientOffset, setClientOffset] = useState(data.offset);
-  const { selectedTypeOfValue, selectedRegion, typeOfValues, favorites } = user;
+  const { selectedTypeOfValue, selectedRegion, typeOfValues, selectedBeneficiaryId, favorites } = user;
   // const router = useRouter();
   // const routerLocation = router.asPath;
   // const [loading, setLoading] = useState(false);
   const [selectedBeneficiary, setSelectedBeneficiary] = useState("All");
   const [beneficiaryId, setBeneficiaryId] = useState("All");
-
 
   // const handleValuesList = () => {
   //   setValuesList(!openValuesList);
@@ -40,7 +38,7 @@ const Home = ({ data, pagination }) => {
     }
   };
   useEffect(() => {
-    function getBeneficiary() {
+    async function getBeneficiary() {
       fetch(
         "https://api.airtable.com/v0/appHMNZpRfMeHIZGc/LOOKUP%20Value%20stakeholders",
         {
@@ -52,12 +50,14 @@ const Home = ({ data, pagination }) => {
         }
       )
         .then((response) => response.json())
-        .then((res) => setWhoBenefits(res));
+        .then(res => res.records.map(beneficiary => ({ [beneficiary.fields.Name]: {id: beneficiary.id, isSelected: false} })))
+        .then((ids) => setUser(prev => ({...prev, selectedBeneficiaryId: Object.assign({}, prev.selectedBeneficiaryId, ...ids)}) ))
     }
 
     getBeneficiary();
   }, []);
 
+  
 
   return (
     <Layout>
@@ -71,7 +71,6 @@ const Home = ({ data, pagination }) => {
         data={data}
         setFilteredData={setFilteredData}
         selectedBeneficiary={selectedBeneficiary}
-        whoBenefits={whoBenefits}
         handleBeneficiary={handleBeneficiary}
       />
 
