@@ -28,7 +28,10 @@ export const ValueContextProvider = ({ children }) => {
       "North America": false,
     },
     selectedBeneficiaryId: {
-      All: true,
+      //This will fill with key: Objects to store id and selection
+      // Eg. {id: '', isSelected: false}
+      // 'All' key does not have id
+      All: {isSelected: false},
     },
     favorites: [],
   });

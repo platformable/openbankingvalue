@@ -104,7 +104,7 @@ const ToolsResults = ({
       {/* end of pagination */}
 
       <div className="container mx-auto px-14 ">
-        <div className="card-container grid gap-4 md:grid-cols-3 grid-cols-1 my-5">
+        <div className="card-container grid gap-4 xl:grid-cols-3 grid-cols-1 my-5">
           {content.length > 0 ? content.map((item, index, array) =>  (
               <div
                 id={item.id}

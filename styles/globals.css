@@ -119,3 +119,13 @@ img {
     top: 20px;
     z-index: 20;
 }
+
+.pink-checkbox {
+  accent-color: rgb(218, 78, 155);
+}
+.orange-checkbox {
+  accent-color: var(--red-orange-dark);
+}
+.yellow-checkbox {
+  accent-color: var(--sunglow-dark);
+}
