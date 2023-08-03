@@ -16,9 +16,9 @@ const AppliedFiltersLabels = () => {
     return (
     <>
     {anySelection && (
-        <div className="grid grid-rows-auto lg:flex gap-x-3 md:gap-5">
+        <div className="grid grid-rows-auto lg:grid-cols-5 px-10 mb-10 gap-x-3 md:gap-5">
       {Object.entries(typeOfValues).filter(([key, value]) => key === 'All' ? false : value === true).map(array => (
-        <div className="bg-orange py-1 px-3 flex justify-between gap-3 lg:gap-5 rounded-r-2xl rounded-l text-white" onClick={() => deleteFilter('typeOfValues',array[0])}>
+        <div className="bg-orange py-1 px-3 flex justify-between items-center gap-3 lg:gap-5 rounded-r-2xl rounded-l text-white" onClick={() => deleteFilter('typeOfValues',array[0])}>
             {array[0]}
             <span className="uppercase">X</span>
         </div>
