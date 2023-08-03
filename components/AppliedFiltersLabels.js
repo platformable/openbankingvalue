@@ -8,7 +8,7 @@ const AppliedFiltersLabels = () => {
   const anySelection = //Check if any exist any selection from the user diffferent thant 'All'   
     Object.entries(typeOfValues).some(([key, value]) => key === 'All' ? false : value === true) ||
     Object.entries(selectedRegion).some(([key, value]) => key === 'All' ? false : value === true) ||
-    Object.entries(selectedBeneficiaryId).some(([key, value]) => key === 'All' ? false : value === true);
+    Object.entries(selectedBeneficiaryId).some(([key, value]) => key === 'All' ? false : value.isSelected === true);
 
     const deleteFilter = (stateName, valueKey) => {
       setUser(prev => ({...prev, [stateName]: {...prev[stateName], [valueKey]: !prev[stateName][valueKey] }}))
@@ -18,7 +18,7 @@ const AppliedFiltersLabels = () => {
     {anySelection && (
         <div className="grid grid-rows-auto lg:flex gap-x-3 md:gap-5">
       {Object.entries(typeOfValues).filter(([key, value]) => key === 'All' ? false : value === true).map(array => (
-        <div className="bg-[var(--red-orange-dark)] py-1 px-3 flex justify-between gap-3 lg:gap-5 rounded-r-2xl rounded-l" onClick={() => deleteFilter('typeOfValues',array[0])}>
+        <div className="bg-orange py-1 px-3 flex justify-between gap-3 lg:gap-5 rounded-r-2xl rounded-l text-white" onClick={() => deleteFilter('typeOfValues',array[0])}>
             {array[0]}
             <span className="uppercase">X</span>
         </div>
@@ -30,7 +30,10 @@ const AppliedFiltersLabels = () => {
         </div>
       ))}
       {Object.entries(selectedBeneficiaryId).filter(([key, value]) => key === 'All' ? false : value.isSelected === true).map(array => (
-        <div className="bg-[var(--sunglow-dark)] py-1 px-3 flex justify-between gap-3 lg:gap-5 rounded-r-2xl rounded-l" >
+        <div className="bg-yellow py-1 px-3 flex justify-between gap-3 lg:gap-5 rounded-r-2xl rounded-l" onClick={() => 
+          //Different deletion process than other because state is different structure  
+          setUser(prev => ({...prev, selectedBeneficiaryId: {...prev['selectedBeneficiaryId'], [array[0]]: !prev['selectedBeneficiaryId'][array[0]] }}))
+        }>
             {array[0]}
             <span className="uppercase">X</span>
         </div>
