@@ -28,7 +28,7 @@ const ToolsResults = ({
 // console.log("content", content)
   const handleNextPage = () => {
     router.push({
-      pathname: "/tools",
+      pathname: "/",
       query: { clientOffset: clientOffset },
     });
   };

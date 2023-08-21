@@ -8,7 +8,7 @@ import Filters from "../components/Filters";
 import Hero from "../components/Hero";
 
 const Home = ({ data, pagination }) => {
-  console.log("data", data)
+  // console.log("data", data)
   const [user, setUser] = useContext(ValueContext);
 
   const [filteredData, setFilteredData] = useState(data.records);
