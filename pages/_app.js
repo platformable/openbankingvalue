@@ -7,9 +7,9 @@ import { ValueContextProvider } from '../context/valueContext';
 function MyApp({ Component, pageProps }) {
   return (
   <ValueContextProvider>
-  <AppWrapper>
+  {/* <AppWrapper> */}
   <Component {...pageProps} />
-  </AppWrapper>
+  {/* </AppWrapper> */}
   </ValueContextProvider>
   )
 }

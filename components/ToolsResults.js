@@ -75,7 +75,7 @@ const ToolsResults = ({
 
       <section className="pagination my-5 mb-20">
         <AppliedFiltersLabels />
-        <div className="container mx-auto flex md:justify-between px-10 items-center justify-center">
+        <div className=" flex md:justify-between px-10 items-center justify-center">
           <p className=" text-2xl">Showing  <strong>{content?.length}</strong> success stories</p>
           {pagination ? (
             <button
@@ -103,7 +103,7 @@ const ToolsResults = ({
       </section>
       {/* end of pagination */}
 
-      <div className="container mx-auto px-14 ">
+      <div className=" px-14 ">
         <div className="card-container grid gap-4 xl:grid-cols-3 grid-cols-1 my-5">
           {content.length > 0 ? content.map((item, index, array) =>  (
               <div
