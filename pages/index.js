@@ -66,7 +66,7 @@ const Home = ({ data, pagination }) => {
         <meta name="description" content="Platformable Value Generated Tool" />
       </Head>
       <Hero />
-      <section className="flex">
+      <section className="flex container mx-auto">
       <Filters
         data={data}
         setFilteredData={setFilteredData}

@@ -54,7 +54,7 @@ export default function Filters  ({
   
       const [firstFilter, ...rest] = arr;
   
-      const newData = populatedData?.filter((r) => firstFilter(r));
+      const newData = populatedData?.filter((row) => firstFilter(row));
   
       setFilteredData(newData);
   
