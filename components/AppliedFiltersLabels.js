@@ -4,11 +4,11 @@ import { useContext } from "react";
 const AppliedFiltersLabels = () => {
   const [user, setUser] = useContext(ValueContext);
   const { selectedTypeOfValue, selectedRegion, typeOfValues, favorites, selectedBeneficiaryId } = user;
-
+console.log(user)
   const anySelection = //Check if any exist any selection from the user diffferent thant 'All'   
     Object.entries(typeOfValues).some(([key, value]) => key === 'All' ? false : value === true) ||
     Object.entries(selectedRegion).some(([key, value]) => key === 'All' ? false : value === true) ||
-    Object.entries(selectedBeneficiaryId).some(([key, value]) => key === 'All' ? false : value.isSelected === true);
+    Object.entries(selectedBeneficiaryId).some(([key, value]) => value.isSelected === true  ? false : value.isSelected === true);
 
     const deleteFilter = (stateName, valueKey) => {
       setUser(prev => ({...prev, [stateName]: {...prev[stateName], [valueKey]: !prev[stateName][valueKey] }}))
