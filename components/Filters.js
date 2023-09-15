@@ -128,8 +128,8 @@ export default function Filters  ({
                             typeOfValues: { ...typeOfValues, [label]: !value },
                           });
                         }}
-                        // defaultChecked={typeOfValues[label]}
-                        checked={typeOfValues[label]}
+                        defaultChecked={typeOfValues[label]}
+                        // checked={typeOfValues[label]}
                       />
                       <div className="flex items-center">
                         <span className="font-normal ml-3 block truncate ">
@@ -225,8 +225,8 @@ export default function Filters  ({
                     <input
                       type="checkbox"
                       className="pink-checkbox"
-                      // defaultChecked={selectedRegion[regionKey]}
-                      checked={selectedRegion[regionKey]}
+                      defaultChecked={selectedRegion[regionKey]}
+                      // checked={selectedRegion[regionKey]}
                       onClick={() =>
                         setUser((prev) => ({
                           ...prev,
@@ -333,8 +333,8 @@ export default function Filters  ({
                     <input
                       type="checkbox"
                       className="yellow-checkbox"
-                      // defaultChecked={selectedBeneficiaryId[beneficiaryKey]}
-                      checked={beneficaryValue?.isSelected}
+                      defaultChecked={selectedBeneficiaryId[beneficiaryKey]}
+                      // checked={beneficaryValue?.isSelected}
                       onClick={() =>
                         setUser((prev) => ({
                           ...prev,
