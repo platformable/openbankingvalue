@@ -35,7 +35,7 @@ const ToolsResults = ({
     const isFavorite = user.favorites.filter(
       (favorites) => favorites.id === item.id
     );
-    if (isFavorite.length > 0) {
+    if (isFavorite?.length > 0) {
       const result = user.favorites.filter(
         (favorites) => favorites.id !== item.id
       );
@@ -103,7 +103,7 @@ const ToolsResults = ({
 
       <div className=" px-14 ">
         <div className="card-container grid gap-4 xl:grid-cols-3 grid-cols-1 my-5 mb-20">
-          {content.length > 0 ? (
+          {content?.length > 0 ? (
             content.map((item, index, array) => (
               <div
                 id={item.id}

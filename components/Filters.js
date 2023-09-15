@@ -51,7 +51,7 @@ export default function Filters  ({
     ];
     //Recursive function
     const filterResults = (arr, populatedData) => {
-      if (arr.length < 1) return;
+      if (arr?.length < 1) return;
   
       const [firstFilter, ...rest] = arr;
   
@@ -218,7 +218,7 @@ export default function Filters  ({
                         }
                       }))
                     }
-                    className="text-gray-900 li-bg-russian-violet-dark flex cursor-default select-none relative py-2 pl-3 pr-9 cursor-pointer hover:bg-purple-50"
+                    className="text-gray-900 li-bg-russian-violet-dark flex cursor-default select-none relative py-2 pl-3 pr-9 cursor-pointer "
                     id="listbox-option-0"
                     role="option"
                   >
@@ -326,15 +326,15 @@ export default function Filters  ({
                         }
                       }))
                     }
-                    className="text-gray-900 li-bg-russian-violet-dark flex cursor-default select-none relative py-2 pl-3 pr-9 cursor-pointer hover:bg-purple-50"
+                    className="text-gray-900 li-bg-russian-violet-dark flex cursor-default select-none relative py-2 pl-3 pr-9 cursor-pointer "
                     id="listbox-option-0"
                     role="option"
                   >
                     <input
                       type="checkbox"
                       className="yellow-checkbox"
-                      defaultChecked={selectedBeneficiaryId[beneficiaryKey]}
-                      // checked={beneficaryValue?.isSelected}
+                      // defaultChecked={beneficaryValue?.isSelected}
+                      checked={beneficaryValue?.isSelected}
                       onClick={() =>
                         setUser((prev) => ({
                           ...prev,
