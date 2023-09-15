@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="75" height="75" viewBox="0 0 75 75">
+  <defs>
+    <filter id="Ellipse_650" x="0" y="0" width="75" height="75" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Tidal" transform="translate(9 6)">
+    <g transform="matrix(1, 0, 0, 1, -9, -6)" filter="url(#Ellipse_650)">
+      <circle id="Ellipse_650-2" data-name="Ellipse 650" cx="28.5" cy="28.5" r="28.5" transform="translate(9 6)" fill="#fff"/>
+    </g>
+    <g id="Group_4736" data-name="Group 4736" transform="translate(9.063 19.535)">
+      <rect id="Rectangle_3203" data-name="Rectangle 3203" width="8.927" height="8.927" transform="translate(13.125 6.312) rotate(-45)" fill="#5b24ec"/>
+      <rect id="Rectangle_3204" data-name="Rectangle 3204" width="8.927" height="8.927" transform="translate(13.125 18.438) rotate(-45)" fill="#5b24ec"/>
+      <rect id="Rectangle_3205" data-name="Rectangle 3205" width="8.927" height="8.927" transform="translate(0 6.313) rotate(-44.999)" fill="#5b24ec"/>
+      <rect id="Rectangle_3206" data-name="Rectangle 3206" width="8.927" height="8.927" transform="translate(26.25 6.313) rotate(-45)" fill="#5b24ec"/>
+    </g>
+  </g>
+</svg>

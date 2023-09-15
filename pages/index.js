@@ -86,7 +86,7 @@ const Home = ({ data, pagination }) => {
         </div>
       )}
       </section>
-      
+      <div className="footer-top-bar h-12"></div>
     </Layout>
   );
 };

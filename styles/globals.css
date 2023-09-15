@@ -6,6 +6,7 @@
 
 html,
 body {
+  scroll-behavior: smooth !important;
   padding: 0;
   margin: 0;
   font-family: 'Roboto', sans-serif;
@@ -44,6 +45,9 @@ h1,h2,h3,h4,h5{
 
   /*2023 style guide colors*/
   --dark-blue: #3425c9;
+  --purple-medium-dark: #4f35e2;
+  --yellow: #ffe200;
+  --gradient-obof: linear-gradient(to right, #F157FF 0%, #FF9D00 100%) 0% 0%;
 }
 
 .bg-btn-russian-violet {
@@ -134,4 +138,8 @@ a {
 }
 .yellow-checkbox {
   accent-color: var(--sunglow-dark);
+}
+
+.footer-top-bar {
+  background-color: var(--gradient-obof);
 }
