@@ -5,7 +5,7 @@ import styles from '../styles/Home.module.css'
 const Hero = () => {
     return (
         <section className={styles.bg_hero}>
-        <div className="container mx-auto flex px-5 py-24 md:flex-row text-white flex-col items-center">
+        <div className="container mx-auto flex px-5 py-24 md:flex-row text-white flex-col items-start">
           <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
             <h1 className="title-font sm:text-4xl text-3xl mb-4 text-white font-bold">
               Open Banking Value Tool
@@ -20,8 +20,8 @@ const Hero = () => {
               </button>
             </div> */}
           </div>
-          <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-            <Image src={heroImg} alt="OBV__OBV_tool_isometric" />
+          <div className="lg:max-w-lg lg:w-full">
+            <Image src={heroImg} alt="OBV__OBV_tool_isometric" width={350} height={300}/>
           </div>
         </div>
       </section>

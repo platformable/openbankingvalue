@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="75" height="75" viewBox="0 0 75 75">
+  <defs>
+    <filter id="Ellipse_648" x="0" y="0" width="75" height="75" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="email" transform="translate(9 6)">
+    <g transform="matrix(1, 0, 0, 1, -9, -6)" filter="url(#Ellipse_648)">
+      <circle id="Ellipse_648-2" data-name="Ellipse 648" cx="28.5" cy="28.5" r="28.5" transform="translate(9 6)" fill="#fff"/>
+    </g>
+    <path id="Subtraction_58" data-name="Subtraction 58" d="M33.534,18.953H0V0H.33L1.682,1.035,17.269,12.07,32.716.323,33.142,0h.393V18.953Z" transform="translate(11.733 20.504)" fill="#5724e8"/>
+    <path id="Path_4825" data-name="Path 4825" d="M-2385,16207.213h32.124l-15.487,11.742Z" transform="translate(2397.284 -16188.592)" fill="#5724e8"/>
+  </g>
+</svg>

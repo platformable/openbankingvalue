@@ -49,6 +49,7 @@ export default function Filters  ({
   
      
     ];
+    //Recursive function
     const filterResults = (arr, populatedData) => {
       if (arr.length < 1) return;
   
@@ -69,7 +70,7 @@ export default function Filters  ({
 
 
     return (
-      <div className="sticky flex flex-col mx-3 lg:mx-5 pl-7 gap-4 grid-cols-1 py-10">
+      <div className="sticky w-3/12 flex flex-col mx-3 lg:mx-5 pl-7 gap-4 grid-cols-1 py-10">
         <div id="values-list" className="md:my-5 mt-5 bank-form-list  md:px-0 px-5">
           <label
             id="listbox-label"
