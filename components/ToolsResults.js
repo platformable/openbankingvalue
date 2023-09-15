@@ -69,7 +69,7 @@ const ToolsResults = ({
         user={user}
       /> */}
 
-      <section className="pagination my-5 mb-20">
+      <section className="pagination flex flex-col my-5 mb-20">
         <AppliedFiltersLabels />
         <div className=" flex md:justify-between px-10 items-center justify-center">
           <p className=" text-2xl">

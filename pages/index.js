@@ -75,7 +75,7 @@ const Home = ({ data, pagination }) => {
       />
 
       {data && (
-        <div className="w-full">
+        <div className="flex flex-col">
           <ToolsResults
             typeOfValues={typeOfValues}
             content={filteredData}
