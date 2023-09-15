@@ -104,7 +104,7 @@ export default function Footer() {
   const handleError = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (email.length === 0) {
+    if (email?.length === 0) {
       setErrorMessage(`Please insert your email`);
     } else if (!emailRegex.test(email)) {
       setErrorMessage("Invalid email format");

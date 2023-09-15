@@ -51,7 +51,7 @@ export default function Filters  ({
     ];
     //Recursive function
     const filterResults = (arr, populatedData) => {
-      if (arr.length < 1) return;
+      if (arr?.length < 1) return;
   
       const [firstFilter, ...rest] = arr;
   
@@ -128,8 +128,8 @@ export default function Filters  ({
                             typeOfValues: { ...typeOfValues, [label]: !value },
                           });
                         }}
-                        // defaultChecked={typeOfValues[label]}
-                        checked={typeOfValues[label]}
+                        defaultChecked={typeOfValues[label]}
+                        // checked={typeOfValues[label]}
                       />
                       <div className="flex items-center">
                         <span className="font-normal ml-3 block truncate ">
@@ -218,15 +218,15 @@ export default function Filters  ({
                         }
                       }))
                     }
-                    className="text-gray-900 li-bg-russian-violet-dark flex cursor-default select-none relative py-2 pl-3 pr-9 cursor-pointer hover:bg-purple-50"
+                    className="text-gray-900 li-bg-russian-violet-dark flex cursor-default select-none relative py-2 pl-3 pr-9 cursor-pointer "
                     id="listbox-option-0"
                     role="option"
                   >
                     <input
                       type="checkbox"
                       className="pink-checkbox"
-                      // defaultChecked={selectedRegion[regionKey]}
-                      checked={selectedRegion[regionKey]}
+                      defaultChecked={selectedRegion[regionKey]}
+                      // checked={selectedRegion[regionKey]}
                       onClick={() =>
                         setUser((prev) => ({
                           ...prev,
@@ -326,14 +326,14 @@ export default function Filters  ({
                         }
                       }))
                     }
-                    className="text-gray-900 li-bg-russian-violet-dark flex cursor-default select-none relative py-2 pl-3 pr-9 cursor-pointer hover:bg-purple-50"
+                    className="text-gray-900 li-bg-russian-violet-dark flex cursor-default select-none relative py-2 pl-3 pr-9 cursor-pointer "
                     id="listbox-option-0"
                     role="option"
                   >
                     <input
                       type="checkbox"
                       className="yellow-checkbox"
-                      // defaultChecked={selectedBeneficiaryId[beneficiaryKey]}
+                      // defaultChecked={beneficaryValue?.isSelected}
                       checked={beneficaryValue?.isSelected}
                       onClick={() =>
                         setUser((prev) => ({
