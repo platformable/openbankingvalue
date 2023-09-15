@@ -49,6 +49,7 @@ export default function Filters  ({
   
      
     ];
+    //Recursive function
     const filterResults = (arr, populatedData) => {
       if (arr.length < 1) return;
   

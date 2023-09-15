@@ -9,9 +9,10 @@ module.exports = {
       colors: {
         "orange": "var(--red-orange-dark)",
         "yellow": "var(--sunglow-dark)",
+        "dark-blue": "var(--dark-blue)",
+
       },
     },
   },
-  darkMode: false, // or 'media' or 'class'
   
 }
