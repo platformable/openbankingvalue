@@ -69,15 +69,15 @@ const ToolsResults = ({
         user={user}
       /> */}
 
-      <section className="pagination flex flex-col my-5 mb-20">
+      <section className="pagination flex flex-col my-5 mb-20 ">
         <AppliedFiltersLabels />
-        <div className=" flex md:justify-between px-10 items-center justify-center">
+        <div className=" flex md:justify-between px-10 items-center justify-between ">
           <p className=" text-2xl">
             Showing <strong>{content?.length}</strong> success stories
           </p>
           {pagination ? (
             <button
-              className="btn bg-red-orange-dark px-5 py-2 rounded text-white"
+              className="btn bg-red-orange-dark px-5 py-2 rounded text-white "
               onClick={() => handleNextPage()}
             >
               {" "}
@@ -101,8 +101,10 @@ const ToolsResults = ({
       </section>
       {/* end of pagination */}
 
-      <div className=" px-14 ">
-        <div className="card-container grid gap-4 xl:grid-cols-3 grid-cols-1 my-5 mb-20">
+      {/* Those are the result cards */}
+
+      <div className="px-14">
+        <div className="md:px-14 lg:px-0 card-container grid gap-4 xl:grid-cols-3 grid-cols-1 my-5 mb-20">
           {content?.length > 0 ? (
             content.map((item, index, array) => (
               <div
@@ -110,7 +112,7 @@ const ToolsResults = ({
                 key={index}
                 className="card shadow-md rounded-md flex flex-col  gap-5 rounded py-5 px-5 md:mx-0 mx-5" /* onClick={()=>handleSelected(item)} */
               >
-                <div className="card-top flex justify-center w-full">
+                <div className="md:w-7/12 card-top flex justify-center lg:w-full mx-auto">
                   {/* <div className="flex  md:justify-end justify-center mb-5 mr-5">
                     <p className="bg-red-orange-dark text-white text-xs pt-2 pb-2 px-5 rounded">
                       {selectedTypeOfValue === "All"
@@ -129,10 +131,15 @@ const ToolsResults = ({
                       crossOrigin="*"
                     />
                   ) : (
-                    <img src="../societyIcon.png" alt="Fintech logo" crossOrigin="*" className="h-20"/>
+                    <img
+                      src="../societyIcon.png"
+                      alt="Fintech logo"
+                      crossOrigin="*"
+                      className="h-20"
+                    />
                   )}
                 </div>
-                <div className="flex flex-col ">
+                <div className="flex flex-col">
                   <p className="leading-relaxed text-sm md:text-2xl font-black text-main-color title-font">
                     {item.fields["Data point"] == ""
                       ? "numbers"
@@ -169,7 +176,7 @@ const ToolsResults = ({
                 </div> */}
 
                 <div
-                  className='card-bottom flex w-full h-full items-end'
+                  className="md:w-6/12 card-bottom flex lg:w-full h-full items-end "
                   data-html2canvas-ignore
                 >
                   <div className="bg-purple-100 flex items-center p-2 rounded-l-md">
@@ -183,12 +190,9 @@ const ToolsResults = ({
                     />
                   </div>
                   <div className="text-white bg-dark-blue h-10 w-full overflow-hidden text-xs flex items-center py-1 px-2 rounded-r-md">
-                  <Link
-                    href={`${item.fields["Source link"]}`}
-                    className=""
-                  >
-                    {item?.fields["Source link"]?.slice(0,30)}...
-                  </Link>
+                    <Link href={`${item.fields["Source link"]}`} className="">
+                      {item?.fields["Source link"]?.slice(0, 30)}...
+                    </Link>
                   </div>
                 </div>
               </div>
