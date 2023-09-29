@@ -33,7 +33,7 @@ const AppliedFiltersLabels = () => {
   return (
     <>
       {anySelection && (
-        <div className="flex flex-wrap text-sm px-10 mb-10 gap-x-3 md:gap-3">
+        <div className="hidden md:flex flex-wrap text-sm px-10 mb-10 gap-x-3 md:gap-3">
           {Object.entries(typeOfValues)
             ?.filter(([key, value]) => (key === "All" ? false : value === true))
             .map((array, index) => (

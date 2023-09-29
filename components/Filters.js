@@ -71,10 +71,10 @@ export default function Filters({ setFilteredData, data, handleBeneficiary }) {
   ]);
 
   return (
-    <div className=" lg:px-0 flex flex-col lg:flex-col mx-3 lg:mx-5  gap-4 grid-cols-1 py-10">
+    <div className=" lg:px-0 flex flex-col lg:flex-col mx-3 lg:mx-5  gap-10 grid-cols-1 mt-5 py-10">
       <div
         id="values-list"
-        className="md:my-5 mt-5 bank-form-list  md:px-0 px-5"
+        className="bank-form-list  md:px-0 px-5"
       >
         <label
           id="listbox-label"
@@ -150,119 +150,8 @@ export default function Filters({ setFilteredData, data, handleBeneficiary }) {
       </div>
 
       <div
-        id="region-list"
-        className="md:my-5 mt-5 bank-form-list md:px-0 px-5"
-      >
-        <label
-          id="listbox-label"
-          className="block text-sm font-medium text-gray-700 flex justify-between pr-5 items-center"
-        >
-          <strong className="text-lg">List of regions</strong>
-
-          <button
-            type="button"
-            className="relative   rounded-md  py-2 text-left cursor-default focus:outline-none  sm:text-sm"
-            aria-haspopup="listbox"
-            aria-expanded="true"
-            aria-labelledby="listbox-label"
-            // onMouseLeave={() => setValuesList(!openValuesList)}
-            onClick={() => setRegionList((prev) => !prev)}
-          >
-            <img
-              src={openRegionList ? "/arrow-up.svg" : "/arrow-down.svg"}
-              alt="more icon"
-              width={23}
-            />
-          </button>
-        </label>
-        <div className="mt-1 relative">
-          {/* <button
-                type="button"
-                className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                aria-haspopup="listbox"
-                aria-expanded="true"
-                aria-labelledby="listbox-label"
-                onClick={handleRegionsList}
-              >
-                <span className="flex items-center">
-                  <span className="ml-3 block truncate">
-                    {selectedRegion['all'] ? 'All Regions' : "Select Region"}
-                  </span>
-                </span>
-                <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                  <svg
-                    className="h-5 w-5 text-gray-400"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </span>
-              </button> */}
-
-          {openRegionList && (
-            <ul
-              className=" z-10 mt-1 w-full   rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 h-auto focus:outline-none sm:text-sm"
-              tabIndex="-1"
-              role="listbox"
-              aria-labelledby="listbox-label"
-              aria-activedescendant="listbox-option-3"
-              // onMouseLeave={(prev) => setSelectedRegion(!prev)}
-            >
-              {Object.keys(selectedRegion).map((regionKey, index) => {
-                return (
-                  <li
-                    key={index}
-                    onClick={() =>
-                      setUser((prev) => ({
-                        ...prev,
-                        selectedRegion: {
-                          ...prev.selectedRegion,
-                          [regionKey]: !prev.selectedRegion[regionKey],
-                        },
-                      }))
-                    }
-                    className="text-gray-900 li-bg-russian-violet-dark flex cursor-default select-none relative py-2 pl-3 pr-9 cursor-pointer "
-                    id="listbox-option-0"
-                    role="option"
-                  >
-                    <input
-                      type="checkbox"
-                      className="pink-checkbox"
-                      defaultChecked={selectedRegion[regionKey]}
-                      // checked={selectedRegion[regionKey]}
-                      onClick={() =>
-                        setUser((prev) => ({
-                          ...prev,
-                          selectedRegion: {
-                            ...prev.selectedRegion,
-                            [regionKey]: !prev.selectedRegion[regionKey],
-                          },
-                        }))
-                      }
-                    />
-                    <div className="flex items-center">
-                      <span className="font-normal ml-3 block truncate">
-                        {regionKey}
-                      </span>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-        </div>
-      </div>
-
-      <div
         id="beneficiary-list"
-        className="md:my-5 values-form-list md:px-0 px-5"
+        className=" values-form-list md:px-0 px-5"
       >
         <label
           id="listbox-label"
@@ -380,6 +269,119 @@ export default function Filters({ setFilteredData, data, handleBeneficiary }) {
           )}
         </div>
       </div>
+
+      <div
+        id="region-list"
+        className=" bank-form-list md:px-0 px-5"
+      >
+        <label
+          id="listbox-label"
+          className="block text-sm font-medium text-gray-700 flex justify-between pr-5 items-center"
+        >
+          <strong className="text-lg">List of regions</strong>
+
+          <button
+            type="button"
+            className="relative   rounded-md  py-2 text-left cursor-default focus:outline-none  sm:text-sm"
+            aria-haspopup="listbox"
+            aria-expanded="true"
+            aria-labelledby="listbox-label"
+            // onMouseLeave={() => setValuesList(!openValuesList)}
+            onClick={() => setRegionList((prev) => !prev)}
+          >
+            <img
+              src={openRegionList ? "/arrow-up.svg" : "/arrow-down.svg"}
+              alt="more icon"
+              width={23}
+            />
+          </button>
+        </label>
+        <div className="mt-1 relative">
+          {/* <button
+                type="button"
+                className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                aria-haspopup="listbox"
+                aria-expanded="true"
+                aria-labelledby="listbox-label"
+                onClick={handleRegionsList}
+              >
+                <span className="flex items-center">
+                  <span className="ml-3 block truncate">
+                    {selectedRegion['all'] ? 'All Regions' : "Select Region"}
+                  </span>
+                </span>
+                <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                  <svg
+                    className="h-5 w-5 text-gray-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </span>
+              </button> */}
+
+          {openRegionList && (
+            <ul
+              className=" z-10 mt-1 w-full   rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 h-auto focus:outline-none sm:text-sm"
+              tabIndex="-1"
+              role="listbox"
+              aria-labelledby="listbox-label"
+              aria-activedescendant="listbox-option-3"
+              // onMouseLeave={(prev) => setSelectedRegion(!prev)}
+            >
+              {Object.keys(selectedRegion).map((regionKey, index) => {
+                return (
+                  <li
+                    key={index}
+                    onClick={() =>
+                      setUser((prev) => ({
+                        ...prev,
+                        selectedRegion: {
+                          ...prev.selectedRegion,
+                          [regionKey]: !prev.selectedRegion[regionKey],
+                        },
+                      }))
+                    }
+                    className="text-gray-900 li-bg-russian-violet-dark flex cursor-default select-none relative py-2 pl-3 pr-9 cursor-pointer "
+                    id="listbox-option-0"
+                    role="option"
+                  >
+                    <input
+                      type="checkbox"
+                      className="pink-checkbox"
+                      defaultChecked={selectedRegion[regionKey]}
+                      // checked={selectedRegion[regionKey]}
+                      onClick={() =>
+                        setUser((prev) => ({
+                          ...prev,
+                          selectedRegion: {
+                            ...prev.selectedRegion,
+                            [regionKey]: !prev.selectedRegion[regionKey],
+                          },
+                        }))
+                      }
+                    />
+                    <div className="flex items-center">
+                      <span className="font-normal ml-3 block truncate">
+                        {regionKey}
+                      </span>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
+      </div>
+
+      
       {/* end of benefits */}
     </div>
   );
