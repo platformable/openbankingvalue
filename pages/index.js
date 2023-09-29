@@ -76,7 +76,7 @@ const Home = ({ data, pagination }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Hero />
-      <section className="flex container mx-auto">
+      <section className="sm:grid sm:grid-rows-1 lg:flex container mx-auto">
         <Filters
           data={data}
           setFilteredData={setFilteredData}
