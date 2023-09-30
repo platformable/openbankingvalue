@@ -5,16 +5,8 @@ export const ValueContext = createContext();
 export const ValueContextProvider = ({ children }) => {
   const [user, setUser] = useState({
     selectedTypeOfValue: "",
-    name: "",
     typeOfValues: {
-      "All": false,
-        "Efficiency/cost reduction":false,
-        "Network optimisation":false,
-        "Revenue growth":false,
-        "Financial health of customers":false,
-        "Increased innovation":false,
-        "Reduced inequality":false,
-       
+      "All": {isSelected: false},
     },
     selectedRegion: {
       'All': false,
@@ -35,8 +27,20 @@ export const ValueContextProvider = ({ children }) => {
     },
     favorites: [],
   });
+  const setTypeOfValue = (key) => {
+    setUser((prev) => ({
+          ...prev,
+          typeOfValues: {
+            ...prev.typeOfValues,
+            [key]: {
+              ...user.typeOfValues[key],
+              isSelected: !user.typeOfValues[key].isSelected,
+            },
+          },
+        }))
+  }
   return (
-    <ValueContext.Provider value={[user, setUser]}>
+    <ValueContext.Provider value={[user, setUser, setTypeOfValue]}>
       {children}
     </ValueContext.Provider>
   );

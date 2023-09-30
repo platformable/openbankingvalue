@@ -100,29 +100,44 @@ export default function Footer() {
       return `Error: ${error}`;
     }
   }
+  async function verifyUserSubscription () {
+    // console.log("verify subscription")
+    try {
+      let response = await fetch(`/api/verifysubscription`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
 
-  const handleError = () => {
+      if (response.status === 404) {
+        handleSubmit();
+      }
+      if (response.status === 200) {
+        setErrorMessage("You are already registered");
+      }
+    } catch (error) {
+      return `Error: ${error}`;
+    }
+  }
+  const handleError = async () => {
+    setErrorMessage('')
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (email?.length === 0) {
+    if (email.length === 0) {
+      // console.log("pasa insert email")
       setErrorMessage(`Please insert your email`);
+
     } else if (!emailRegex.test(email)) {
+      // console.log("pasa invalid")
+
       setErrorMessage("Invalid email format");
 
-      // } else if (subscribers.some((person) => person.email === email)) {
-      //   setErrorMessage("You are already a subscriber");
-      // }
-    } else {
-      setErrorMessage("");
-    }
-  };
-
-  const handleClick = (e) => {
-    e.preventDefault();
-    handleError();
-    if (!errorMessage) {
-      handleSubmit();
-    }
+    } 
+    else {
+      verifyUserSubscription();
+    } 
   };
 
   // useEffect(() => {
@@ -269,7 +284,7 @@ export default function Footer() {
               /> */}
                 <button
                   type="button"
-                  onClick={handleClick}
+                  onClick={handleError}
                   className={`${style.btnSubscribe} mt-8 font-bold w-full mx-auto p-4 rounded-xl md:mx-auto md:p-3 md:w-full `}
                 >
                   Subscribe

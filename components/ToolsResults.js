@@ -69,7 +69,7 @@ const ToolsResults = ({
         user={user}
       /> */}
 
-      <section className="pagination flex flex-col my-5 mb-20 ">
+      <section className="pagination flex flex-col my-5 ">
         <AppliedFiltersLabels />
         <div className=" flex md:justify-between px-10 items-center justify-between ">
           <p className=" text-2xl">
@@ -103,14 +103,14 @@ const ToolsResults = ({
 
       {/* Those are the result cards */}
 
-      <div className="px-14">
+      <div className="px-10">
         <div className="md:px-14 lg:px-0 card-container grid gap-4 xl:grid-cols-3 grid-cols-1 my-5 mb-20">
           {content?.length > 0 ? (
             content.map((item, index, array) => (
               <div
                 id={item.id}
                 key={index}
-                className="card shadow-md rounded-md flex flex-col  gap-5 rounded py-5 px-5 md:mx-0 mx-5" /* onClick={()=>handleSelected(item)} */
+                className="card shadow-md rounded-md flex flex-col  gap-5 rounded py-5 px-5 md:mx-0 " /* onClick={()=>handleSelected(item)} */
               >
                 <div className="md:w-7/12 card-top flex justify-center lg:w-full mx-auto">
                   {/* <div className="flex  md:justify-end justify-center mb-5 mr-5">

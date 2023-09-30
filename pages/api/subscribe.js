@@ -20,7 +20,7 @@ export default async function subscribe(req, res) {
         body: JSON.stringify({ email }),
       }
     );
-    console.log(response)
+    // console.log(response)
     if (response.ok) {
       return res.status(200).json({ success: true });
     } else {
