@@ -7,10 +7,9 @@ import Head from "next/head";
 import Filters from "../components/Filters";
 import Hero from "../components/Hero";
 
-const Home = ({ data, pagination }) => {
-  console.log("data", data);
+const Home = ({ data, pagination, valueCategories }) => {
+  // console.log("valueCategories", data);
   const [user, setUser] = useContext(ValueContext);
-
   const [filteredData, setFilteredData] = useState(data.records);
   const [clientOffset, setClientOffset] = useState(data.offset);
   const { selectedRegion, typeOfValues, selectedBeneficiaryId } = user;
@@ -31,6 +30,15 @@ const Home = ({ data, pagination }) => {
     }
   };
   useEffect(() => {
+    setUser((prev) => ({
+      ...prev,
+      typeOfValues: 
+      Object.assign(
+        {},
+        prev.typeOfValues,
+        ...valueCategories?.records?.map(value => ({[value.fields['Value Generation Category']]: { id: value.id , isSelected: false}}))
+      )
+    }));
     async function getBeneficiary() {
       fetch(
         "https://api.airtable.com/v0/appHMNZpRfMeHIZGc/LOOKUP%20Value%20stakeholders",
@@ -64,6 +72,7 @@ const Home = ({ data, pagination }) => {
     }
 
     getBeneficiary();
+    
   }, []);
 
   return (
@@ -81,7 +90,6 @@ const Home = ({ data, pagination }) => {
           data={data}
           setFilteredData={setFilteredData}
           selectedBeneficiary={selectedBeneficiary}
-          handleBeneficiary={handleBeneficiary}
         />
 
         {data && (
@@ -105,30 +113,43 @@ export default Home;
 
 export async function getServerSideProps(context) {
   const offset = "" || (await context.query.clientOffset);
-
-  // console.log(offset)
   const url =
     offset === undefined
       ? "https://api.airtable.com/v0/appHMNZpRfMeHIZGc/Value%20Generated"
       : `https://api.airtable.com/v0/appHMNZpRfMeHIZGc/Value%20Generated?offset=${offset}`;
-
-  const res = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.PLATFORMABLE_AIRTABLE_KEY}`,
-    },
-  });
-  const data = await res.json();
-  const pagination = (await data.offset) || null;
-
-  if (!data) {
-    return {
-      notFound: true,
-    };
-  }
-
-  return {
-    props: { data, pagination },
-  };
+    /*   const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/engage?populate=*`
+      );
+      const data = await res.json(); */
+  
+  
+      const [data, valueCategories] = await Promise.all([
+        fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.PLATFORMABLE_AIRTABLE_KEY}`,
+          },
+        })
+        .then((res) => res.json()),
+        fetch('https://api.airtable.com/v0/appHMNZpRfMeHIZGc/LOOKUP%20Value%20taxonomy', {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.PLATFORMABLE_AIRTABLE_KEY}`,
+          },
+        })
+        .then(
+          (res) => res.json()),
+      ]);
+      const pagination = await data.offset
+      return {
+        props: {
+          pagination,
+          data,
+          valueCategories,
+        },
+      };
+  
+ 
 }

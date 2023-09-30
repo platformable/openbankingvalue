@@ -1,13 +1,14 @@
 import { ValueContext } from "../context/valueContext";
 import { useContext, useEffect, useState } from "react";
 
-export default function Filters({ setFilteredData, data, handleBeneficiary }) {
-  const [user, setUser] = useContext(ValueContext);
+export default function Filters({ setFilteredData, data, }) {
+  const [user, setUser, setTypeOfValue] = useContext(ValueContext);
   const {
     selectedTypeOfValue,
     typeOfValues,
     selectedRegion,
     selectedBeneficiaryId,
+    
   } = user;
 
   const [openRegionList, setRegionList] = useState(true);
@@ -18,11 +19,11 @@ export default function Filters({ setFilteredData, data, handleBeneficiary }) {
     // Filter for each value of fields array (fields.[])
     // Return always true if typeOfValues.All === true, Return boolean existence of the typeOfValues == true in Cluster Category
     (item) => {
-      if (typeOfValues["All"] === true) return true;
-      return Object.entries(typeOfValues)
-        ?.filter(([key, value]) => value === true)
-        .every(([key, value]) =>
-          item.fields["Cluster Category"]?.includes(key)
+      if (typeOfValues["All"]["isSelected"] === true) return true;
+      return Object.values(typeOfValues)
+        ?.filter((value) => value.isSelected === true)
+        .every((value) =>
+          item.fields["Value Category"]?.includes(value.id)
         );
     },
 
@@ -63,7 +64,7 @@ export default function Filters({ setFilteredData, data, handleBeneficiary }) {
     // Repopulate from Server records to avoid empty data
     filterResults(arrayOfFIlters, data?.records);
   }, [
-    selectedTypeOfValue,
+    // selectedTypeOfValue,
     data,
     typeOfValues,
     selectedRegion,
@@ -107,19 +108,14 @@ export default function Filters({ setFilteredData, data, handleBeneficiary }) {
               aria-activedescendant="listbox-option-3"
               // onMouseLeave={() => setValuesList(!openValuesList)}
             >
-              {typeOfValues &&
-                Object.entries(typeOfValues).map(([label, value], index) => {
+              
+                {Object.entries(typeOfValues).map(([label, value], index) => {
+                  const newValueToFilter = typeOfValues[label]
                   return (
                     <li
                       key={index}
-                      onClick={() => {
-                        // setUser({ ...user, selectedTypeOfValue: label });
-                        setUser({
-                          ...user,
-                          typeOfValues: { ...typeOfValues, [label]: !value },
-                        });
-                      }}
-                      className=" flex cursor-default hover:text-white select-none relative py-2 pl-3 pr-9 cursor-pointer li-bg-russian-violet-dark"
+                      onClick={() => setTypeOfValue(label)}
+                      className="flex relative py-2 pl-3 pr-9 cursor-pointer li-bg-russian-violet-dark"
                       id="listbox-option-0"
                       role="option"
                     >
@@ -127,13 +123,9 @@ export default function Filters({ setFilteredData, data, handleBeneficiary }) {
                         type="checkbox"
                         className="orange-checkbox"
                         name={label}
-                        onChange={(e) => {
-                          setUser({
-                            ...user,
-                            typeOfValues: { ...typeOfValues, [label]: !value },
-                          });
-                        }}
-                        defaultChecked={typeOfValues[label]}
+                        onChange={() => setTypeOfValue(label)}
+                        defaultChecked={value.isSelected}
+                        // readOnly
                         // checked={typeOfValues[label]}
                       />
                       <div className="flex items-center">
@@ -143,7 +135,8 @@ export default function Filters({ setFilteredData, data, handleBeneficiary }) {
                       </div>
                     </li>
                   );
-                })}
+                }
+              )}
             </ul>
           )}
         </div>
@@ -176,37 +169,7 @@ export default function Filters({ setFilteredData, data, handleBeneficiary }) {
           </button>
         </label>
         <div className="mt-1 relative">
-          {/* <button
-              type="button"
-              className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              aria-haspopup="listbox"
-              aria-expanded="true"
-              aria-labelledby="listbox-label"
-              onClick={() => setBeneficiaryList((prev) => !prev)}
-            >
-              <span className="flex items-center">
-                <span className="ml-3 block truncate">
-                  {selectedBeneficiary
-                    ? selectedBeneficiary
-                    : "Select Beneficiary"}
-                </span>
-              </span>
-              <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                <svg
-                  className="h-5 w-5 text-gray-400"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </span>
-            </button> */}
+          
 
           {openBeneficiaryList && (
             <ul
@@ -242,7 +205,7 @@ export default function Filters({ setFilteredData, data, handleBeneficiary }) {
                         type="checkbox"
                         className="yellow-checkbox"
                         // defaultChecked={beneficaryValue?.isSelected}
-                        checked={beneficaryValue?.isSelected}
+                        defaultChecked={beneficaryValue?.isSelected}
                         onClick={() =>
                           setUser((prev) => ({
                             ...prev,
