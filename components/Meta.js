@@ -1,13 +1,13 @@
 import Head from "next/head";
 
-const Meta = ({ title, keywords, data }) => {
+const Meta = ({ title, keywords,excerpt, data }) => {
   return (
     <Head>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta name="keywords" content={keywords} />
       <meta
         name="description"
-        content={data?.excerpt?.replace(/(<([^>]+)>)/gi, "")}
+        content={excerpt?.replace(/(<([^>]+)>)/gi, "")}
       />
       <meta charSet="utf-8" />
       <link rel="icon" href="/favicon.ico" />
@@ -20,7 +20,7 @@ const Meta = ({ title, keywords, data }) => {
         name="twitter:description"
         content={data?.excerpt?.replace(/(<([^>]+)>)/gi, "")}
       /> */}
-      {/* <meta name="twitter:site" content={`https://www.platformable.com/blog/${data?.slug}`} />
+      {/* <meta name="twitter:site" content={`https://www.openbankingvalue.platformable.com/blog/${data?.slug}`} />
       <meta
         name="twitter:image"
         content={
@@ -33,7 +33,7 @@ const Meta = ({ title, keywords, data }) => {
       <meta property="og:title" content={title} />
       <meta
         property="og:description"
-        content={data?.excerpt?.replace(/(<([^>]+)>)/gi, "")}
+        content={excerpt?.replace(/(<([^>]+)>)/gi, "")}
       />
       <meta property="og:type" content="website" />
       <meta
@@ -51,18 +51,18 @@ const Meta = ({ title, keywords, data }) => {
         }
       />
       <meta property="og:image:alt" content={title} />
-      <meta property="og:url" content={`https://www.platformable.com/blog/${data?.slug}`} />
+      <meta property="og:url" content={`https://www.openbankingvalue.platformable.com/`} />
       <meta property="og:site_name" content="platformable.com" />
     </Head>
   );
 };
 
 Meta.defaultProps = {
-  // title: "Platformable",
+  title: "Platformable: Open Banking Value Tool",
   keywords:
-    "platformable, data, api, open ecosystems, open banking, open finance, open health",
+    "platformable, data, api, open ecosystems, open banking, open finance, open health, value generated, benefits, outcomes",
   description:
-    "Platformable supports the development of open ecosystems to build a future we can all live in",
+    "Platformable's Open Banking Value Tool describes the benefits and outcomes that have been achieved in the global open banking and open finance ecosystem",
 };
 
 export default Meta;

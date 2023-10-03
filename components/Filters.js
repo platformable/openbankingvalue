@@ -287,7 +287,7 @@ export default function Filters({ setFilteredData, data }) {
                     <input
                       type="checkbox"
                       className="pink-checkbox"
-                      // checked={selectedRegion}
+                      checked={selectedRegion[regionKey] === true}
                       // checked={selectedRegion[regionKey]}
                       onClick={() =>
                         setUser((prev) => ({

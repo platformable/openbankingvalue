@@ -6,6 +6,7 @@ import { ValueContext } from "../context/valueContext";
 import Head from "next/head";
 import Filters from "../components/Filters";
 import Hero from "../components/Hero";
+import Meta from "../components/Meta";
 
 const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
   // console.log("data", data);
@@ -24,7 +25,15 @@ const [ismobile, setIsmobile] = useState(null)
   }, [])
 
 
+  const unrepeatedRegionValues = new Set(null)
+  data?.records?.forEach(row => {
+    const x = row.fields['Region (from Country)'] 
+    
+    x?.forEach(region => unrepeatedRegionValues.add(region))
 
+  })
+  console.log(unrepeatedRegionValues);
+  
 
   useEffect(() => {
     setUser((prev) => ({
@@ -61,12 +70,13 @@ const [ismobile, setIsmobile] = useState(null)
       x?.forEach(region => unrepeatedRegionValues.add(region))
 
     })
-    // console.log(...Object.values(unrepeatedRegionValues))
+    console.log(Array.from(unrepeatedRegionValues))
     setUser((prev) => ({
       ...prev,
-      selectedRegion: Object.assign({},
+      selectedRegion: Object.assign(
+        {},
         prev.selectedRegion,
-        // ...Object.values(unrepeatedRegionValues).map((value) => ({[value]: {isSelected: true}}) )
+        ...Array.from(unrepeatedRegionValues).map((value) => ({[value]:  true}) )
         ) 
        
     }));
@@ -76,13 +86,14 @@ const [ismobile, setIsmobile] = useState(null)
 
   return (
     <Layout>
-      <Head>
-        {/* <title>Platformable Value Generated Tool</title> */}
+      {/* <Head>
+        <title>Platformable Value Generated Tool</title> 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="Platformable Value Generated Tool" />
         <meta charSet="utf-8" />
         <link rel="icon" href="/favicon.ico" />
-      </Head>
+      </Head> */}
+      <Meta />
       <Hero />
       <section className="sm:grid sm:grid-rows-1 lg:grid lg:grid-cols-[1fr_3fr] container mx-auto">
         <Filters
