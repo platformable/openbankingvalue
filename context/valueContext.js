@@ -10,14 +10,14 @@ export const ValueContextProvider = ({ children }) => {
     },
     selectedRegion: {
       'All': false,
-      'APAC': false,
-      "Eastern Europe & Russia": false,
-      'Africa': false,
-      'Europe': false,
-      "Latin America": false,
-      "Middle East": false,
-      "Eastern Europe & Russia": false,
-      "North America": false,
+      // 'APAC': false,
+      // "Eastern Europe & Russia": false,
+      // 'Africa': false,
+      // 'Europe': false,
+      // "Latin America": false,
+      // "Middle East": false,
+      // "Eastern Europe & Russia": false,
+      // "North America": false,
     },
     selectedBeneficiaryId: {
       //This will fill with key: Objects to store id and selection
