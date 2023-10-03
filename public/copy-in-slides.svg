@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="33" height="36" viewBox="0 0 33 36">
+  <defs>
+    <filter id="Rectangle_1976" x="0" y="0" width="33" height="36" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Component_17_1" data-name="Component 17 – 1" transform="translate(5 2)">
+    <g id="Rectangle_1977" data-name="Rectangle 1977" fill="#fdd057" stroke="#3425c9" stroke-width="1">
+      <rect width="14" height="19" rx="1" stroke="none"/>
+      <rect x="0.5" y="0.5" width="13" height="18" rx="0.5" fill="none"/>
+    </g>
+    <g transform="matrix(1, 0, 0, 1, -5, -2)" filter="url(#Rectangle_1976)">
+      <g id="Rectangle_1976-2" data-name="Rectangle 1976" transform="translate(9 6)" fill="#fff" stroke="#3425c9" stroke-width="1">
+        <rect width="15" height="18" rx="1" stroke="none"/>
+        <rect x="0.5" y="0.5" width="14" height="17" rx="0.5" fill="none"/>
+      </g>
+    </g>
+    <g id="Rectangle_1979" data-name="Rectangle 1979" transform="translate(8 8)" fill="#fff" stroke="#3425c9" stroke-linecap="round" stroke-linejoin="round" stroke-width="1">
+      <rect width="7" height="4" stroke="none"/>
+      <rect x="0.5" y="0.5" width="6" height="3" fill="none"/>
+    </g>
+    <path id="Path_3143" data-name="Path 3143" d="M13209.521,395.428h7.857" transform="translate(-13201.949 -381)" fill="none" stroke="#3425c9" stroke-linecap="round" stroke-width="1"/>
+    <path id="Path_3144" data-name="Path 3144" d="M13209.521,395.428h7.857" transform="translate(-13201.949 -378.572)" fill="none" stroke="#3425c9" stroke-linecap="round" stroke-width="1"/>
+  </g>
+</svg>
