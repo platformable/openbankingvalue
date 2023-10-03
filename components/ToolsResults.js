@@ -13,7 +13,6 @@ import AppliedFiltersLabels from "./AppliedFiltersLabels";
 
 const ToolsResults = ({
   content,
-  clientOffset,
   pagination,
   handleBackPage,
   routerLocation,
@@ -23,11 +22,11 @@ const ToolsResults = ({
   const { selectedTypeOfValue } = user;
   const [cardId, setCardId] = useState("");
 
-  // console.log("content", content)
+  // console.log("pagination inside app", pagination)
   const handleNextPage = () => {
     router.push({
       pathname: "/",
-      query: { clientOffset: clientOffset },
+      query: { clientOffset: pagination },
     });
   };
 

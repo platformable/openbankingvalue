@@ -1,7 +1,6 @@
 import { ValueContext } from "../context/valueContext";
 import { useContext, useEffect, useState } from "react";
-
-export default function Filters({ setFilteredData, data, }) {
+export default function Filters({ setFilteredData, data }) {
   const [user, setUser, setTypeOfValue] = useContext(ValueContext);
   const {
     selectedTypeOfValue,
@@ -10,10 +9,12 @@ export default function Filters({ setFilteredData, data, }) {
     selectedBeneficiaryId,
     
   } = user;
-
-  const [openRegionList, setRegionList] = useState(true);
-  const [openValuesList, setValuesList] = useState(true);
-  const [openBeneficiaryList, setBeneficiaryList] = useState(true);
+  const [nav, setNav] = useState(null)
+  useEffect(() => setNav(navigator), [])
+  // console.log(nav)
+  const [openRegionList, setRegionList] = useState(false);
+  const [openValuesList, setValuesList] = useState(false);
+  const [openBeneficiaryList, setBeneficiaryList] = useState(false);
 
   const arrayOfFIlters = [
     // Filter for each value of fields array (fields.[])
@@ -30,11 +31,12 @@ export default function Filters({ setFilteredData, data, }) {
     // Filter for each value of fields array (fields.[])
     // Return always true if selectedRegion.All === true, Return boolean existence of the selectedRegion == true in Region (From country)
     (item) => {
-      if (selectedRegion["All"] === true) return true;
+      if (selectedRegion["All"]["isSelected"] === true) return true;
       return Object.entries(selectedRegion)
-        ?.filter(([key, value]) => value === true)
-        .every(([key, value]) =>
-          item.fields["Region (from Country)"]?.includes(key)
+        ?.filter(([key, value]) => value.isSelected === true)
+        .every((value) =>
+          // item.fields["Region (from Country)"]?.includes(key)
+          console.log(value)
         );
     },
 
@@ -72,22 +74,20 @@ export default function Filters({ setFilteredData, data, }) {
   ]);
 
   return (
-    <div className=" lg:px-0 flex flex-col lg:flex-col mx-3 lg:mx-5  gap-10 grid-cols-1 mt-5 py-10">
+    <div id="filter-container" className="lg:px-0 flex flex-col  lg:flex-col mx-3 lg:mx-5 gap-10 grid-cols-1 mt-5 py-10">
       <div
         id="values-list"
-        className="bank-form-list  md:px-0 px-5"
+        className="md:px-0 px-5"
       >
         <label
           id="listbox-label"
-          className="block text-sm font-medium text-gray-700 flex justify-between pr-5 items-center "
+          className="block text-sm font-medium text-gray-700 flex justify-between  items-center "
         >
-          <strong className="text-lg">List of values</strong>
+          <strong className="text-lg">Value generated categories</strong>
           <button
             type="button"
-            className="relative   rounded-md  py-2 text-left cursor-default focus:outline-none sm:text-sm"
-            aria-haspopup="listbox"
-            aria-expanded="true"
-            aria-labelledby="listbox-label"
+            className="relative rounded-md py-2 text-left cursor-default focus:outline-none sm:text-sm"
+            
             // onMouseLeave={() => setValuesList(!openValuesList)}
             onClick={() => setValuesList((prev) => !prev)}
           >
@@ -98,10 +98,10 @@ export default function Filters({ setFilteredData, data, }) {
             />
           </button>
         </label>
-        <div className="mt-1 relative">
+        <div className="mt-2 ">
           {openValuesList && (
             <ul
-              className=" z-10 mt-1 w-full rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 h-auto focus:outline-none sm:text-sm"
+              className=" mt-2 w-full rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 h-auto focus:outline-none sm:text-sm"
               tabIndex="-1"
               role="listbox"
               aria-labelledby="listbox-label"
@@ -115,7 +115,7 @@ export default function Filters({ setFilteredData, data, }) {
                     <li
                       key={index}
                       onClick={() => setTypeOfValue(label)}
-                      className="flex relative py-2 pl-3 pr-9 cursor-pointer li-bg-russian-violet-dark"
+                      className="flex items-center py-2 pl-3 pr-9 cursor-pointer li-bg-russian-violet-dark"
                       id="listbox-option-0"
                       role="option"
                     >
@@ -124,12 +124,12 @@ export default function Filters({ setFilteredData, data, }) {
                         className="orange-checkbox"
                         name={label}
                         onChange={() => setTypeOfValue(label)}
-                        defaultChecked={value.isSelected}
+                        // defaultChecked={value.isSelected}
                         // readOnly
-                        // checked={typeOfValues[label]}
+                        checked={value.isSelected}
                       />
                       <div className="flex items-center">
-                        <span className="font-normal ml-3 block truncate ">
+                        <span className="font-normal ml-3  ">
                           {label}
                         </span>
                       </div>
@@ -148,16 +148,14 @@ export default function Filters({ setFilteredData, data, }) {
       >
         <label
           id="listbox-label"
-          className="block text-sm font-medium text-gray-700 flex justify-between pr-5 items-center"
+          className="block text-sm font-medium text-gray-700 flex justify-between items-center"
         >
           <strong className="text-lg">Who Benefits?</strong>
 
           <button
             type="button"
             className="relative   rounded-md  py-2 text-left cursor-default focus:outline-none  sm:text-sm"
-            aria-haspopup="listbox"
-            aria-expanded="true"
-            aria-labelledby="listbox-label"
+            
             // onMouseLeave={() => setValuesList(!openValuesList)}
             onClick={() => setBeneficiaryList((prev) => !prev)}
           >
@@ -168,12 +166,12 @@ export default function Filters({ setFilteredData, data, }) {
             />
           </button>
         </label>
-        <div className="mt-1 relative">
+        <div className="mt-2 relative">
           
 
           {openBeneficiaryList && (
             <ul
-              className=" z-10 mt-1 w-full   rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 h-auto focus:outline-none sm:text-sm"
+              className="  mt-2 w-full   rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 h-auto focus:outline-none sm:text-sm"
               tabIndex="-1"
               role="listbox"
               aria-labelledby="listbox-label"
@@ -197,7 +195,7 @@ export default function Filters({ setFilteredData, data, }) {
                           },
                         }))
                       }
-                      className="text-gray-900 li-bg-russian-violet-dark flex cursor-default select-none relative py-2 pl-3 pr-9 cursor-pointer "
+                      className="text-gray-900 li-bg-russian-violet-dark flex items-center select-none  py-2 pl-3 pr-9 cursor-pointer "
                       id="listbox-option-0"
                       role="option"
                     >
@@ -205,7 +203,7 @@ export default function Filters({ setFilteredData, data, }) {
                         type="checkbox"
                         className="yellow-checkbox"
                         // defaultChecked={beneficaryValue?.isSelected}
-                        defaultChecked={beneficaryValue?.isSelected}
+                        checked={beneficaryValue?.isSelected}
                         onClick={() =>
                           setUser((prev) => ({
                             ...prev,
@@ -220,7 +218,7 @@ export default function Filters({ setFilteredData, data, }) {
                         }
                       />
                       <div className="flex items-center">
-                        <span className="font-normal ml-3 block truncate">
+                        <span className="font-normal ml-3 ">
                           {beneficiaryKey}
                         </span>
                       </div>
@@ -235,20 +233,18 @@ export default function Filters({ setFilteredData, data, }) {
 
       <div
         id="region-list"
-        className=" bank-form-list md:px-0 px-5"
+        className=" md:px-0 px-5"
       >
         <label
           id="listbox-label"
-          className="block text-sm font-medium text-gray-700 flex justify-between pr-5 items-center"
+          className="block text-sm font-medium text-gray-700 flex justify-between items-center"
         >
           <strong className="text-lg">List of regions</strong>
 
           <button
             type="button"
             className="relative   rounded-md  py-2 text-left cursor-default focus:outline-none  sm:text-sm"
-            aria-haspopup="listbox"
-            aria-expanded="true"
-            aria-labelledby="listbox-label"
+            
             // onMouseLeave={() => setValuesList(!openValuesList)}
             onClick={() => setRegionList((prev) => !prev)}
           >
@@ -259,40 +255,12 @@ export default function Filters({ setFilteredData, data, }) {
             />
           </button>
         </label>
-        <div className="mt-1 relative">
-          {/* <button
-                type="button"
-                className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                aria-haspopup="listbox"
-                aria-expanded="true"
-                aria-labelledby="listbox-label"
-                onClick={handleRegionsList}
-              >
-                <span className="flex items-center">
-                  <span className="ml-3 block truncate">
-                    {selectedRegion['all'] ? 'All Regions' : "Select Region"}
-                  </span>
-                </span>
-                <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                  <svg
-                    className="h-5 w-5 text-gray-400"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </span>
-              </button> */}
+        <div className="mt-2 relative">
+          
 
           {openRegionList && (
             <ul
-              className=" z-10 mt-1 w-full   rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 h-auto focus:outline-none sm:text-sm"
+              className="  mt-2 w-full   rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 h-auto focus:outline-none sm:text-sm"
               tabIndex="-1"
               role="listbox"
               aria-labelledby="listbox-label"
@@ -312,14 +280,14 @@ export default function Filters({ setFilteredData, data, }) {
                         },
                       }))
                     }
-                    className="text-gray-900 li-bg-russian-violet-dark flex cursor-default select-none relative py-2 pl-3 pr-9 cursor-pointer "
+                    className="text-gray-900 li-bg-russian-violet-dark flex items-center select-none py-2 pl-3 pr-9 cursor-pointer "
                     id="listbox-option-0"
                     role="option"
                   >
                     <input
                       type="checkbox"
                       className="pink-checkbox"
-                      defaultChecked={selectedRegion[regionKey]}
+                      // checked={selectedRegion}
                       // checked={selectedRegion[regionKey]}
                       onClick={() =>
                         setUser((prev) => ({
@@ -332,7 +300,7 @@ export default function Filters({ setFilteredData, data, }) {
                       }
                     />
                     <div className="flex items-center">
-                      <span className="font-normal ml-3 block truncate">
+                      <span className="font-normal ml-3 ">
                         {regionKey}
                       </span>
                     </div>

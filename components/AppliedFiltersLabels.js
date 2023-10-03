@@ -10,6 +10,7 @@ const AppliedFiltersLabels = () => {
     favorites,
     selectedBeneficiaryId,
   } = user;
+
   const anySelection = //Check if any exist any selection from the user diffferent thant 'All'
     Object.entries(typeOfValues).some(([key, value]) =>
       key === "All" ? false : value.isSelected
@@ -38,22 +39,28 @@ const AppliedFiltersLabels = () => {
             ?.filter(([key, value]) =>
             key === "All" ? false : value?.isSelected === true
           )
-            .map((array, index) => (
-              <div
+            .map(([key, value], index) => {
+              // console.log("array ", array)
+              return (
+                <div
                 key={index}
                 className="bg-orange py-1 px-3 flex justify-between items-center gap-3 lg:gap-5 rounded-sm text-white"
                 onClick={() => setUser((prev) => ({
                   ...prev,
                   typeOfValues: {
                     ...prev["typeOfValues"],
-                    [array[0]]: !prev["typeOfValues"][array[0]],
+                    [key]: {
+                      ...value,
+                      isSelected: !value.isSelected
+                    },
                   },
                 }))}
               >
-                {array[0]}
+                {key}
                 <span className="uppercase cursor-pointer">X</span>
               </div>
-            ))}
+              )
+            })}
           {Object.entries(selectedRegion)
             ?.filter(([key, value]) => (key === "All" ? false : value === true))
             .map((array, index) => (
@@ -70,7 +77,7 @@ const AppliedFiltersLabels = () => {
             ?.filter(([key, value]) =>
               key === "All" ? false : value?.isSelected === true
             )
-            .map((array, index) => (
+            .map(([key, value], index) => (
               <div
                 key={index}
                 className="bg-yellow py-1 px-3 flex justify-between gap-3 lg:gap-5 rounded-sm"
@@ -80,12 +87,12 @@ const AppliedFiltersLabels = () => {
                     ...prev,
                     selectedBeneficiaryId: {
                       ...prev["selectedBeneficiaryId"],
-                      [array[0]]: !prev["selectedBeneficiaryId"][array[0]],
+                      [key]: !prev["selectedBeneficiaryId"][key],
                     },
                   }))
                 }
               >
-                {array[0]}
+                {key}
                 <span className="uppercase cursor-pointer">X</span>
               </div>
             ))}
