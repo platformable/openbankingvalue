@@ -59,7 +59,7 @@ const [ismobile, setIsmobile] = useState(null)
       }))
     ),
   }));
-  const clearenceRegionsState = () => {
+  const clearRegionsState = () => {
     const unrepeatedRegionValues = new Set(null)
     data?.records?.forEach(row => {
       const x = row.fields['Region (from Country)'] 
@@ -81,7 +81,7 @@ const [ismobile, setIsmobile] = useState(null)
  const clearState = () => {
     clearTypeOfValuesState()
     clearBenefieciarieSelectedState()
-    clearenceRegionsState()
+    clearRegionsState()
  } 
   useEffect(() => {
 
