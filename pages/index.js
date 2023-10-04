@@ -55,9 +55,9 @@ const [ismobile, setIsmobile] = useState(null)
   const clearRegionsState = () => {
     const unrepeatedRegionValues = new Set(null)
     data?.records?.forEach(row => {
-      const x = row.fields['Region (from Country)'] 
+      const rowRegions = row.fields['Region (from Country)'] 
       
-      x?.forEach(region => unrepeatedRegionValues.add(region))
+      rowRegions?.forEach(region => unrepeatedRegionValues.add(region))
 
     })
     // console.log(Array.from(unrepeatedRegionValues))
