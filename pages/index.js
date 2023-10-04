@@ -25,14 +25,7 @@ const [ismobile, setIsmobile] = useState(null)
   }, [])
 
 
-  const unrepeatedRegionValues = new Set(null)
-  data?.records?.forEach(row => {
-    const x = row.fields['Region (from Country)'] 
-    
-    x?.forEach(region => unrepeatedRegionValues.add(region))
-
-  })
-  console.log(unrepeatedRegionValues);
+  
   const clearTypeOfValuesState = () => setUser((prev) => ({
     ...prev,
     typeOfValues: Object.assign(
@@ -67,13 +60,13 @@ const [ismobile, setIsmobile] = useState(null)
       x?.forEach(region => unrepeatedRegionValues.add(region))
 
     })
-    console.log(Array.from(unrepeatedRegionValues))
+    // console.log(Array.from(unrepeatedRegionValues))
     setUser((prev) => ({
       ...prev,
       selectedRegion: Object.assign(
         {},
         prev.selectedRegion,
-        ...Array.from(unrepeatedRegionValues).map((value) => ({[value]:  true}) )
+        ...Array.from(unrepeatedRegionValues).map((value) => ({[value]:  false}) )
         ) 
        
     }));
