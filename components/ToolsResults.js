@@ -16,6 +16,7 @@ const ToolsResults = ({
   pagination,
   handleBackPage,
   routerLocation,
+  clearState
 }) => {
   const router = useRouter();
   const [user, setUser] = useContext(ValueContext);
@@ -69,7 +70,7 @@ const ToolsResults = ({
       /> */}
 
       <section className="pagination flex flex-col my-5 ">
-        <AppliedFiltersLabels />
+        <AppliedFiltersLabels clearState={clearState}/>
         <div className=" flex md:justify-between px-10 items-center justify-between ">
           <p className=" text-2xl">
             Showing <strong>{content?.length}</strong> success stories

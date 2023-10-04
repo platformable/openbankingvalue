@@ -1,7 +1,7 @@
 import { ValueContext } from "../context/valueContext";
 import { useContext } from "react";
 
-const AppliedFiltersLabels = () => {
+const AppliedFiltersLabels = ({clearState}) => {
   const [user, setUser] = useContext(ValueContext);
   const {
     selectedTypeOfValue,
@@ -21,7 +21,7 @@ const AppliedFiltersLabels = () => {
     Object.entries(selectedBeneficiaryId).some(([key, value]) =>
       key === "All" ? false : value.isSelected
     );
-
+  
   const deleteFilter = (stateName, valueKey) => {
     setUser((prev) => ({
       ...prev,

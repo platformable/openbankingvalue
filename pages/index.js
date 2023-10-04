@@ -33,36 +33,33 @@ const [ismobile, setIsmobile] = useState(null)
 
   })
   console.log(unrepeatedRegionValues);
-  
-
-  useEffect(() => {
-    setUser((prev) => ({
-      ...prev,
-      typeOfValues: Object.assign(
-        {},
-        prev.typeOfValues,
-        ...valueCategories?.records?.map((value) => ({
-          [value.fields["Value Generation Category"]]: {
-            id: value.id,
-            isSelected: false,
-          },
-        }))
-      ),
-    }));
-    setUser((prev) => ({
-      ...prev,
-      selectedBeneficiaryId: Object.assign(
-        {},
-        prev.selectedBeneficiaryId,
-        ...beneficiaries?.records?.map((beneficiary) => ({
-          [beneficiary.fields["Name"]]: {
-            id: beneficiary.id,
-            isSelected: false,
-          },
-        }))
-      ),
-    }));
-    
+  const clearTypeOfValuesState = () => setUser((prev) => ({
+    ...prev,
+    typeOfValues: Object.assign(
+      {},
+      prev.typeOfValues,
+      ...valueCategories?.records?.map((value) => ({
+        [value.fields["Value Generation Category"]]: {
+          id: value.id,
+          isSelected: false,
+        },
+      }))
+    ),
+  }));
+  const clearBenefieciarieSelectedState = () => setUser((prev) => ({
+    ...prev,
+    selectedBeneficiaryId: Object.assign(
+      {},
+      prev.selectedBeneficiaryId,
+      ...beneficiaries?.records?.map((beneficiary) => ({
+        [beneficiary.fields["Name"]]: {
+          id: beneficiary.id,
+          isSelected: false,
+        },
+      }))
+    ),
+  }));
+  const clearenceRegionsState = () => {
     const unrepeatedRegionValues = new Set(null)
     data?.records?.forEach(row => {
       const x = row.fields['Region (from Country)'] 
@@ -80,6 +77,17 @@ const [ismobile, setIsmobile] = useState(null)
         ) 
        
     }));
+  }
+ const clearState = () => {
+    clearTypeOfValuesState()
+    clearBenefieciarieSelectedState()
+    clearenceRegionsState()
+ } 
+  useEffect(() => {
+
+    clearState()
+    
+   
     // console.log(v)
   }, []);
     console.log(user)
@@ -108,6 +116,7 @@ const [ismobile, setIsmobile] = useState(null)
               content={filteredData}
               selectedRegion={selectedRegion}
               pagination={pagination}
+              clearState={clearState}
             />
           </div>
         )}
