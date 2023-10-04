@@ -2,7 +2,7 @@ import { ValueContext } from "../context/valueContext";
 import { useContext } from "react";
 import style from "../styles/Tools.module.css";
 
-const AppliedFiltersLabels = ({ clearFilter }) => {
+const AppliedFiltersLabels = ({clearState}) => {
   const [user, setUser] = useContext(ValueContext);
   const {
     selectedTypeOfValue,
@@ -22,15 +22,7 @@ const AppliedFiltersLabels = ({ clearFilter }) => {
     Object.entries(selectedBeneficiaryId).some(([key, value]) =>
       key === "All" ? false : value.isSelected
     );
-
-  // const clearAllFilters = () => {
-  //   setUser((prev) => ({
-  //     typeOfValues: Object.entries(typeOfValues).map(
-  //       ([key, value], index) => {}
-  //     ),
-  //   }));
-  // };
-
+  
   const deleteFilter = (stateName, valueKey) => {
     setUser((prev) => ({
       ...prev,
