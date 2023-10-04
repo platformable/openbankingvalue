@@ -41,7 +41,7 @@ const AppliedFiltersLabels = ({clearState}) => {
             className={`${style["ob-background-buttons"]} py-1 px-3 flex justify-between gap-3 lg:gap-5 rounded-sm text-white`}
           >
             Clear All Filters
-            <span className="uppercase cursor-pointer" onClick={clearFilter}>
+            <span className="uppercase cursor-pointer" onClick={clearState}>
               X
             </span>
           </div>
