@@ -25,14 +25,6 @@ const [ismobile, setIsmobile] = useState(null)
   }, [])
 
 
-  const unrepeatedRegionValues = new Set(null)
-  data?.records?.forEach(row => {
-    const x = row.fields['Region (from Country)'] 
-    
-    x?.forEach(region => unrepeatedRegionValues.add(region))
-
-  })
-  console.log(unrepeatedRegionValues);
   const clearTypeOfValuesState = () => setUser((prev) => ({
     ...prev,
     typeOfValues: Object.assign(
@@ -73,7 +65,7 @@ const [ismobile, setIsmobile] = useState(null)
       selectedRegion: Object.assign(
         {},
         prev.selectedRegion,
-        ...Array.from(unrepeatedRegionValues).map((value) => ({[value]:  true}) )
+        ...Array.from(unrepeatedRegionValues).map((value) => ({[value]:  false}) )
         ) 
        
     }));
@@ -90,17 +82,10 @@ const [ismobile, setIsmobile] = useState(null)
    
     // console.log(v)
   }, []);
-    console.log(user)
+    
 
   return (
     <Layout>
-      {/* <Head>
-        <title>Platformable Value Generated Tool</title> 
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="Platformable Value Generated Tool" />
-        <meta charSet="utf-8" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head> */}
       <Meta />
       <Hero />
       <section className="sm:grid sm:grid-rows-1 lg:grid lg:grid-cols-[1fr_3fr] container mx-auto">
