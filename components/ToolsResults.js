@@ -79,7 +79,7 @@ const ToolsResults = ({
           </p>
           {pagination ? (
             <button
-              className="btn bg-red-orange-dark px-5 py-2 rounded text-white "
+              className="btn px-5 py-2 rounded text-white "
               onClick={() => handleNextPage()}
             >
               {" "}
@@ -90,7 +90,7 @@ const ToolsResults = ({
           )}
           {pagination == null ? (
             <button
-              className="btn bg-red-orange-dark px-5 py-2 rounded text-white"
+              className="btn px-5 py-2 rounded text-white"
               onClick={() => router.back()}
             >
               {" "}
@@ -179,11 +179,11 @@ const ToolsResults = ({
 
                 <div
                   // className="md:w-6/12 card-bottom flex lg:w-full h-full items-end gap-x-11"
-                  className="card-bottom flex gap-x-2  h-full items-end   sm:flex-col md:flex-row "
+                  className="card-bottom w-full grid md:flex items-between gap-x-2  h-full items-end gap-y-1 flex-col md:flex-row "
                   data-html2canvas-ignore
                 >
                   <div
-                    className={`${style["ob-background-buttons"]}  pr-2 flex h-10 text-xs w-4/6 items-center  rounded text-white cursor-pointer`}
+                    className={`${style["ob-background-buttons"]}  pr-2 flex w-full  h-10 text-xs w-4/6 items-center  rounded text-white cursor-pointer`}
                   >
                     {/* <img
                       src="./downloadIcon.png"
@@ -194,25 +194,35 @@ const ToolsResults = ({
                       onClick={() => handleDownloadImage(item)}
                     /> */}
                     <img src="./open-in-slide.svg" className="pt-2 pl-1" />
-                    <a onClick={() => handleDownloadImage(item)}>
+                    <a className="md:hidden" onClick={() => handleDownloadImage(item)}>
                       Copy Use Case card as png{" "}
                     </a>
+                    <p className="hidden md:block">PNG</p>
                   </div>
                   <div
-                    className={`${style["ob-background-buttons"]} pr-2 text-white h-10 w-4/6 rounded text-xs flex items-center `}
+                    className={`${style["ob-background-buttons"]} w-full pr-2 text-white h-10 w-4/6 rounded text-xs flex items-center `}
                   >
                     <img src="./open-use-case.svg" className="pt-2 pl-1" />
-                    <Link href={`${item.fields["Source link"]}`} className="">
+                    <Link href={`${item.fields["Source link"]}`} >
                       {/* {item?.fields["Source link"]?.slice(0, 30)}... */}
-                      Copy Use Case Source
+                      <span className="md:hidden">
+                        Copy Use Case Source
+
+                      </span>
+                      <span className="hidden md:block">Source</span>
                     </Link>
                   </div>
                   <div
-                    className={`${style["ob-background-buttons"]} pr-2 flex items-center text-white h-10 rounded text-xs w-4/6`}
+                    className={`${style["ob-background-buttons"]} w-full pr-2 flex items-center text-white h-10 rounded text-xs w-4/6`}
                   >
                     <img src="./copy-in-slides.svg" className="pt-2 pl-1" />
                     <Link href="#" className="">
+                      
+                      <span className="md:hidden">
                       Open it directly in your slides
+
+                      </span>
+                      <span className="hidden md:block">Slides</span>
                     </Link>
                   </div>
                 </div>
