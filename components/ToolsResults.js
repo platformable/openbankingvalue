@@ -79,7 +79,7 @@ const ToolsResults = ({
           </p>
           {pagination ? (
             <button
-              className="btn bg-[var(--ob-blue-shade)] px-5 py-2 rounded text-white "
+              className="btn px-5 py-2 rounded text-white "
               onClick={() => handleNextPage()}
             >
               {" "}
@@ -90,7 +90,7 @@ const ToolsResults = ({
           )}
           {pagination == null ? (
             <button
-              className="btn bg-[var(--ob-blue-shade)] px-5 py-2 rounded text-white"
+              className="btn px-5 py-2 rounded text-white"
               onClick={() => router.back()}
             >
               {" "}
