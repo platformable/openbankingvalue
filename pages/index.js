@@ -78,9 +78,7 @@ const [ismobile, setIsmobile] = useState(null)
   useEffect(() => {
 
     clearState()
-    
-   
-    // console.log(v)
+
   }, []);
     
 
