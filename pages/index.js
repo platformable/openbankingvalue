@@ -165,7 +165,7 @@ export async function getServerSideProps(context) {
         
        
       ]);
-      console.log("PAGINATION => ", data?.offset);
+      // console.log("PAGINATION => ", data?.offset);
 
       const pagination = await data?.offset || null;
       return {
