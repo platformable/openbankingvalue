@@ -66,7 +66,7 @@ const [ismobile, setIsmobile] = useState(null)
       selectedRegion: Object.assign(
         {},
         prev.selectedRegion,
-        ...Array.from(unrepeatedRegionValues).map((value) => ({[value]:  false}) )
+        ...Array.from(unrepeatedRegionValues)?.map((value) => ({[value]:  false}) )
         ) 
        
     }));
