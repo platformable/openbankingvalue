@@ -24,9 +24,10 @@ const ToolsResults = ({
   clearState,
 }) => {
   const router = useRouter();
-  const [user, setUser] = useContext(ValueContext);
+  const [user, setUser, checkOffset, visited] = useContext(ValueContext);
   const { selectedTypeOfValue } = user;
   const [cardId, setCardId] = useState("");
+  const [visitedPages, setVisitedPages] = useState([]);
 
   // console.log("pagination inside app", pagination)
   const handleNextPage = () => {
@@ -35,6 +36,34 @@ const ToolsResults = ({
       query: { clientOffset: pagination },
     });
   };
+
+  //HERE IS THE LOGIC FOR WHEN A USER REACHES THE LAST PAGE, HE CLICKS ON BACK AND IS NAVIGATED TO THE FIRST PAGE
+  //I MADE THIS FUNCTION JUST FOR PRACTICE
+  const handleGoBack = () => {
+    //if i am on the last page, then go back to the first page
+    if (pagination === null) {
+      router.push("/");
+    }
+  };
+
+  // //HERE IS THE USEEFFECT AND GOBACK FUNCTION TO GO BACK TO PREVIOUSE PAGES
+  // useEffect(() => {
+  //   // When pagination is null, add the current page to visitedPages
+  //   if (pagination === null) {
+  //     setVisitedPages((prevVisitedPages) => [
+  //       ...prevVisitedPages,
+  //       router.asPath,
+  //     ]);
+  //   }
+  // }, [pagination, router.asPath]);
+
+  // const goBack = () => {
+  //   // When the "Back" button is clicked, navigate to the previous page in visitedPages
+  //   if (visitedPages.length >= 1) {
+  //     const previousPage = visitedPages[visitedPages.length - 2];
+  //     router.push("?clientOffset=" + previousPage);
+  //   }
+  // };
 
   const handleSelected = (item) => {
     const isFavorite = user.favorites.filter(
@@ -96,7 +125,7 @@ const ToolsResults = ({
     //descending order
     return dateBString.localeCompare(dateAString);
   });
-  console.log(sortedContent);
+  // console.log(sortedContent);
   return (
     <>
       {/* <HeroResume
@@ -110,6 +139,7 @@ const ToolsResults = ({
           <p className=" text-2xl">
             Showing <strong>{content?.length}</strong> success stories
           </p>
+
           {pagination ? (
             <button
               className={`${style["ob-background-buttons"]} btn px-5 py-2 rounded text-white`}
@@ -123,8 +153,10 @@ const ToolsResults = ({
           )}
           {pagination == null ? (
             <button
-              className="btn px-5 py-2 rounded text-white"
-              onClick={() => router.back()}
+              className={`${style["ob-background-buttons"]} btn px-5 py-2 rounded text-white`}
+              // onClick={() => router.back()}
+              onClick={() => handleGoBack()}
+              // onClick={() => goBack()}
             >
               {" "}
               Back

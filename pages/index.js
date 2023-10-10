@@ -17,81 +17,76 @@ const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
   // const routerLocation = router.asPath;
   // const [loading, setLoading] = useState(false);
 
-const [ismobile, setIsmobile] = useState(null)
+  const [ismobile, setIsmobile] = useState(null);
 
   useEffect(() => {
     // console.log("navigator", navigator)
-    setIsmobile(navigator?.userAgentData?.mobile)
-  }, [])
+    setIsmobile(navigator?.userAgentData?.mobile);
+  }, []);
 
-
-  const clearTypeOfValuesState = () => setUser((prev) => ({
-    ...prev,
-    typeOfValues: Object.assign(
-      {},
-      prev.typeOfValues,
-      ...valueCategories?.records?.map((value) => ({
-        [value.fields["Value Generation Category"]]: {
-          id: value.id,
-          isSelected: false,
-        },
-      }))
-    ),
-  }));
-  const clearBenefieciarieSelectedState = () => setUser((prev) => ({
-    ...prev,
-    selectedBeneficiaryId: Object.assign(
-      {},
-      prev.selectedBeneficiaryId,
-      ...beneficiaries?.records?.map((beneficiary) => ({
-        [beneficiary.fields["Name"]]: {
-          id: beneficiary.id,
-          isSelected: false,
-        },
-      }))
-    ),
-  }));
+  const clearTypeOfValuesState = () =>
+    setUser((prev) => ({
+      ...prev,
+      typeOfValues: Object.assign(
+        {},
+        prev.typeOfValues,
+        ...valueCategories?.records?.map((value) => ({
+          [value.fields["Value Generation Category"]]: {
+            id: value.id,
+            isSelected: false,
+          },
+        }))
+      ),
+    }));
+  const clearBenefieciarieSelectedState = () =>
+    setUser((prev) => ({
+      ...prev,
+      selectedBeneficiaryId: Object.assign(
+        {},
+        prev.selectedBeneficiaryId,
+        ...beneficiaries?.records?.map((beneficiary) => ({
+          [beneficiary.fields["Name"]]: {
+            id: beneficiary.id,
+            isSelected: false,
+          },
+        }))
+      ),
+    }));
   const clearRegionsState = () => {
-    const unrepeatedRegionValues = new Set(null)
-    data?.records?.forEach(row => {
-      const rowRegions = row.fields['Region (from Country)'] 
-      
-      rowRegions?.forEach(region => unrepeatedRegionValues.add(region))
+    const unrepeatedRegionValues = new Set(null);
+    data?.records?.forEach((row) => {
+      const rowRegions = row.fields["Region (from Country)"];
 
-    })
+      rowRegions?.forEach((region) => unrepeatedRegionValues.add(region));
+    });
     // console.log(Array.from(unrepeatedRegionValues))
     setUser((prev) => ({
       ...prev,
       selectedRegion: Object.assign(
         {},
         prev.selectedRegion,
-        ...Array.from(unrepeatedRegionValues)?.map((value) => ({[value]:  false}) )
-        ) 
-       
+        ...Array.from(unrepeatedRegionValues)?.map((value) => ({
+          [value]: false,
+        }))
+      ),
     }));
-  }
- const clearState = () => {
-    clearTypeOfValuesState()
-    clearBenefieciarieSelectedState()
-    clearRegionsState()
- } 
+  };
+  const clearState = () => {
+    clearTypeOfValuesState();
+    clearBenefieciarieSelectedState();
+    clearRegionsState();
+  };
   useEffect(() => {
-
-    clearState()
-
+    clearState();
   }, []);
-    
 
+  console.log(pagination);
   return (
     <Layout>
       <Meta />
       <Hero />
       <section className="sm:grid sm:grid-rows-1 lg:grid lg:grid-cols-[1fr_3fr] container mx-auto">
-        <Filters
-          data={data}
-          setFilteredData={setFilteredData}
-        />
-
+        <Filters data={data} setFilteredData={setFilteredData} />
         {data && (
           <div className="flex flex-col">
             <ToolsResults
@@ -122,53 +117,50 @@ export async function getServerSideProps(context) {
       );
       const data = await res.json(); */
 
-    try {
-      const [data, valueCategories, beneficiaries] = await Promise.all([
-        fetch(url, {
+  try {
+    const [data, valueCategories, beneficiaries] = await Promise.all([
+      fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.PLATFORMABLE_AIRTABLE_KEY}`,
+        },
+      }).then((res) => res.json()),
+      fetch(
+        "https://api.airtable.com/v0/appHMNZpRfMeHIZGc/LOOKUP%20Value%20taxonomy",
+        {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${process.env.PLATFORMABLE_AIRTABLE_KEY}`,
           },
-        }).then((res) => res.json()),
-        fetch(
-          "https://api.airtable.com/v0/appHMNZpRfMeHIZGc/LOOKUP%20Value%20taxonomy",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${process.env.PLATFORMABLE_AIRTABLE_KEY}`,
-            },
-          }
-        ).then((res) => res.json()),
-    
-        fetch(
-          "https://api.airtable.com/v0/appHMNZpRfMeHIZGc/LOOKUP%20Value%20stakeholders",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${process.env.PLATFORMABLE_AIRTABLE_KEY}`,
-            },
-          }
-        ).then((res) => res.json()),
-        
-       
-      ]);
-      // console.log("PAGINATION => ", data?.offset);
+        }
+      ).then((res) => res.json()),
 
-      const pagination = await data?.offset || null;
-      return {
-        props: {
-          pagination,
-          data,
-          valueCategories,
-          beneficiaries,
-        },
-      };
-    } catch (error) {
-      console.log(error)
-      return {props: {data: 'No Data'}}
-    }
- 
+      fetch(
+        "https://api.airtable.com/v0/appHMNZpRfMeHIZGc/LOOKUP%20Value%20stakeholders",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.PLATFORMABLE_AIRTABLE_KEY}`,
+          },
+        }
+      ).then((res) => res.json()),
+    ]);
+    // console.log("PAGINATION => ", data?.offset);
+
+    const pagination = (await data?.offset) || null;
+    return {
+      props: {
+        pagination,
+        data,
+        valueCategories,
+        beneficiaries,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+    return { props: { data: "No Data" } };
+  }
 }

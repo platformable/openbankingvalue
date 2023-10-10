@@ -2,7 +2,7 @@ import { ValueContext } from "../context/valueContext";
 import { useContext } from "react";
 import style from "../styles/Tools.module.css";
 
-const AppliedFiltersLabels = ({clearState}) => {
+const AppliedFiltersLabels = ({ clearState }) => {
   const [user, setUser] = useContext(ValueContext);
   const {
     selectedTypeOfValue,
@@ -22,7 +22,7 @@ const AppliedFiltersLabels = ({clearState}) => {
     Object.entries(selectedBeneficiaryId).some(([key, value]) =>
       key === "All" ? false : value.isSelected
     );
-  
+
   const deleteFilter = (stateName, valueKey) => {
     setUser((prev) => ({
       ...prev,
@@ -31,6 +31,28 @@ const AppliedFiltersLabels = ({clearState}) => {
         [valueKey]: !prev[stateName][valueKey],
       },
     }));
+  };
+
+  const resetFilters = () => {
+    // Define your initial state here
+    const initialUserState = {
+      selectedTypeOfValue: "",
+      typeOfValues: {
+        All: { isSelected: false },
+        // Add other keys and initial values here
+      },
+      selectedRegion: {
+        All: false,
+        // Add other keys and initial values here
+      },
+      selectedBeneficiaryId: {
+        All: { isSelected: false },
+        // Add other keys and initial values here
+      },
+      favorites: [],
+    };
+
+    setUser(initialUserState);
   };
   return (
     <>
@@ -41,7 +63,14 @@ const AppliedFiltersLabels = ({clearState}) => {
             className={`${style["ob-background-buttons"]} py-1 px-3 flex justify-between gap-3 lg:gap-5 rounded-sm text-white`}
           >
             Clear All Filters
-            <span className="uppercase cursor-pointer" onClick={clearState}>
+            <span
+              className="uppercase cursor-pointer"
+              // onClick={() => {
+              //   clearState(); // Call clearState to delete the labels
+              //   resetFilters(); // Call resetFilters to reset the filters
+              // }}
+              onClick={clearState}
+            >
               X
             </span>
           </div>
