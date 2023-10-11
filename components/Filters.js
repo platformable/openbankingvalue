@@ -7,10 +7,10 @@ export default function Filters({ setFilteredData, data }) {
     typeOfValues,
     selectedRegion,
     selectedBeneficiaryId,
-    
+    checkOffset,
   } = user;
-  const [nav, setNav] = useState(null)
-  useEffect(() => setNav(navigator), [])
+  const [nav, setNav] = useState(null);
+  useEffect(() => setNav(navigator), []);
   // console.log(nav)
   const [openRegionList, setRegionList] = useState(false);
   const [openValuesList, setValuesList] = useState(false);
@@ -23,9 +23,7 @@ export default function Filters({ setFilteredData, data }) {
       if (typeOfValues["All"]["isSelected"] === true) return true;
       return Object.values(typeOfValues)
         ?.filter((value) => value.isSelected === true)
-        .every((value) =>
-          item.fields["Value Category"]?.includes(value.id)
-        );
+        .every((value) => item.fields["Value Category"]?.includes(value.id));
     },
 
     // Filter for each value of fields array (fields.[])
@@ -74,11 +72,11 @@ export default function Filters({ setFilteredData, data }) {
   ]);
 
   return (
-    <div id="filter-container" className="lg:px-0 flex flex-col  lg:flex-col mx-3 lg:mx-5 gap-10 grid-cols-1 mt-5 py-10">
-      <div
-        id="values-list"
-        className="md:px-0 px-5"
-      >
+    <div
+      id="filter-container"
+      className="lg:px-0 flex flex-col  lg:flex-col mx-3 lg:mx-5 gap-10 grid-cols-1 mt-5 py-10"
+    >
+      <div id="values-list" className="md:px-0 px-5">
         <label
           id="listbox-label"
           className="block text-sm font-medium text-gray-700 flex justify-between  items-center "
@@ -87,7 +85,6 @@ export default function Filters({ setFilteredData, data }) {
           <button
             type="button"
             className="relative rounded-md py-2 text-left cursor-default focus:outline-none sm:text-sm"
-            
             // onMouseLeave={() => setValuesList(!openValuesList)}
             onClick={() => setValuesList((prev) => !prev)}
           >
@@ -108,44 +105,37 @@ export default function Filters({ setFilteredData, data }) {
               aria-activedescendant="listbox-option-3"
               // onMouseLeave={() => setValuesList(!openValuesList)}
             >
-              
-                {Object.entries(typeOfValues).map(([label, value], index) => {
-                  const newValueToFilter = typeOfValues[label]
-                  return (
-                    <li
-                      key={index}
-                      onClick={() => setTypeOfValue(label)}
-                      className="flex items-center py-2 pl-3 pr-9 cursor-pointer li-bg-russian-violet-dark"
-                      id="listbox-option-0"
-                      role="option"
-                    >
-                      <input
-                        type="checkbox"
-                        className="orange-checkbox"
-                        name={label}
-                        onChange={() => setTypeOfValue(label)}
-                        // defaultChecked={value.isSelected}
-                        // readOnly
-                        checked={value.isSelected}
-                      />
-                      <div className="flex items-center">
-                        <span className="font-normal ml-3  ">
-                          {label}
-                        </span>
-                      </div>
-                    </li>
-                  );
-                }
-              )}
+              {Object.entries(typeOfValues).map(([label, value], index) => {
+                const newValueToFilter = typeOfValues[label];
+                return (
+                  <li
+                    key={index}
+                    onClick={() => setTypeOfValue(label)}
+                    className="flex items-center py-2 pl-3 pr-9 cursor-pointer li-bg-russian-violet-dark"
+                    id="listbox-option-0"
+                    role="option"
+                  >
+                    <input
+                      type="checkbox"
+                      className="orange-checkbox"
+                      name={label}
+                      onChange={() => setTypeOfValue(label)}
+                      // defaultChecked={value.isSelected}
+                      // readOnly
+                      checked={value.isSelected}
+                    />
+                    <div className="flex items-center">
+                      <span className="font-normal ml-3  ">{label}</span>
+                    </div>
+                  </li>
+                );
+              })}
             </ul>
           )}
         </div>
       </div>
 
-      <div
-        id="beneficiary-list"
-        className=" values-form-list md:px-0 px-5"
-      >
+      <div id="beneficiary-list" className=" values-form-list md:px-0 px-5">
         <label
           id="listbox-label"
           className="block text-sm font-medium text-gray-700 flex justify-between items-center"
@@ -155,7 +145,6 @@ export default function Filters({ setFilteredData, data }) {
           <button
             type="button"
             className="relative   rounded-md  py-2 text-left cursor-default focus:outline-none  sm:text-sm"
-            
             // onMouseLeave={() => setValuesList(!openValuesList)}
             onClick={() => setBeneficiaryList((prev) => !prev)}
           >
@@ -167,8 +156,6 @@ export default function Filters({ setFilteredData, data }) {
           </button>
         </label>
         <div className="mt-2 relative">
-          
-
           {openBeneficiaryList && (
             <ul
               className="  mt-2 w-full   rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 h-auto focus:outline-none sm:text-sm"
@@ -231,10 +218,7 @@ export default function Filters({ setFilteredData, data }) {
         </div>
       </div>
 
-      <div
-        id="region-list"
-        className=" md:px-0 px-5"
-      >
+      <div id="region-list" className=" md:px-0 px-5">
         <label
           id="listbox-label"
           className="block text-sm font-medium text-gray-700 flex justify-between items-center"
@@ -244,7 +228,6 @@ export default function Filters({ setFilteredData, data }) {
           <button
             type="button"
             className="relative   rounded-md  py-2 text-left cursor-default focus:outline-none  sm:text-sm"
-            
             // onMouseLeave={() => setValuesList(!openValuesList)}
             onClick={() => setRegionList((prev) => !prev)}
           >
@@ -256,8 +239,6 @@ export default function Filters({ setFilteredData, data }) {
           </button>
         </label>
         <div className="mt-2 relative">
-          
-
           {openRegionList && (
             <ul
               className="  mt-2 w-full   rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 h-auto focus:outline-none sm:text-sm"
@@ -300,9 +281,7 @@ export default function Filters({ setFilteredData, data }) {
                       }
                     />
                     <div className="flex items-center">
-                      <span className="font-normal ml-3 ">
-                        {regionKey}
-                      </span>
+                      <span className="font-normal ml-3 ">{regionKey}</span>
                     </div>
                   </li>
                 );
@@ -312,7 +291,6 @@ export default function Filters({ setFilteredData, data }) {
         </div>
       </div>
 
-      
       {/* end of benefits */}
     </div>
   );
