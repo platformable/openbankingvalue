@@ -10,9 +10,11 @@ import Meta from "../components/Meta";
 
 const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
   // console.log("data", data);
+  // console.log(`Hello`, valueCategories);
   const [user, setUser] = useContext(ValueContext);
   const [filteredData, setFilteredData] = useState(data.records);
   const { selectedRegion, typeOfValues, selectedBeneficiaryId } = user;
+  const [valueCat, setValueCat] = useState([]);
   // const router = useRouter();
   // const routerLocation = router.asPath;
   // const [loading, setLoading] = useState(false);
@@ -22,6 +24,7 @@ const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
   useEffect(() => {
     // console.log("navigator", navigator)
     setIsmobile(navigator?.userAgentData?.mobile);
+    // console.log(`hello2`, valueCategories.records);
   }, []);
 
   const clearTypeOfValuesState = () =>
@@ -78,7 +81,8 @@ const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
   };
   useEffect(() => {
     clearState();
-  }, []);
+    setValueCat(valueCategories.records);
+  }, [valueCategories]);
 
   console.log(pagination);
   return (
@@ -86,7 +90,11 @@ const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
       <Meta />
       <Hero />
       <section className="sm:grid sm:grid-rows-1 lg:grid lg:grid-cols-[1fr_3fr] container mx-auto">
-        <Filters data={data} setFilteredData={setFilteredData} />
+        <Filters
+          data={data}
+          setFilteredData={setFilteredData}
+          valueCat={valueCat}
+        />
         {data && (
           <div className="flex flex-col">
             <ToolsResults
