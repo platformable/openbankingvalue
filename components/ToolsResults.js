@@ -18,52 +18,22 @@ import style from "../styles/Tools.module.css";
 
 const ToolsResults = ({
   content,
-  pagination,
   handleBackPage,
   routerLocation,
-  clearState,
+  setInitialStates,
 }) => {
   const router = useRouter();
-  const [user, setUser, checkOffset, visited] = useContext(ValueContext);
-  const { selectedTypeOfValue } = user;
+  const [user, setUser, checkOffset, ] = useContext(ValueContext);
+  const { visitedPages } = user;
   const [cardId, setCardId] = useState("");
-  const [visitedPages, setVisitedPages] = useState([]);
 
-  // console.log("pagination inside app", pagination)
-  const handleNextPage = () => {
+  const handleNextPage = (offsetID) => {
     router.push({
       pathname: "/",
-      query: { clientOffset: pagination },
+      query: { clientOffset: offsetID },
     });
   };
 
-  //HERE IS THE LOGIC FOR WHEN A USER REACHES THE LAST PAGE, HE CLICKS ON BACK AND IS NAVIGATED TO THE FIRST PAGE
-  //I MADE THIS FUNCTION JUST FOR PRACTICE
-  const handleGoBack = () => {
-    //if i am on the last page, then go back to the first page
-    if (pagination === null) {
-      router.push("/");
-    }
-  };
-
-  // //HERE IS THE USEEFFECT AND GOBACK FUNCTION TO GO BACK TO PREVIOUSE PAGES
-  // useEffect(() => {
-  //   // When pagination is null, add the current page to visitedPages
-  //   if (pagination === null) {
-  //     setVisitedPages((prevVisitedPages) => [
-  //       ...prevVisitedPages,
-  //       router.asPath,
-  //     ]);
-  //   }
-  // }, [pagination, router.asPath]);
-
-  // const goBack = () => {
-  //   // When the "Back" button is clicked, navigate to the previous page in visitedPages
-  //   if (visitedPages.length >= 1) {
-  //     const previousPage = visitedPages[visitedPages.length - 2];
-  //     router.push("?clientOffset=" + previousPage);
-  //   }
-  // };
 
   const handleSelected = (item) => {
     const isFavorite = user.favorites.filter(
@@ -95,7 +65,6 @@ const ToolsResults = ({
       window.open(data);
     }
   };
-  console.log(content);
 
   const sortedContent = [...content].sort((a, b) => {
     let dateA = new Date(a.fields["Source Date"]);
@@ -104,67 +73,31 @@ const ToolsResults = ({
     let dateAString = dateA.toLocaleDateString("en-US");
     let dateBString = dateB.toLocaleDateString("en-US");
 
-    // const dateAString = format(dateA, "MM/dd/yyyy");
-    // const dateBString = format(dateB, "MM/dd/yyyy");
-
-    // // Format the dates as "MM/DD/YYYY"
-    // dateAString = `${(dateA.getMonth() + 1).toString().padStart(2, "0")}/${dateA
-    //   .getDate()
-    //   .toString()
-    //   .padStart(2, "0")}/${dateA.getFullYear()}`;
-    // dateBString = `${(dateB.getMonth() + 1).toString().padStart(2, "0")}/${dateB
-    //   .getDate()
-    //   .toString()
-    //   .padStart(2, "0")}/${dateB.getFullYear()}`;
-
-    // // Sort in descending order
-    // if (dateA > dateB) return -1;
-    // if (dateA < dateB) return 1;
-    // return 0;
-
-    //descending order
+    
     return dateBString.localeCompare(dateAString);
   });
-  // console.log(sortedContent);
   return (
     <>
-      {/* <HeroResume
-        selectedTypeOfValue={selectedTypeOfValue}
-        user={user}
-      /> */}
-
       <section className="pagination flex flex-col my-5 ">
-        <AppliedFiltersLabels clearState={clearState} />
         <div className=" flex md:justify-between px-10 items-center justify-between ">
           <p className=" text-2xl">
             Showing <strong>{content?.length}</strong> success stories
           </p>
-
-          {pagination ? (
+          <div className="flex justify-between gap-x-2">
+          {visitedPages.map((offsetID, index) => (
             <button
-              className={`${style["ob-background-buttons"]} btn px-5 py-2 rounded text-white`}
-              onClick={() => handleNextPage()}
-            >
-              {" "}
-              Load more
-            </button>
-          ) : (
-            ""
-          )}
-          {pagination == null ? (
-            <button
-              className={`${style["ob-background-buttons"]} btn px-5 py-2 rounded text-white`}
-              // onClick={() => router.back()}
-              onClick={() => handleGoBack()}
-              // onClick={() => goBack()}
-            >
-              {" "}
-              Back
-            </button>
-          ) : (
-            ""
-          )}
+            className={`${style["ob-background-buttons"]} btn px-3 py-2 rounded text-white`}
+            onClick={() => handleNextPage(offsetID)}
+          >
+            {index+1}
+            
+          </button>
+          ))}
+          </div>
+          
         </div>
+        <AppliedFiltersLabels setInitialStates={setInitialStates} />
+
       </section>
       {/* end of pagination */}
 
@@ -219,29 +152,7 @@ const ToolsResults = ({
                     />
                   </div>
                 </div>
-                {/* <div className="cards-bottom flex justify-between mt-5">
-                  <div className="cards-logo">
-                    {item.fields["Logo (from Fintech involved)"] ? (
-                      <img
-                        src={
-                          item.fields["Logo (from Fintech involved)"][0]
-                            .thumbnails.large.url
-                        }
-                        alt=""
-                        crossOrigin="*"
-                      />
-                    ) : (
-                      <img src="../societyIcon.png" alt="" crossOrigin="*" />
-                    )}
-                  </div>
-                  <div className="cards-map">
-                    <img
-                      src="../allRegMap.png"
-                      alt=""
-                      crossOrigin="anonymous"
-                    />
-                  </div>
-                </div> */}
+                
 
                 <div
                   // className="md:w-6/12 card-bottom flex lg:w-full h-full items-end gap-x-11"

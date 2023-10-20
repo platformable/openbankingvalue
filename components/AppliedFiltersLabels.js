@@ -2,7 +2,7 @@ import { ValueContext } from "../context/valueContext";
 import { useContext } from "react";
 import style from "../styles/Tools.module.css";
 
-const AppliedFiltersLabels = ({ clearState }) => {
+const AppliedFiltersLabels = ({ setInitialStates }) => {
   const [user, setUser] = useContext(ValueContext);
   const {
     selectedTypeOfValue,
@@ -33,31 +33,11 @@ const AppliedFiltersLabels = ({ clearState }) => {
     }));
   };
 
-  const resetFilters = () => {
-    // Define your initial state here
-    const initialUserState = {
-      selectedTypeOfValue: "",
-      typeOfValues: {
-        All: { isSelected: false },
-        // Add other keys and initial values here
-      },
-      selectedRegion: {
-        All: false,
-        // Add other keys and initial values here
-      },
-      selectedBeneficiaryId: {
-        All: { isSelected: false },
-        // Add other keys and initial values here
-      },
-      favorites: [],
-    };
-
-    setUser(initialUserState);
-  };
+ 
   return (
     <>
       {anySelection && (
-        <div className="hidden md:flex flex-wrap text-sm px-10 mb-10 gap-x-3 md:gap-3">
+        <div className="hidden md:flex flex-wrap text-sm px-10 my-10 gap-x-3 md:gap-3">
           {/* Render "Clear All" label */}
           <div
             className={`${style["ob-background-buttons"]} py-1 px-3 flex justify-between gap-3 lg:gap-5 rounded-sm text-white`}
@@ -65,11 +45,7 @@ const AppliedFiltersLabels = ({ clearState }) => {
             Clear All Filters
             <span
               className="uppercase cursor-pointer"
-              // onClick={() => {
-              //   clearState(); // Call clearState to delete the labels
-              //   resetFilters(); // Call resetFilters to reset the filters
-              // }}
-              onClick={clearState}
+              onClick={setInitialStates}
             >
               X
             </span>

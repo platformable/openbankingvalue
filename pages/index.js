@@ -10,22 +10,14 @@ import Meta from "../components/Meta";
 
 const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
   // console.log("data", data);
-  // console.log(`Hello`, valueCategories);
   const [user, setUser] = useContext(ValueContext);
   const [filteredData, setFilteredData] = useState(data.records);
   const { selectedRegion, typeOfValues, selectedBeneficiaryId } = user;
   const [valueCat, setValueCat] = useState([]);
-  // const router = useRouter();
-  // const routerLocation = router.asPath;
-  // const [loading, setLoading] = useState(false);
 
   const [ismobile, setIsmobile] = useState(null);
 
-  useEffect(() => {
-    // console.log("navigator", navigator)
-    setIsmobile(navigator?.userAgentData?.mobile);
-    // console.log(`hello2`, valueCategories.records);
-  }, []);
+  const addOffsetforPagination = (id) => setUser(prev => ({...prev, visitedPages: [...prev.visitedPages, id]}))
 
   const clearTypeOfValuesState = () =>
     setUser((prev) => ({
@@ -68,23 +60,27 @@ const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
       selectedRegion: Object.assign(
         {},
         prev.selectedRegion,
-        ...Array.from(unrepeatedRegionValues)?.map((value) => ({
-          [value]: false,
-        }))
-      ),
+        ...Array.from(unrepeatedRegionValues)?.map((value) => ({[value]:  false}) )
+        ) 
+       
     }));
   };
-  const clearState = () => {
+  const setInitialStates = () => {
     clearTypeOfValuesState();
     clearBenefieciarieSelectedState();
     clearRegionsState();
   };
   useEffect(() => {
-    clearState();
+    setInitialStates();
     setValueCat(valueCategories.records);
-  }, [valueCategories]);
+    
+  }, []);
 
-  console.log(pagination);
+  useEffect(() => {
+    if (pagination) addOffsetforPagination(pagination)
+    setIsmobile(navigator?.userAgentData?.mobile);
+  }, []);
+  console.log(user)
   return (
     <Layout>
       <Meta />
@@ -101,8 +97,7 @@ const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
               typeOfValues={typeOfValues}
               content={filteredData}
               selectedRegion={selectedRegion}
-              pagination={pagination}
-              clearState={clearState}
+              setInitialStates={setInitialStates}
             />
           </div>
         )}

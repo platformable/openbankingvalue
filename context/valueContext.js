@@ -26,10 +26,8 @@ export const ValueContextProvider = ({ children }) => {
       All: { isSelected: false },
     },
     favorites: [],
-    visited: [
-      "itr1W8N30Te735Odc/recSu7iY8CRN3FPk7",
-      "itr1W8N30Te735Odc/reczMBhNnVV7CXF0c",
-      null,
+    visitedPages: [
+      "",
     ],
   });
 
@@ -47,7 +45,7 @@ export const ValueContextProvider = ({ children }) => {
   };
   return (
     <ValueContext.Provider
-      value={[user, setUser, setTypeOfValue, user.visited]}
+      value={[user, setUser, setTypeOfValue]}
     >
       {children}
     </ValueContext.Provider>
