@@ -37,7 +37,7 @@ const AppliedFiltersLabels = ({ setInitialStates }) => {
   return (
     <>
       {anySelection && (
-        <div className="hidden md:flex flex-wrap text-sm px-10 mb-10 gap-x-3 md:gap-3">
+        <div className="hidden md:flex flex-wrap text-sm px-10 my-10 gap-x-3 md:gap-3">
           {/* Render "Clear All" label */}
           <div
             className={`${style["ob-background-buttons"]} py-1 px-3 flex justify-between gap-3 lg:gap-5 rounded-sm text-white`}

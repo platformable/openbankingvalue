@@ -79,7 +79,6 @@ const ToolsResults = ({
   return (
     <>
       <section className="pagination flex flex-col my-5 ">
-        <AppliedFiltersLabels setInitialStates={setInitialStates} />
         <div className=" flex md:justify-between px-10 items-center justify-between ">
           <p className=" text-2xl">
             Showing <strong>{content?.length}</strong> success stories
@@ -97,6 +96,8 @@ const ToolsResults = ({
           </div>
           
         </div>
+        <AppliedFiltersLabels setInitialStates={setInitialStates} />
+
       </section>
       {/* end of pagination */}
 

@@ -178,9 +178,9 @@ export default function Filters({ setFilteredData, data, valueCat }) {
                           type="checkbox"
                           className="orange-checkbox"
                           name={valueGenCategory}
-                          onChange={() => {
-                            setTypeOfValue(valueGenCategory);
-                          }}
+                          // onChange={() => {
+                          //   setTypeOfValue(valueGenCategory);
+                          // }}
                           checked={typeOfValues[valueGenCategory].isSelected}
                           role="option"
                         />
@@ -195,44 +195,7 @@ export default function Filters({ setFilteredData, data, valueCat }) {
             )
           )}
         </div>
-        {/* <div className="mt-2 ">
-          {openValuesList && (
-            <ul
-              className=" mt-2 w-full rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 h-auto focus:outline-none sm:text-sm"
-              tabIndex="-1"
-              role="listbox"
-              aria-labelledby="listbox-label"
-              aria-activedescendant="listbox-option-3"
-              // onMouseLeave={() => setValuesList(!openValuesList)}
-            >
-              {Object.entries(typeOfValues).map(([label, value], index) => {
-                const newValueToFilter = typeOfValues[label];
-                return (
-                  <li
-                    key={index}
-                    onClick={() => setTypeOfValue(label)}
-                    className="flex items-center py-2 pl-3 pr-9 cursor-pointer li-bg-russian-violet-dark"
-                    id="listbox-option-0"
-                    role="option"
-                  >
-                    <input
-                      type="checkbox"
-                      className="orange-checkbox"
-                      name={label}
-                      onChange={() => setTypeOfValue(label)}
-                      // defaultChecked={value.isSelected}
-                      // readOnly
-                      checked={value.isSelected}
-                    />
-                    <div className="flex items-center">
-                      <span className="font-normal ml-3  ">{label}</span>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-        </div> */}
+        
       </div>
 
       <div id="beneficiary-list" className=" values-form-list md:px-0 px-5">
@@ -291,18 +254,18 @@ export default function Filters({ setFilteredData, data, valueCat }) {
                         className="yellow-checkbox"
                         // defaultChecked={beneficaryValue?.isSelected}
                         checked={beneficaryValue?.isSelected}
-                        onChange={() =>
-                          setUser((prev) => ({
-                            ...prev,
-                            selectedBeneficiaryId: {
-                              ...prev.selectedBeneficiaryId,
-                              [beneficiaryKey]: {
-                                ...beneficaryValue,
-                                isSelected: !beneficaryValue.isSelected,
-                              },
-                            },
-                          }))
-                        }
+                        // onChange={() =>
+                        //   setUser((prev) => ({
+                        //     ...prev,
+                        //     selectedBeneficiaryId: {
+                        //       ...prev.selectedBeneficiaryId,
+                        //       [beneficiaryKey]: {
+                        //         ...beneficaryValue,
+                        //         isSelected: !beneficaryValue.isSelected,
+                        //       },
+                        //     },
+                        //   }))
+                        // }
                       />
                       <div className="flex items-center">
                         <span className="font-normal ml-3 ">
@@ -341,7 +304,7 @@ export default function Filters({ setFilteredData, data, valueCat }) {
         <div className="mt-2 relative">
           {openRegionList && (
             <ul
-              className="  mt-2 w-full   rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 h-auto focus:outline-none sm:text-sm"
+              className="mt-2 w-full rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 h-auto focus:outline-none sm:text-sm"
               tabIndex="-1"
               role="listbox"
               aria-labelledby="listbox-label"
@@ -369,15 +332,7 @@ export default function Filters({ setFilteredData, data, valueCat }) {
                       type="checkbox"
                       className="pink-checkbox"
                       checked={selectedRegion[regionKey] === true}
-                      onChange={() =>
-                        setUser((prev) => ({
-                          ...prev,
-                          selectedRegion: {
-                            ...prev.selectedRegion,
-                            [regionKey]: !prev.selectedRegion[regionKey],
-                          },
-                        }))
-                      }
+                      
                     />
                     <div className="flex items-center">
                       <span className="font-normal ml-3 ">{regionKey}</span>
