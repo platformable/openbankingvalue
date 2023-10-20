@@ -291,7 +291,7 @@ export default function Filters({ setFilteredData, data, valueCat }) {
                         className="yellow-checkbox"
                         // defaultChecked={beneficaryValue?.isSelected}
                         checked={beneficaryValue?.isSelected}
-                        onClick={() =>
+                        onChange={() =>
                           setUser((prev) => ({
                             ...prev,
                             selectedBeneficiaryId: {
@@ -369,7 +369,7 @@ export default function Filters({ setFilteredData, data, valueCat }) {
                       type="checkbox"
                       className="pink-checkbox"
                       checked={selectedRegion[regionKey] === true}
-                      onClick={() =>
+                      onChange={() =>
                         setUser((prev) => ({
                           ...prev,
                           selectedRegion: {
