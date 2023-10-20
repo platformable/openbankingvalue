@@ -13,53 +13,47 @@ const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
   const [user, setUser] = useContext(ValueContext);
   const [filteredData, setFilteredData] = useState(data.records);
   const { selectedRegion, typeOfValues, selectedBeneficiaryId } = user;
-  // const router = useRouter();
-  // const routerLocation = router.asPath;
-  // const [loading, setLoading] = useState(false);
+  const [valueCat, setValueCat] = useState([]);
 
-const [ismobile, setIsmobile] = useState(null)
+  const [ismobile, setIsmobile] = useState(null);
 
-  useEffect(() => {
-    // console.log("navigator", navigator)
-    setIsmobile(navigator?.userAgentData?.mobile)
-  }, [])
+  const addOffsetforPagination = (id) => setUser(prev => ({...prev, visitedPages: [...prev.visitedPages, id]}))
 
-
-  
-  const clearTypeOfValuesState = () => setUser((prev) => ({
-    ...prev,
-    typeOfValues: Object.assign(
-      {},
-      prev.typeOfValues,
-      ...valueCategories?.records?.map((value) => ({
-        [value.fields["Value Generation Category"]]: {
-          id: value.id,
-          isSelected: false,
-        },
-      }))
-    ),
-  }));
-  const clearBenefieciarieSelectedState = () => setUser((prev) => ({
-    ...prev,
-    selectedBeneficiaryId: Object.assign(
-      {},
-      prev.selectedBeneficiaryId,
-      ...beneficiaries?.records?.map((beneficiary) => ({
-        [beneficiary.fields["Name"]]: {
-          id: beneficiary.id,
-          isSelected: false,
-        },
-      }))
-    ),
-  }));
+  const clearTypeOfValuesState = () =>
+    setUser((prev) => ({
+      ...prev,
+      typeOfValues: Object.assign(
+        {},
+        prev.typeOfValues,
+        ...valueCategories?.records?.map((value) => ({
+          [value.fields["Value Generation Category"]]: {
+            id: value.id,
+            isSelected: false,
+          },
+        }))
+      ),
+    }));
+  const clearBenefieciarieSelectedState = () =>
+    setUser((prev) => ({
+      ...prev,
+      selectedBeneficiaryId: Object.assign(
+        {},
+        prev.selectedBeneficiaryId,
+        ...beneficiaries?.records?.map((beneficiary) => ({
+          [beneficiary.fields["Name"]]: {
+            id: beneficiary.id,
+            isSelected: false,
+          },
+        }))
+      ),
+    }));
   const clearRegionsState = () => {
-    const unrepeatedRegionValues = new Set(null)
-    data?.records?.forEach(row => {
-      const rowRegions = row.fields['Region (from Country)'] 
-      
-      rowRegions?.forEach(region => unrepeatedRegionValues.add(region))
+    const unrepeatedRegionValues = new Set(null);
+    data?.records?.forEach((row) => {
+      const rowRegions = row.fields["Region (from Country)"];
 
-    })
+      rowRegions?.forEach((region) => unrepeatedRegionValues.add(region));
+    });
     // console.log(Array.from(unrepeatedRegionValues))
     setUser((prev) => ({
       ...prev,
@@ -70,46 +64,40 @@ const [ismobile, setIsmobile] = useState(null)
         ) 
        
     }));
-  }
- const clearState = () => {
-    clearTypeOfValuesState()
-    clearBenefieciarieSelectedState()
-    clearRegionsState()
- } 
+  };
+  const setInitialStates = () => {
+    clearTypeOfValuesState();
+    clearBenefieciarieSelectedState();
+    clearRegionsState();
+  };
   useEffect(() => {
-
-    clearState()
+    setInitialStates();
+    setValueCat(valueCategories.records);
     
-   
-    // console.log(v)
   }, []);
-    console.log(user)
 
+  useEffect(() => {
+    if (pagination) addOffsetforPagination(pagination)
+    setIsmobile(navigator?.userAgentData?.mobile);
+  }, []);
+  console.log(user)
   return (
     <Layout>
-      {/* <Head>
-        <title>Platformable Value Generated Tool</title> 
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="Platformable Value Generated Tool" />
-        <meta charSet="utf-8" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head> */}
       <Meta />
       <Hero />
       <section className="sm:grid sm:grid-rows-1 lg:grid lg:grid-cols-[1fr_3fr] container mx-auto">
         <Filters
           data={data}
           setFilteredData={setFilteredData}
+          valueCat={valueCat}
         />
-
         {data && (
           <div className="flex flex-col">
             <ToolsResults
               typeOfValues={typeOfValues}
               content={filteredData}
               selectedRegion={selectedRegion}
-              pagination={pagination}
-              clearState={clearState}
+              setInitialStates={setInitialStates}
             />
           </div>
         )}
@@ -132,53 +120,50 @@ export async function getServerSideProps(context) {
       );
       const data = await res.json(); */
 
-    try {
-      const [data, valueCategories, beneficiaries] = await Promise.all([
-        fetch(url, {
+  try {
+    const [data, valueCategories, beneficiaries] = await Promise.all([
+      fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.PLATFORMABLE_AIRTABLE_KEY}`,
+        },
+      }).then((res) => res.json()),
+      fetch(
+        "https://api.airtable.com/v0/appHMNZpRfMeHIZGc/LOOKUP%20Value%20taxonomy",
+        {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${process.env.PLATFORMABLE_AIRTABLE_KEY}`,
           },
-        }).then((res) => res.json()),
-        fetch(
-          "https://api.airtable.com/v0/appHMNZpRfMeHIZGc/LOOKUP%20Value%20taxonomy",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${process.env.PLATFORMABLE_AIRTABLE_KEY}`,
-            },
-          }
-        ).then((res) => res.json()),
-    
-        fetch(
-          "https://api.airtable.com/v0/appHMNZpRfMeHIZGc/LOOKUP%20Value%20stakeholders",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${process.env.PLATFORMABLE_AIRTABLE_KEY}`,
-            },
-          }
-        ).then((res) => res.json()),
-        
-       
-      ]);
-      // console.log("PAGINATION => ", data?.offset);
+        }
+      ).then((res) => res.json()),
 
-      const pagination = await data?.offset || null;
-      return {
-        props: {
-          pagination,
-          data,
-          valueCategories,
-          beneficiaries,
-        },
-      };
-    } catch (error) {
-      console.log(error)
-      return {props: {data: 'No Data'}}
-    }
- 
+      fetch(
+        "https://api.airtable.com/v0/appHMNZpRfMeHIZGc/LOOKUP%20Value%20stakeholders",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.PLATFORMABLE_AIRTABLE_KEY}`,
+          },
+        }
+      ).then((res) => res.json()),
+    ]);
+    // console.log("PAGINATION => ", data?.offset);
+
+    const pagination = (await data?.offset) || null;
+    return {
+      props: {
+        pagination,
+        data,
+        valueCategories,
+        beneficiaries,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+    return { props: { data: "No Data" } };
+  }
 }

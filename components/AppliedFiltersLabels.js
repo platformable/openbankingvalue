@@ -2,7 +2,7 @@ import { ValueContext } from "../context/valueContext";
 import { useContext } from "react";
 import style from "../styles/Tools.module.css";
 
-const AppliedFiltersLabels = ({clearState}) => {
+const AppliedFiltersLabels = ({ setInitialStates }) => {
   const [user, setUser] = useContext(ValueContext);
   const {
     selectedTypeOfValue,
@@ -22,7 +22,7 @@ const AppliedFiltersLabels = ({clearState}) => {
     Object.entries(selectedBeneficiaryId).some(([key, value]) =>
       key === "All" ? false : value.isSelected
     );
-  
+
   const deleteFilter = (stateName, valueKey) => {
     setUser((prev) => ({
       ...prev,
@@ -32,6 +32,8 @@ const AppliedFiltersLabels = ({clearState}) => {
       },
     }));
   };
+
+ 
   return (
     <>
       {anySelection && (
@@ -41,7 +43,10 @@ const AppliedFiltersLabels = ({clearState}) => {
             className={`${style["ob-background-buttons"]} py-1 px-3 flex justify-between gap-3 lg:gap-5 rounded-sm text-white`}
           >
             Clear All Filters
-            <span className="uppercase cursor-pointer" onClick={clearState}>
+            <span
+              className="uppercase cursor-pointer"
+              onClick={setInitialStates}
+            >
               X
             </span>
           </div>

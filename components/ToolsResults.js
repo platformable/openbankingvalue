@@ -13,25 +13,27 @@ import AppliedFiltersLabels from "./AppliedFiltersLabels";
 
 import style from "../styles/Tools.module.css";
 
+//I didnt install the formatter yet, i thought i would ask u first
+// const { format } = require("date-fns");
+
 const ToolsResults = ({
   content,
-  pagination,
   handleBackPage,
   routerLocation,
-  clearState
+  setInitialStates,
 }) => {
   const router = useRouter();
-  const [user, setUser] = useContext(ValueContext);
-  const { selectedTypeOfValue } = user;
+  const [user, setUser, checkOffset, ] = useContext(ValueContext);
+  const { visitedPages } = user;
   const [cardId, setCardId] = useState("");
 
-  // console.log("pagination inside app", pagination)
-  const handleNextPage = () => {
+  const handleNextPage = (offsetID) => {
     router.push({
       pathname: "/",
-      query: { clientOffset: pagination },
+      query: { clientOffset: offsetID },
     });
   };
+
 
   const handleSelected = (item) => {
     const isFavorite = user.favorites.filter(
@@ -64,41 +66,36 @@ const ToolsResults = ({
     }
   };
 
+  const sortedContent = [...content].sort((a, b) => {
+    let dateA = new Date(a.fields["Source Date"]);
+    let dateB = new Date(b.fields["Source Date"]);
+
+    let dateAString = dateA.toLocaleDateString("en-US");
+    let dateBString = dateB.toLocaleDateString("en-US");
+
+    
+    return dateBString.localeCompare(dateAString);
+  });
   return (
     <>
-      {/* <HeroResume
-        selectedTypeOfValue={selectedTypeOfValue}
-        user={user}
-      /> */}
-
       <section className="pagination flex flex-col my-5 ">
-        <AppliedFiltersLabels clearState={clearState}/>
+        <AppliedFiltersLabels setInitialStates={setInitialStates} />
         <div className=" flex md:justify-between px-10 items-center justify-between ">
           <p className=" text-2xl">
             Showing <strong>{content?.length}</strong> success stories
           </p>
-          {pagination ? (
+          <div className="flex justify-between gap-x-2">
+          {visitedPages.map((offsetID, index) => (
             <button
-              className="btn px-5 py-2 rounded text-white "
-              onClick={() => handleNextPage()}
-            >
-              {" "}
-              Load more
-            </button>
-          ) : (
-            ""
-          )}
-          {pagination == null ? (
-            <button
-              className="btn px-5 py-2 rounded text-white"
-              onClick={() => router.back()}
-            >
-              {" "}
-              Back
-            </button>
-          ) : (
-            ""
-          )}
+            className={`${style["ob-background-buttons"]} btn px-3 py-2 rounded text-white`}
+            onClick={() => handleNextPage(offsetID)}
+          >
+            {index+1}
+            
+          </button>
+          ))}
+          </div>
+          
         </div>
       </section>
       {/* end of pagination */}
@@ -107,13 +104,14 @@ const ToolsResults = ({
 
       <div className="px-10">
         <div className="md:px-14 lg:px-0 card-container grid gap-4 xl:grid-cols-3 grid-cols-1 my-5 mb-20 ">
-          {content?.length > 0 ? (
-            content.map((item, index, array) => (
+          {sortedContent?.length > 0 ? (
+            sortedContent.map((item, index, array) => (
               <div
                 id={item.id}
                 key={index}
                 className="card shadow-md rounded-md flex flex-col w-96gap-5 rounded py-5 px-5 md:mx-0 " /* onClick={()=>handleSelected(item)} */
               >
+                {/* <p>{item.fields["Source date"]}</p> */}
                 <div className="md:w-7/12 card-top flex justify-center lg:w-full mx-auto   ">
                   {/* <div className="flex  md:justify-end justify-center mb-5 mr-5">
                     <p className="bg-red-orange-dark text-white text-xs pt-2 pb-2 px-5 rounded">
@@ -129,7 +127,7 @@ const ToolsResults = ({
                           .thumbnails.large.url
                       }
                       alt="Fintech logo"
-                      className="h-20"
+                      className="h-20 "
                       crossOrigin="*"
                     />
                   ) : (
@@ -142,7 +140,7 @@ const ToolsResults = ({
                   )}
                 </div>
                 <div className="flex flex-col  ">
-                  <p className="leading-relaxed text-sm md:text-2xl font-black text-main-color title-font">
+                  <p className="leading-relaxed text-sm md:text-2xl font-black text-main-color title-font mt-8">
                     {item.fields["Data point"] == ""
                       ? "numbers"
                       : item.fields["Data point"]}
@@ -153,39 +151,27 @@ const ToolsResults = ({
                     />
                   </div>
                 </div>
-                {/* <div className="cards-bottom flex justify-between mt-5">
-                  <div className="cards-logo">
-                    {item.fields["Logo (from Fintech involved)"] ? (
-                      <img
-                        src={
-                          item.fields["Logo (from Fintech involved)"][0]
-                            .thumbnails.large.url
-                        }
-                        alt=""
-                        crossOrigin="*"
-                      />
-                    ) : (
-                      <img src="../societyIcon.png" alt="" crossOrigin="*" />
-                    )}
-                  </div>
-                  <div className="cards-map">
-                    <img
-                      src="../allRegMap.png"
-                      alt=""
-                      crossOrigin="anonymous"
-                    />
-                  </div>
-                </div> */}
+                
 
                 <div
                   // className="md:w-6/12 card-bottom flex lg:w-full h-full items-end gap-x-11"
                   className="card-bottom w-full grid md:flex items-between gap-x-2  h-full items-end gap-y-1 flex-col md:flex-row "
                   data-html2canvas-ignore
                 >
-                  <div
+                  {/* <div
                     className={`${style["ob-background-buttons"]}  pr-2 flex w-full  h-10 text-xs w-4/6 items-center  rounded text-white cursor-pointer`}
                   >
-                    {/* <img
+                    <img src="./open-in-slide.svg" className="pt-2 pl-1" />
+                    <a
+                      className="md:hidden"
+                      onClick={() => handleDownloadImage(item)}
+                    >
+                      Copy Use Case card as png{" "}
+                    </a>
+                    <p className="hidden md:block">PNG</p>
+                  </div> */}
+
+                  {/* <img
                       src="./downloadIcon.png"
                       alt=""
                       width="29"
@@ -193,22 +179,13 @@ const ToolsResults = ({
                       className="cursor-pointer"
                       onClick={() => handleDownloadImage(item)}
                     /> */}
-                    <img src="./open-in-slide.svg" className="pt-2 pl-1" />
-                    <a className="md:hidden" onClick={() => handleDownloadImage(item)}>
-                      Copy Use Case card as png{" "}
-                    </a>
-                    <p className="hidden md:block">PNG</p>
-                  </div>
                   <div
                     className={`${style["ob-background-buttons"]} w-full pr-2 text-white h-10 w-4/6 rounded text-xs flex items-center `}
                   >
                     <img src="./open-use-case.svg" className="pt-2 pl-1" />
-                    <Link href={`${item.fields["Source link"]}`} >
+                    <Link href={`${item.fields["Source link"]}`}>
                       {/* {item?.fields["Source link"]?.slice(0, 30)}... */}
-                      <span className="md:hidden">
-                        Copy Use Case Source
-
-                      </span>
+                      <span className="md:hidden">Copy Use Case Source</span>
                       <span className="hidden md:block">Source</span>
                     </Link>
                   </div>
@@ -217,10 +194,8 @@ const ToolsResults = ({
                   >
                     <img src="./copy-in-slides.svg" className="pt-2 pl-1" />
                     <Link href="#" className="">
-                      
                       <span className="md:hidden">
-                      Open it directly in your slides
-
+                        Open it directly in your slides
                       </span>
                       <span className="hidden md:block">Slides</span>
                     </Link>
