@@ -9,15 +9,17 @@ import Hero from "../components/Hero";
 import Meta from "../components/Meta";
 
 const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
-  // console.log("data", data);
+  console.log("data", data);
   const [user, setUser] = useContext(ValueContext);
   const [filteredData, setFilteredData] = useState(data.records);
-  const { selectedRegion, typeOfValues, selectedBeneficiaryId } = user;
+  const { selectedRegion, typeOfValues, visitedPages } = user;
   const [valueCat, setValueCat] = useState([]);
 
   const [ismobile, setIsmobile] = useState(null);
 
-  const addOffsetforPagination = (id) => setUser(prev => ({...prev, visitedPages: [...prev.visitedPages, id]}))
+  const addOffsetforPagination = (id) => {
+    !visitedPages.includes(id) && setUser(prev => ({...prev, visitedPages: [...prev.visitedPages, id]}))
+  }
 
   const clearTypeOfValuesState = () =>
     setUser((prev) => ({
@@ -80,7 +82,7 @@ const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
     if (pagination) addOffsetforPagination(pagination)
     setIsmobile(navigator?.userAgentData?.mobile);
   }, []);
-  console.log(user)
+  // console.log(user)
   return (
     <Layout>
       <Meta />

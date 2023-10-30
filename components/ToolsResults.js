@@ -66,7 +66,7 @@ const ToolsResults = ({
     }
   };
 
-  const sortedContent = [...content].sort((a, b) => {
+  const sortedContent = content && [...content]?.sort((a, b) => {
     let dateA = new Date(a.fields["Source Date"]);
     let dateB = new Date(b.fields["Source Date"]);
 
@@ -121,11 +121,13 @@ const ToolsResults = ({
                         : selectedTypeOfValue}
                     </p>
                   </div> */}
-                  {item.fields["Logo (from Fintech involved)"] ? (
+                  {item.fields["Logo (from Fintech involved)"] || item.fields["Logo (from Banks involved)"] ? (
                     <img
                       src={
-                        item.fields["Logo (from Fintech involved)"][0]
-                          .thumbnails.large.url
+                        item.fields["Logo (from Banks involved)"]?.[0]
+                          .thumbnails.large.url ||
+                        item.fields["Logo (from Fintech involved)"]?.[0]
+                          .thumbnails.large.url 
                       }
                       alt="Fintech logo"
                       className="h-20 "

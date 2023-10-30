@@ -11,8 +11,7 @@ const Hero = () => {
               Open Banking Value Tool
             </h1>
             <p className="mb-8 leading-relaxed text-2xl">
-              What evidence do we have that open banking is creating benefits
-              for the banks that open APIs?
+            What evidence do we have that open banking is really creating impactful benefits for the different ecosystem’s stakeholders?
             </p>
             {/*   <div className="flex justify-center">
               <button className="inline-flex text-white bg-btn-russian-violet border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
