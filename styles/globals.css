@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -9,14 +9,14 @@ body {
   scroll-behavior: smooth !important;
   padding: 0;
   margin: 0;
-  font-family: "Roboto", sans-serif;
+  font-family: "Poppins", sans-serif;
+
 }
 h1,
 h2,
 h3,
 h4,
 h5 {
-  color: #1b014c;
 }
 
 /* COLORS */
@@ -26,6 +26,7 @@ h5 {
   --sunglow-dark: #ffd23f;
   --sunglow-light: #ffe89e;
   --red-orange-dark: #fb5012;
+  --medium-orange: #F5A02D;
   --red-orange-light: #fed2vc2;
   --fluorecent-blue-dark: #01fdf6;
   --fluorecent-blue-light: #80fefa;
@@ -50,7 +51,11 @@ h5 {
   /*2023 style guide colors*/
   --dark-blue: #3425c9;
   --purple-medium-dark: #4f35e2;
+  --purple-medium: #5A23EC;
   --yellow: #ffe200;
+  --light-pink: #FEE6FF;
+  --light-yellow: #FFF2C8;
+  --light-purple: #ECE4FF;
   --gradient-obof: linear-gradient(to right, #f157ff 0%, #ff9d00 100%) 0% 0%;
 }
 
@@ -130,13 +135,13 @@ a {
 }
 
 .pink-checkbox {
-  accent-color: rgb(218, 78, 155);
+  accent-color: #F15AF4;
 }
 .orange-checkbox {
-  accent-color: var(--red-orange-dark);
+  accent-color: var(--medium-orange);
 }
-.yellow-checkbox {
-  accent-color: var(--sunglow-dark);
+.purple-checkbox {
+  accent-color: var(--purple-medium);
 }
 
 .footer-top-bar {

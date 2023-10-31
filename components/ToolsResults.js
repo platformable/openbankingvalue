@@ -23,7 +23,8 @@ const ToolsResults = ({
   setInitialStates,
 }) => {
   const router = useRouter();
-  const [user, setUser, checkOffset, ] = useContext(ValueContext);
+  console.log("router", router)
+  const [user, setUser, ] = useContext(ValueContext);
   const { visitedPages } = user;
   const [cardId, setCardId] = useState("");
 
@@ -78,15 +79,15 @@ const ToolsResults = ({
   });
   return (
     <>
-      <section className="pagination flex flex-col my-5 ">
+      <section className="pagination flex flex-col ">
         <div className=" flex md:justify-between px-10 items-center justify-between ">
           <p className=" text-2xl">
-            Showing <strong>{content?.length}</strong> success stories
+            Showing <strong>{content?.length}</strong> success stories <strong>of 169</strong>
           </p>
-          <div className="flex justify-between gap-x-2">
+          <div className={`flex flex-1 justify-end p-3 gap-x-2`}>
           {visitedPages.map((offsetID, index) => (
             <button
-            className={`${style["ob-background-buttons"]} btn px-3 py-2 rounded text-white`}
+            className={`${ visitedPages.indexOf(router?.query?.clientOffset || '') === index ? "bg-[var(--purple-medium)]" : "bg-[#9978F0]" }  btn w-10 py-2 rounded text-white`}
             onClick={() => handleNextPage(offsetID)}
           >
             {index+1}
@@ -135,7 +136,7 @@ const ToolsResults = ({
                     />
                   ) : (
                     <img
-                      src="../societyIcon.png"
+                      src="../no_logo.svg"
                       alt="Fintech logo"
                       crossOrigin="*"
                       className="h-20"
@@ -183,24 +184,22 @@ const ToolsResults = ({
                       onClick={() => handleDownloadImage(item)}
                     /> */}
                   <div
-                    className={`${style["ob-background-buttons"]} w-full pr-2 text-white h-10 w-4/6 rounded text-xs flex items-center `}
+                    className={`bg-[var(--purple-medium)] w-full pr-2 text-white h-10 w-4/6 rounded text-xs flex items-center `}
                   >
                     <img src="./open-use-case.svg" className="pt-2 pl-1" />
                     <Link href={`${item.fields["Source link"]}`}>
                       {/* {item?.fields["Source link"]?.slice(0, 30)}... */}
-                      <span className="md:hidden">Copy Use Case Source</span>
-                      <span className="hidden md:block">Source</span>
+                      <span className="hidden md:inline-block">Copy link source</span>
+                      <span className="md:hidden">Source</span>
                     </Link>
                   </div>
                   <div
-                    className={`${style["ob-background-buttons"]} w-full pr-2 flex items-center text-white h-10 rounded text-xs w-4/6`}
+                    className={`bg-[var(--purple-medium)] w-full pr-2 flex items-center text-white h-10 rounded text-xs w-4/6`}
                   >
                     <img src="./copy-in-slides.svg" className="pt-2 pl-1" />
                     <Link href="#" className="">
-                      <span className="md:hidden">
-                        Open it directly in your slides
-                      </span>
-                      <span className="hidden md:block">Slides</span>
+                    <span className="hidden md:inline-block">Open as a slide</span>
+                      <span className="md:hidden">Slides</span>
                     </Link>
                   </div>
                 </div>

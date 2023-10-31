@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { ValueContext } from "../context/valueContext";
 import { useContext, useEffect, useState } from "react";
 export default function Filters({ setFilteredData, data, valueCat }) {
@@ -16,7 +17,13 @@ export default function Filters({ setFilteredData, data, valueCat }) {
   const [openValuesList, setValuesList] = useState(false);
   const [openBeneficiaryList, setBeneficiaryList] = useState(false);
   const [clusterCategories, setClusterCategories] = useState([]);
-
+  // const [ulrEncoded,setUrlEncoded] = useState()
+  // useEffect(() => {
+  //   var encode = "encodeURIComponent";
+  //   encode = encodeURIComponent("{Region (from Country)}=UK".trim());
+  //   console.log(encode)
+  //   // const dispEl =  encode;
+  // }, [])
 
   useEffect(() => {
     const newCategories = valueCat.map((value) => {
@@ -106,12 +113,12 @@ export default function Filters({ setFilteredData, data, valueCat }) {
   return (
     <div
       id="filter-container"
-      className="lg:px-0 flex flex-col  lg:flex-col mx-3 lg:mx-5 gap-10 grid-cols-1 mt-5 py-10"
+      className="lg:pr-0 flex flex-col  grid-cols-1 "
     >
-      <div id="values-list" className="md:px-0 px-5">
+      <div id="values-list" className="bg-[#FBC6FD]">
         <label
           id="listbox-label"
-          className="block text-sm font-medium text-gray-700 flex justify-between  items-center "
+          className="block text-sm font-medium  flex justify-between md:px-3 py-3 items-center "
         >
           <strong className="text-lg">Value generated categories</strong>
           <button
@@ -127,18 +134,18 @@ export default function Filters({ setFilteredData, data, valueCat }) {
           </button>
         </label>
 
-        <div className={`mt-2  ${openValuesList ? "block" : "hidden"}`}>
+        <div className={` bg-[#FEE6FF] ${openValuesList ? "block" : "hidden"}`}>
           {/* i took the keys and used Object keys to turn them into an array so as to map through them */}
           {Object.entries(groupedCategories).map(
             ([clusterCategory, values], index) => (
-              <div key={index} className="mt-7">
-                <div className="flex justify-between items-center">
-                  <h3 className="text-fuchsia-500 font-semibold ">
+              <div key={index} className="">
+                <div className="flex justify-between items-center px-3 py-3">
+                  <h3 className=" font-semibold ">
                     {clusterCategory}
                   </h3>
                   <button
                     type="button"
-                    className="relative rounded-md py-2 text-left cursor-default focus:outline-none sm:text-sm"
+                    className="relative rounded-md py-2 text-left cursor-default  sm:text-sm"
                     onClick={() =>
                       setClusterCategories((prev) => ({
                         ...prev,
@@ -160,9 +167,7 @@ export default function Filters({ setFilteredData, data, valueCat }) {
                 </div>
                 <ul
                   className={`
-      ${clusterCategories[clusterCategory] ? "block" : "hidden"} 
-     
-      mt-2 w-full rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 h-auto focus:outline-none sm:text-sm pl-2`}
+      ${clusterCategories[clusterCategory] ? "grid gap-y-5" : "hidden"} py-5 md:pl-3 bg-[#FFF7FF]  w-full  text-base  h-auto focus:outline-none sm:text-sm`}
                   tabIndex="-1"
                   role="listbox"
                   aria-labelledby="listbox-label"
@@ -176,7 +181,7 @@ export default function Filters({ setFilteredData, data, valueCat }) {
                       >
                         <input
                           type="checkbox"
-                          className="orange-checkbox"
+                          className="pink-checkbox"
                           name={valueGenCategory}
                           // onChange={() => {
                           //   setTypeOfValue(valueGenCategory);
@@ -184,7 +189,7 @@ export default function Filters({ setFilteredData, data, valueCat }) {
                           checked={typeOfValues[valueGenCategory].isSelected}
                           role="option"
                         />
-                        <div  className="pt-2 pb-2">
+                        <div  className="">
                           {valueGenCategory}
                         </div>
                       </li>
@@ -198,10 +203,10 @@ export default function Filters({ setFilteredData, data, valueCat }) {
         
       </div>
 
-      <div id="beneficiary-list" className=" values-form-list md:px-0 px-5">
+      <div id="beneficiary-list" className="bg-[var(--light-yellow)]">
         <label
           id="listbox-label"
-          className="block text-sm font-medium text-gray-700 flex justify-between items-center"
+          className="block text-sm font-medium  flex justify-between md:px-3 py-3 items-center "
         >
           <strong className="text-lg">Who Benefits?</strong>
 
@@ -218,10 +223,10 @@ export default function Filters({ setFilteredData, data, valueCat }) {
             />
           </button>
         </label>
-        <div className="mt-2 relative">
+        <div className=" relative bg-[#FFFAE8]">
           {openBeneficiaryList && (
             <ul
-              className="  mt-2 w-full   rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 h-auto focus:outline-none sm:text-sm"
+              className="w-full text-base pl-3 h-auto focus:outline-none sm:text-sm py-3"
               tabIndex="-1"
               role="listbox"
               aria-labelledby="listbox-label"
@@ -251,7 +256,7 @@ export default function Filters({ setFilteredData, data, valueCat }) {
                     >
                       <input
                         type="checkbox"
-                        className="yellow-checkbox"
+                        className="orange-checkbox"
                         // defaultChecked={beneficaryValue?.isSelected}
                         checked={beneficaryValue?.isSelected}
                         // onChange={() =>
@@ -281,10 +286,10 @@ export default function Filters({ setFilteredData, data, valueCat }) {
         </div>
       </div>
 
-      <div id="region-list" className=" md:px-0 px-5">
+      <div id="region-list" className="bg-[var(--light-purple)]">
         <label
           id="listbox-label"
-          className="block text-sm font-medium text-gray-700 flex justify-between items-center"
+          className="block text-sm font-medium  flex justify-between md:px-3 py-3 items-center "
         >
           <strong className="text-lg">List of regions</strong>
 
@@ -301,10 +306,10 @@ export default function Filters({ setFilteredData, data, valueCat }) {
             />
           </button>
         </label>
-        <div className="mt-2 relative">
+        <div className="relative bg-[#F4F2FF]">
           {openRegionList && (
             <ul
-              className="mt-2 w-full rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 h-auto focus:outline-none sm:text-sm"
+              className="w-full text-base pl-3 h-auto focus:outline-none sm:text-sm py-3"
               tabIndex="-1"
               role="listbox"
               aria-labelledby="listbox-label"
@@ -330,7 +335,7 @@ export default function Filters({ setFilteredData, data, valueCat }) {
                   >
                     <input
                       type="checkbox"
-                      className="pink-checkbox"
+                      className="purple-checkbox"
                       checked={selectedRegion[regionKey] === true}
                       
                     />

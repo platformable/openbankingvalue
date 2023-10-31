@@ -86,8 +86,9 @@ const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
   return (
     <Layout>
       <Meta />
+      
       <Hero />
-      <section className="sm:grid sm:grid-rows-1 lg:grid lg:grid-cols-[1fr_3fr] container mx-auto">
+      <section className="sm:grid sm:grid-rows-1 lg:grid lg:grid-cols-[1fr_3fr] container mx-auto mt-5">
         <Filters
           data={data}
           setFilteredData={setFilteredData}
