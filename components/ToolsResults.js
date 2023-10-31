@@ -84,7 +84,7 @@ const ToolsResults = ({
           <p className=" text-2xl">
             Showing <strong>{content?.length}</strong> success stories <strong>of 169</strong>
           </p>
-          <div className={`flex flex-1 justify-end p-3 gap-x-2`}>
+          <div className={`flex flex-1 justify-end p-3 pr-0 gap-x-2`}>
           {visitedPages.map((offsetID, index) => (
             <button
             className={`${ visitedPages.indexOf(router?.query?.clientOffset || '') === index ? "bg-[var(--purple-medium)]" : "bg-[#9978F0]" }  btn w-10 py-2 rounded text-white`}
