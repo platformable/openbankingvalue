@@ -5,9 +5,9 @@ import Link from "next/link";
 const BannerTop = () => {
   return (
     <section className={`${styles.bg_banner_top} py-5`}>
-      <div className="container mx-auto text-white text-xl 2xl:text-3xl flex flex-col lg:flex-row justify-between items-center">
+      <div className="container mx-auto text-white text-xl 2xl:text-3xl flex flex-col gap-y-5 lg:flex-row justify-between items-center">
         <img src="/banner_logo.svg" alt="data products logo" />
-        <div>
+        <div className="max-md:text-center">
           <span className="mr-3 ">
             <strong>Want more open banking data?</strong>
           </span>
@@ -29,7 +29,7 @@ const Hero = () => {
     <>
       <BannerTop />
       <section className={styles.bg_hero}>
-        <div className="container mx-auto flex md:flex-row text-white flex-col items-center">
+        <div className="container mx-auto flex md:flex-row text-white flex-col items-center max-sm:pt-5">
           <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center text-[var(--purple-medium)]">
             <h1 className="title-font sm:text-4xl text-3xl mb-4 font-bold ">
               Open Banking Value Tool
