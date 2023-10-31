@@ -22,7 +22,7 @@ export default function Footer() {
             alt="pride heart"
             className="inline-block"
           />
-          proudly based in Barcelona
+          proudly based in Barcelona.
         </p>
       </section>
       <div
