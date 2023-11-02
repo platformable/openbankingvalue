@@ -59,31 +59,50 @@ export default function Filters({ setFilteredData, data, valueCat }) {
   const arrayOfFIlters = [
     // Filter for each value of fields array (fields.[])
     // Return always true if typeOfValues.All === true, Return boolean existence of the typeOfValues == true in Cluster Category
+    // (item) => {
+    //   if (typeOfValues["All"]["isSelected"] === true) return true;
+    //   return Object.values(typeOfValues)
+    //     ?.filter((value) => value.isSelected === true)
+    //     .every((value) => item.fields["Value Category"]?.includes(value.id));
+    // },
     (item) => {
-      if (typeOfValues["All"]["isSelected"] === true) return true;
+      if (Object.values(typeOfValues).every(value => value.isSelected === false)) return true;
       return Object.values(typeOfValues)
         ?.filter((value) => value.isSelected === true)
-        .every((value) => item.fields["Value Category"]?.includes(value.id));
+        .some((value) => item.fields["Value Category"]?.includes(value.id));
     },
 
     // Filter for each value of fields array (fields.[])
     // Return always true if selectedRegion.All === true, Return boolean existence of the selectedRegion == true in Region (From country)
+    // (item) => {
+    //   if (selectedRegion["All"] === true) return true;
+    //   return Object.entries(selectedRegion)
+    //     ?.filter(([key, value]) => value === true)
+    //     .every(([key, value]) =>
+    //       item.fields["Region (from Country)"]?.includes(key)
+    //     );
+    // },
     (item) => {
-      if (selectedRegion["All"] === true) return true;
+      if (Object.values(selectedRegion).every(value => value === false)) return true;
       return Object.entries(selectedRegion)
         ?.filter(([key, value]) => value === true)
-        .every(([key, value]) =>
+        .some(([key, value]) =>
           item.fields["Region (from Country)"]?.includes(key)
         );
     },
-
     // Filter for each value of fields array (fields.[])
     // Return always true if beneficaryId.All.isSelected === true, Return boolean existence of the selectedBeneficiaryId[beneficiary.id] == true in Who Benefitas?
+    // (item) => {
+    //   if (selectedBeneficiaryId["All"]["isSelected"] === true) return true;
+    //   return Object.values(selectedBeneficiaryId)
+    //     ?.filter((value) => value.isSelected === true)
+    //     .every((value) => item.fields["Who benefits?"]?.includes(value.id));
+    // },
     (item) => {
-      if (selectedBeneficiaryId["All"]["isSelected"] === true) return true;
+      if (Object.values(selectedBeneficiaryId).every(value => value.isSelected === false)) return true;
       return Object.values(selectedBeneficiaryId)
         ?.filter((value) => value.isSelected === true)
-        .every((value) => item.fields["Who benefits?"]?.includes(value.id));
+        .some((value) => item.fields["Who benefits?"]?.includes(value.id));
     },
   ];
   //Recursive function
