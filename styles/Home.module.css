@@ -99,6 +99,9 @@
 
 
  .bg_hero {
-  background: transparent linear-gradient(269deg, #FC912A 0%, #F157FF 100%) 0% 0% no-repeat padding-box;
+  background: transparent linear-gradient(-90deg, #FDF1DF 0%, #FEF5FE 45%, #FFFFFF 100%) 0% 0% no-repeat padding-box;
 
+ }
+ .bg_banner_top {
+  background: transparent linear-gradient(-90deg, #F5A02D 0%, #F15EEB 49%, #7C41FF 100%) 0% 0% no-repeat padding-box;
  }

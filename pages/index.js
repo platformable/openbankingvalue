@@ -12,12 +12,14 @@ const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
   // console.log("data", data);
   const [user, setUser] = useContext(ValueContext);
   const [filteredData, setFilteredData] = useState(data.records);
-  const { selectedRegion, typeOfValues, selectedBeneficiaryId } = user;
+  const { selectedRegion, typeOfValues, visitedPages } = user;
   const [valueCat, setValueCat] = useState([]);
 
   const [ismobile, setIsmobile] = useState(null);
 
-  const addOffsetforPagination = (id) => setUser(prev => ({...prev, visitedPages: [...prev.visitedPages, id]}))
+  const addOffsetforPagination = (id) => {
+    !visitedPages.includes(id) && setUser(prev => ({...prev, visitedPages: [...prev.visitedPages, id]}))
+  }
 
   const clearTypeOfValuesState = () =>
     setUser((prev) => ({
@@ -80,12 +82,13 @@ const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
     if (pagination) addOffsetforPagination(pagination)
     setIsmobile(navigator?.userAgentData?.mobile);
   }, []);
-  console.log(user)
+  // console.log(user)
   return (
     <Layout>
       <Meta />
+      
       <Hero />
-      <section className="sm:grid sm:grid-rows-1 lg:grid lg:grid-cols-[1fr_3fr] container mx-auto">
+      <section className="sm:grid sm:grid-rows-1 lg:grid lg:grid-cols-[1fr_3fr] container mx-auto mt-5">
         <Filters
           data={data}
           setFilteredData={setFilteredData}
