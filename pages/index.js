@@ -9,7 +9,7 @@ import Hero from "../components/Hero";
 import Meta from "../components/Meta";
 
 const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
-  console.log("data", data);
+  // console.log("data", data);
   const [user, setUser] = useContext(ValueContext);
   const [filteredData, setFilteredData] = useState(data.records);
   const { selectedRegion, typeOfValues, visitedPages } = user;

@@ -23,7 +23,7 @@ const ToolsResults = ({
   setInitialStates,
 }) => {
   const router = useRouter();
-  console.log("router", router)
+  // console.log("router", router)
   const [user, setUser, ] = useContext(ValueContext);
   const { visitedPages } = user;
   const [cardId, setCardId] = useState("");
@@ -89,6 +89,7 @@ const ToolsResults = ({
             <button
             className={`${ visitedPages.indexOf(router?.query?.clientOffset || '') === index ? "bg-[var(--purple-medium)]" : "bg-[#9978F0]" }  btn w-10 py-2 rounded text-white`}
             onClick={() => handleNextPage(offsetID)}
+            key={index}
           >
             {index+1}
             
