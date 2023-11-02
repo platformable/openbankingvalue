@@ -15,7 +15,7 @@ const BannerTop = () => {
             Subscribe to our <strong>Trends Reports</strong>
           </span>
         </div>
-        <Link href="https://platformable.com/data-products/open-banking-open-value-trends-reports">
+        <Link href="https://platformable.com/data-products/open-banking-open-value-trends-reports" target="_blank">
         <button className="bg-yellow shadow rounded-md px-10 py-2 text-xl text-[var(--purple-medium)]">
           Find out more
         </button>

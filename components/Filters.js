@@ -167,7 +167,7 @@ export default function Filters({ setFilteredData, data, valueCat }) {
                 </div>
                 <ul
                   className={`
-      ${clusterCategories[clusterCategory] ? "grid" : "hidden"} py-5 md:pl-3 bg-[#FFF7FF]  w-full  text-base  h-auto focus:outline-none sm:text-sm`}
+      ${clusterCategories[clusterCategory] ? "grid" : "hidden"} py-5 bg-[#FFF7FF]  w-full  text-base  h-auto focus:outline-none sm:text-sm`}
                   tabIndex="-1"
                   role="listbox"
                   aria-labelledby="listbox-label"
@@ -175,7 +175,7 @@ export default function Filters({ setFilteredData, data, valueCat }) {
                 >
                   {groupedCategories[clusterCategory].map(
                     (valueGenCategory, i) => (
-                      <li className="hover:bg-[#FEE6FF] flex cursor-pointer gap-3 py-3" 
+                      <li className="hover:bg-[#FEE6FF] flex cursor-pointer gap-3 py-3 px-3" 
                         onClick={() => setTypeOfValue(valueGenCategory)}
                         key={i}
                       >
@@ -226,7 +226,7 @@ export default function Filters({ setFilteredData, data, valueCat }) {
         <div className=" relative bg-[#FFFAE8]">
           {openBeneficiaryList && (
             <ul
-              className="w-full text-base pl-3 h-auto sm:text-sm py-3"
+              className="w-full text-base h-auto sm:text-sm py-3"
               tabIndex="-1"
               role="listbox"
               aria-labelledby="listbox-label"
@@ -250,7 +250,7 @@ export default function Filters({ setFilteredData, data, valueCat }) {
                           },
                         }))
                       }
-                      className="hover:bg-[var(--light-yellow)] flex items-center select-none  py-2 pl-3 pr-9 cursor-pointer "
+                      className="hover:bg-[var(--light-yellow)] flex items-center select-none  py-2 px-3 cursor-pointer "
                       id="listbox-option-0"
                       role="option"
                     >
@@ -309,7 +309,7 @@ export default function Filters({ setFilteredData, data, valueCat }) {
         <div className="relative bg-[#F4F2FF]">
           {openRegionList && (
             <ul
-              className="w-full text-base pl-3 h-auto focus:outline-none sm:text-sm py-3"
+              className="w-full text-base h-auto focus:outline-none sm:text-sm py-3"
               tabIndex="-1"
               role="listbox"
               aria-labelledby="listbox-label"
@@ -329,7 +329,7 @@ export default function Filters({ setFilteredData, data, valueCat }) {
                         },
                       }))
                     }
-                    className=" hover:bg-[var(--light-purple)] flex items-center select-none py-2 pl-3 pr-9 cursor-pointer "
+                    className=" hover:bg-[var(--light-purple)] flex items-center select-none py-2 px-3 cursor-pointer "
                     id="listbox-option-0"
                     // role="option"
                   >

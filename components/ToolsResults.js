@@ -187,9 +187,9 @@ const ToolsResults = ({
                     className={`bg-[var(--purple-medium)] w-full pr-2 text-white h-10 w-4/6 rounded text-xs flex items-center `}
                   >
                     <img src="./open-use-case.svg" className="pt-2 pl-1" />
-                    <Link href={`${item.fields["Source link"]}`}>
+                    <Link href={`${item.fields["Source link"]}`} target="_blank">
                       {/* {item?.fields["Source link"]?.slice(0, 30)}... */}
-                      <span className="hidden md:inline-block">Copy link source</span>
+                      <span className="hidden md:inline-block">Source link</span>
                       <span className="md:hidden">Source</span>
                     </Link>
                   </div>
@@ -197,7 +197,7 @@ const ToolsResults = ({
                     className={`bg-[var(--purple-medium)] w-full pr-2 flex items-center text-white h-10 rounded text-xs w-4/6`}
                   >
                     <img src="./copy-in-slides.svg" className="pt-2 pl-1" />
-                    <Link href="#" className="">
+                    <Link href={item.fields["DownloadLink"]} target="_blank" className="">
                     <span className="hidden md:inline-block">Open as a slide</span>
                       <span className="md:hidden">Slides</span>
                     </Link>
