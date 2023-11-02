@@ -9,7 +9,7 @@ import Hero from "../components/Hero";
 import Meta from "../components/Meta";
 
 const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
-  // console.log("data", data);
+  
   const [user, setUser] = useContext(ValueContext);
   const [filteredData, setFilteredData] = useState(data.records);
   const { selectedRegion, typeOfValues, visitedPages } = user;
@@ -154,7 +154,7 @@ export async function getServerSideProps(context) {
         }
       ).then((res) => res.json()),
     ]);
-    // console.log("PAGINATION => ", data?.offset);
+   
 
     const pagination = (await data?.offset) || null;
     return {
