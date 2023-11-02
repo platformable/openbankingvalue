@@ -151,7 +151,7 @@ export async function getServerSideProps(context) {
         }
       ).then((res) => res.json()),
     ]);
-    // console.log("PAGINATION => ", data?.offset);
+   
 
     const pagination = (await data?.offset) || null;
     return {
