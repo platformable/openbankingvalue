@@ -43,6 +43,7 @@ export const ValueContextProvider = ({ children }) => {
       },
     }));
   };
+  
   return (
     <ValueContext.Provider
       value={[user, setUser, setTypeOfValue]}
