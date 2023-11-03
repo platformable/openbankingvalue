@@ -24,7 +24,7 @@ const ToolsResults = ({
 }) => {
   const router = useRouter();
   // console.log("router", router)
-  const [user, setUser, ] = useContext(ValueContext);
+  const [user, setUser] = useContext(ValueContext);
   const { visitedPages } = user;
   const [cardId, setCardId] = useState("");
 
@@ -34,8 +34,30 @@ const ToolsResults = ({
       query: { clientOffset: offsetID },
     });
   };
+  // Supongamos que tienes un array de objetos como este:
+const objetos = [
+  { name: "Objeto1", sourceDate: "2023-01-15" },
+  { name: "Objeto2", sourceDate: "2022-12-20" },
+  { name: "Objeto3", sourceDate: "2023-02-10" },
+  { name: "Objeto4" }, // Sin sourceDate
+  { name: "Objeto5" }, // Sin sourceDate
+];
 
+// Usamos localeCompare para ordenar el array por sourceDate (asegurándonos de manejar los casos sin sourceDate)
+objetos.sort((a, b) => {
+  // Comprobamos si a y b tienen sourceDate
+  if (a.sourceDate && b.sourceDate) {
+    return a.sourceDate.localeCompare(b.sourceDate);
+  } else if (a.sourceDate) {
+    return -1; // Mover objetos sin sourceDate al principio
+  } else if (b.sourceDate) {
+    return 1; // Mover objetos sin sourceDate al final
+  } else {
+    return 0; // Si ninguno tiene sourceDate, no cambia el orden relativo
+  }
+});
 
+console.log(objetos);
   const handleSelected = (item) => {
     const isFavorite = user.favorites.filter(
       (favorites) => favorites.id === item.id
@@ -67,39 +89,33 @@ const ToolsResults = ({
     }
   };
 
-  const sortedContent = content && [...content]?.sort((a, b) => {
-    let dateA = new Date(a.fields["Source Date"]);
-    let dateB = new Date(b.fields["Source Date"]);
-
-    let dateAString = dateA.toLocaleDateString("en-US");
-    let dateBString = dateB.toLocaleDateString("en-US");
-
-    
-    return dateBString.localeCompare(dateAString);
-  });
+  
   return (
     <>
       <section className="pagination flex flex-col ">
         <div className=" flex md:justify-between px-10 items-center justify-between ">
           <p className=" text-2xl">
-            Showing <strong>{content?.length}</strong> success stories <strong>of 169</strong>
+            Showing <strong>{content?.length}</strong> success stories{" "}
+            <strong>of 166</strong>
           </p>
           <div className={`flex flex-1 justify-end p-3 pr-0 gap-x-2`}>
-          {visitedPages.map((offsetID, index) => (
-            <button
-            className={`${ visitedPages.indexOf(router?.query?.clientOffset || '') === index ? "bg-[var(--purple-medium)]" : "bg-[#9978F0]" }  btn w-10 py-2 rounded text-white`}
-            onClick={() => handleNextPage(offsetID)}
-            key={index}
-          >
-            {index+1}
-            
-          </button>
-          ))}
+            {visitedPages.map((offsetID, index) => (
+             <button
+                className={`${
+                  visitedPages.indexOf(router?.query?.clientOffset || "") ===
+                  index
+                    ? "bg-[#9978F0]"
+                    : "bg-[var(--purple-medium)]"
+                }  btn w-10 py-2 rounded text-white`}
+                onClick={() => handleNextPage(offsetID)}
+                key={index}
+              >
+                {index + 1}
+              </button>
+            ))}
           </div>
-          
         </div>
         <AppliedFiltersLabels setInitialStates={setInitialStates} />
-
       </section>
       {/* end of pagination */}
 
@@ -107,8 +123,9 @@ const ToolsResults = ({
 
       <div className="px-10">
         <div className="md:px-14 lg:px-0 card-container grid gap-4 xl:grid-cols-3 grid-cols-1 my-5 mb-20 ">
-          {sortedContent?.length > 0 ? (
-            sortedContent.map((item, index, array) => (
+          {content?.length > 0 ? (
+            content
+            .map((item, index, array) => (
               <div
                 id={item.id}
                 key={index}
@@ -123,13 +140,14 @@ const ToolsResults = ({
                         : selectedTypeOfValue}
                     </p>
                   </div> */}
-                  {item.fields["Logo (from Fintech involved)"] || item.fields["Logo (from Banks involved)"] ? (
+                  {item.fields["Logo (from Fintech involved)"] ||
+                  item.fields["Logo (from Banks involved)"] ? (
                     <img
                       src={
                         item.fields["Logo (from Banks involved)"]?.[0]
                           .thumbnails.large.url ||
                         item.fields["Logo (from Fintech involved)"]?.[0]
-                          .thumbnails.large.url 
+                          .thumbnails.large.url
                       }
                       alt="Fintech logo"
                       className="h-20 "
@@ -137,7 +155,7 @@ const ToolsResults = ({
                     />
                   ) : (
                     <img
-                      src="../no_logo.svg"
+                      src="/no_logo.svg"
                       alt="Fintech logo"
                       crossOrigin="*"
                       className="h-20"
@@ -156,7 +174,6 @@ const ToolsResults = ({
                     />
                   </div>
                 </div>
-                
 
                 <div
                   // className="md:w-6/12 card-bottom flex lg:w-full h-full items-end gap-x-11"
@@ -188,9 +205,14 @@ const ToolsResults = ({
                     className={`bg-[var(--purple-medium)] w-full pr-2 text-white h-10 w-4/6 rounded text-xs flex items-center `}
                   >
                     <img src="./open-use-case.svg" className="pt-2 pl-1" />
-                    <Link href={`${item.fields["Source link"]}`} target="_blank">
+                    <Link
+                      href={`${item.fields["Source link"]}`}
+                      target="_blank"
+                    >
                       {/* {item?.fields["Source link"]?.slice(0, 30)}... */}
-                      <span className="hidden md:inline-block">Source link</span>
+                      <span className="hidden md:inline-block">
+                        Source link
+                      </span>
                       <span className="md:hidden">Source</span>
                     </Link>
                   </div>
@@ -198,8 +220,14 @@ const ToolsResults = ({
                     className={`bg-[var(--purple-medium)] w-full pr-2 flex items-center text-white h-10 rounded text-xs w-4/6`}
                   >
                     <img src="./copy-in-slides.svg" className="pt-2 pl-1" />
-                    <Link href={item.fields["DownloadLink"]} target="_blank" className="">
-                    <span className="hidden md:inline-block">Open as a slide</span>
+                    <Link
+                      href={item.fields["DownloadLink"]}
+                      target="_blank"
+                      className=""
+                    >
+                      <span className="hidden md:inline-block">
+                        Open as a slide
+                      </span>
                       <span className="md:hidden">Slides</span>
                     </Link>
                   </div>
@@ -214,6 +242,22 @@ const ToolsResults = ({
 
           {/* end of card */}
         </div>
+        <div className={`flex flex-1  p-3 pr-0 justify-center gap-x-2`}>
+            {visitedPages.map((offsetID, index) => (
+              <button
+                className={`${
+                  visitedPages.indexOf(router?.query?.clientOffset || "") ===
+                  index
+                    ? "bg-[#9978F0]"
+                    : "bg-[var(--purple-medium)]"
+                }  btn w-10 py-2 rounded text-white`}
+                onClick={() => handleNextPage(offsetID)}
+                key={index}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
       </div>
     </>
   );
