@@ -13,16 +13,16 @@ export default function Footer() {
           <img
             src="/platformable_logo_footer.png"
             alt="platformable logo"
-            className="inline-block"
+            className="inline-block drop-shadow"
           />
           {' '}
           <strong>Platformable.com</strong>
           <img
             src="/heart-fixed-icon.png"
             alt="pride heart"
-            className="inline-block"
+            className="inline-block drop-shadow"
           />
-          proudly based in Barcelona.
+          proudly based in Barcelona
         </p>
       </section>
       <div
