@@ -1,34 +1,32 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Project Name
+Brief description of the project in one or two sentences.
 
-## Getting Started
+## Table of Contents
 
-First, run the development server:
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contribution](#contribution)
+- [License](#license)
 
+## Installation
 ```bash
-npm run dev
-# or
-yarn dev
+git clone https://github.com/yourusername/yourrepository.git
+cd yourrepository
+npm install  # Or any other dependencies
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# Usage
+Tool to discover the added values to a company when digitizing its digital infrastructure.
+Select from the filter located on the left side of the screen the categorized values you want and/or the types of banks and fintechs benefited and/or the countries where these fintechs and banks belong.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+# Contribution
+Describe how other developers can contribute to the project. This may include instructions on reporting bugs, proposing enhancements, or submitting pull requests.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature/new-feature`)
+3. Make your changes and commit (`git commit -am 'Add new feature'`)
+4. Push your branch (`git push origin feature/new-feature`)
+5. Open a pull request
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+# Licence
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
