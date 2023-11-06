@@ -9,7 +9,7 @@ export const ValueContextProvider = ({ children }) => {
       All: { isSelected: false },
     },
     selectedRegion: {
-      All: false,
+      // All: false,
       // 'APAC': false,
       // "Eastern Europe & Russia": false,
       // 'Africa': false,
@@ -23,7 +23,7 @@ export const ValueContextProvider = ({ children }) => {
       //This will fill with key: Objects to store id and selection
       // Eg. {id: '', isSelected: false}
       // 'All' key does not have id
-      All: { isSelected: false },
+      // All: { isSelected: false },
     },
     favorites: [],
     visitedPages: [
