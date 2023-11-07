@@ -175,7 +175,7 @@ const ToolsResults = ({
 
                 <div
                   // className="md:w-6/12 card-bottom flex lg:w-full h-full items-end gap-x-11"
-                  className="card-bottom w-full grid md:flex items-between gap-x-2  h-full items-end gap-y-1 flex-col md:flex-row "
+                  className="card-bottom w-full grid items-between gap-x-2  h-full items-end gap-y-1 flex-col md:grid-cols-2 "
                   data-html2canvas-ignore
                 >
                   {/* <div
