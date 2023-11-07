@@ -206,7 +206,7 @@ console.log(objetos);
                   >
                     <img src="./open-use-case.svg" className="pt-2 pl-1" />
                     <Link
-                      href={`${item.fields["Source link"]}`}
+                      href={`${item.fields["Source link"]} || '#'`}
                       target="_blank"
                     >
                       {/* {item?.fields["Source link"]?.slice(0, 30)}... */}
@@ -221,7 +221,7 @@ console.log(objetos);
                   >
                     <img src="./copy-in-slides.svg" className="pt-2 pl-1" />
                     <Link
-                      href={item.fields["DownloadLink"]}
+                      href={item.fields["DownloadLink"] ||'#'}
                       target="_blank"
                       className=""
                     >
