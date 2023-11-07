@@ -35,29 +35,29 @@ const ToolsResults = ({
     });
   };
   // Supongamos que tienes un array de objetos como este:
-const objetos = [
-  { name: "Objeto1", sourceDate: "2023-01-15" },
-  { name: "Objeto2", sourceDate: "2022-12-20" },
-  { name: "Objeto3", sourceDate: "2023-02-10" },
-  { name: "Objeto4" }, // Sin sourceDate
-  { name: "Objeto5" }, // Sin sourceDate
-];
+  const objetos = [
+    { name: "Objeto1", sourceDate: "2023-01-15" },
+    { name: "Objeto2", sourceDate: "2022-12-20" },
+    { name: "Objeto3", sourceDate: "2023-02-10" },
+    { name: "Objeto4" }, // Sin sourceDate
+    { name: "Objeto5" }, // Sin sourceDate
+  ];
 
-// Usamos localeCompare para ordenar el array por sourceDate (asegurándonos de manejar los casos sin sourceDate)
-objetos.sort((a, b) => {
-  // Comprobamos si a y b tienen sourceDate
-  if (a.sourceDate && b.sourceDate) {
-    return a.sourceDate.localeCompare(b.sourceDate);
-  } else if (a.sourceDate) {
-    return -1; // Mover objetos sin sourceDate al principio
-  } else if (b.sourceDate) {
-    return 1; // Mover objetos sin sourceDate al final
-  } else {
-    return 0; // Si ninguno tiene sourceDate, no cambia el orden relativo
-  }
-});
+  // Usamos localeCompare para ordenar el array por sourceDate (asegurándonos de manejar los casos sin sourceDate)
+  objetos.sort((a, b) => {
+    // Comprobamos si a y b tienen sourceDate
+    if (a.sourceDate && b.sourceDate) {
+      return a.sourceDate.localeCompare(b.sourceDate);
+    } else if (a.sourceDate) {
+      return -1; // Mover objetos sin sourceDate al principio
+    } else if (b.sourceDate) {
+      return 1; // Mover objetos sin sourceDate al final
+    } else {
+      return 0; // Si ninguno tiene sourceDate, no cambia el orden relativo
+    }
+  });
 
-console.log(objetos);
+  console.log(objetos);
   const handleSelected = (item) => {
     const isFavorite = user.favorites.filter(
       (favorites) => favorites.id === item.id
@@ -89,7 +89,6 @@ console.log(objetos);
     }
   };
 
-  
   return (
     <>
       <section className="pagination flex flex-col ">
@@ -100,7 +99,7 @@ console.log(objetos);
           </p>
           <div className={`flex flex-1 justify-end p-3 pr-0 gap-x-2`}>
             {visitedPages.map((offsetID, index) => (
-             <button
+              <button
                 className={`${
                   visitedPages.indexOf(router?.query?.clientOffset || "") ===
                   index
@@ -124,8 +123,7 @@ console.log(objetos);
       <div className="px-10">
         <div className="md:px-14 lg:px-0 card-container grid gap-4 xl:grid-cols-3 grid-cols-1 my-5 mb-20 ">
           {content?.length > 0 ? (
-            content
-            .map((item, index, array) => (
+            content.map((item, index, array) => (
               <div
                 id={item.id}
                 key={index}
@@ -201,36 +199,39 @@ console.log(objetos);
                       className="cursor-pointer"
                       onClick={() => handleDownloadImage(item)}
                     /> */}
-                  <div
-                    className={`bg-[var(--purple-medium)] w-full pr-2 text-white h-10 w-4/6 rounded text-xs flex items-center `}
+
+                  <Link
+                    href={`${item.fields["Source link"]} || '#'`}
+                    target="_blank"
                   >
-                    <img src="./open-use-case.svg" className="pt-2 pl-1" />
-                    <Link
-                      href={`${item.fields["Source link"]} || '#'`}
-                      target="_blank"
+                    <div
+                      className={`bg-[var(--purple-medium)] w-full pr-2 text-white h-10 w-4/6 rounded text-xs flex items-center `}
                     >
+                      <img src="./open-use-case.svg" className="pt-2 pl-1" />
                       {/* {item?.fields["Source link"]?.slice(0, 30)}... */}
                       <span className="hidden md:inline-block">
                         Source link
                       </span>
                       <span className="md:hidden">Source</span>
-                    </Link>
-                  </div>
-                  <div
-                    className={`bg-[var(--purple-medium)] w-full pr-2 flex items-center text-white h-10 rounded text-xs w-4/6`}
+                    </div>
+                  </Link>
+
+                  <Link
+                    href={item.fields["DownloadLink"] || "#"}
+                    target="_blank"
+                    className=""
                   >
-                    <img src="./copy-in-slides.svg" className="pt-2 pl-1" />
-                    <Link
-                      href={item.fields["DownloadLink"] ||'#'}
-                      target="_blank"
-                      className=""
+                    <div
+                      className={`bg-[var(--purple-medium)] w-full pr-2 flex items-center text-white h-10 rounded text-xs w-4/6`}
                     >
+                      <img src="./copy-in-slides.svg" className="pt-2 pl-1" />
+
                       <span className="hidden md:inline-block">
                         Open as a slide
                       </span>
                       <span className="md:hidden">Slides</span>
-                    </Link>
-                  </div>
+                    </div>
+                  </Link>
                 </div>
               </div>
             ))
@@ -243,21 +244,21 @@ console.log(objetos);
           {/* end of card */}
         </div>
         <div className={`flex flex-1  p-3 pr-0 justify-center gap-x-2`}>
-            {visitedPages.map((offsetID, index) => (
-              <button
-                className={`${
-                  visitedPages.indexOf(router?.query?.clientOffset || "") ===
-                  index
-                    ? "bg-[#9978F0]"
-                    : "bg-[var(--purple-medium)]"
-                }  btn w-10 py-2 rounded text-white`}
-                onClick={() => handleNextPage(offsetID)}
-                key={index}
-              >
-                {index + 1}
-              </button>
-            ))}
-          </div>
+          {visitedPages.map((offsetID, index) => (
+            <button
+              className={`${
+                visitedPages.indexOf(router?.query?.clientOffset || "") ===
+                index
+                  ? "bg-[#9978F0]"
+                  : "bg-[var(--purple-medium)]"
+              }  btn w-10 py-2 rounded text-white`}
+              onClick={() => handleNextPage(offsetID)}
+              key={index}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
       </div>
     </>
   );
