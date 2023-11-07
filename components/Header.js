@@ -16,7 +16,7 @@ const Header = () => {
           </div>
         </Link>
         <div className="flex items-center gap-x-10 text-lg">
-        <Link href="/#">
+        <Link href="https://platformable.com/blog/open-banking-value-tool">
           <span className="font-bold">How to guide</span>
         </Link>
         <Link href="https://platformable.com">
