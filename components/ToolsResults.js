@@ -201,7 +201,7 @@ const ToolsResults = ({
                     /> */}
 
                   <Link
-                    href={`${item.fields["Source link"]} || '#'`}
+                    href={`${item.fields["Source link"] || '#'}`}
                     target="_blank"
                   >
                     <div
