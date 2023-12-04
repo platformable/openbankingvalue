@@ -47,7 +47,7 @@ const Hero = () => {
           <div className="lg:w-3/6 flex justify-end">
             <Image
               src={heroImg}
-              alt="OBV__OBV_tool_isometric"
+              alt="Open Banking value tool"
               // width={350}
               // height={300}
             />

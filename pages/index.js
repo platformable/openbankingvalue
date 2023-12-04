@@ -116,8 +116,8 @@ export async function getServerSideProps(context) {
   const offset = "" || (await context.query.clientOffset);
   const url =
     offset === undefined
-      ? "https://api.airtable.com/v0/appHMNZpRfMeHIZGc/Value%20Generated?sort%5B0%5D%5Bfield%5D=Source+date&sort%5B0%5D%5Bdirection%5D=desc"
-      : `https://api.airtable.com/v0/appHMNZpRfMeHIZGc/Value%20Generated?sort%5B0%5D%5Bfield%5D=Source+date&sort%5B0%5D%5Bdirection%5D=desc&offset=${offset}`;
+      ? "https://api.airtable.com/v0/appHMNZpRfMeHIZGc/Value%20Generated?sort%5B0%5D%5Bfield%5D=Created&sort%5B0%5D%5Bdirection%5D=desc"
+      : `https://api.airtable.com/v0/appHMNZpRfMeHIZGc/Value%20Generated?sort%5B0%5D%5Bfield%5D=Created&sort%5B0%5D%5Bdirection%5D=desc&offset=${offset}`;
   /*   const res = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/api/engage?populate=*`
       );
