@@ -4,10 +4,10 @@ const Meta = ({ title, keywords,excerpt, data }) => {
   return (
     <Head>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <meta name="keywords" content={keywords} />
+      <meta name="keywords" content={'open banking use cases discover API'} />
       <meta
         name="description"
-        content={excerpt?.replace(/(<([^>]+)>)/gi, "")}
+        content={'What evidence do we have that open banking is really creating impactful benefits for all stakeholders across the ecosystem?'}
       />
       <meta charSet="utf-8" />
       <link rel="icon" href="/favicon.ico" />
@@ -15,7 +15,7 @@ const Meta = ({ title, keywords,excerpt, data }) => {
 
       {/* Twitter Meta Tags */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={title} />
+      <meta name="twitter:title" content={'Open Banking Value Tool'} />
       {/* <meta
         name="twitter:description"
         content={data?.excerpt?.replace(/(<([^>]+)>)/gi, "")}
@@ -38,21 +38,16 @@ const Meta = ({ title, keywords,excerpt, data }) => {
       <meta property="og:type" content="website" />
       <meta
         property="og:image"
-        content={
-          data?.featured_img?.data?.attributes?.formats?.small?.url ||
-          "https://res.cloudinary.com/platformable/image/upload/v1692982725/platformablewebsite2023/value_model_1280x720_ae8a224428.png"
-        }
+        content={'/obof_preview.png'}
       />
       <meta
         property="og:image:secure_url"
-        content={
-          data?.featured_img?.data?.attributes?.formats?.small?.url ||
-          "https://res.cloudinary.com/platformable/image/upload/v1692982725/platformablewebsite2023/value_model_1280x720_ae8a224428.png"
-        }
+        content={'/obof_preview.png'}
+
       />
-      <meta property="og:image:alt" content={title} />
+      <meta property="og:image:alt" content={'Open Banking Value Tool'} />
       <meta property="og:url" content={`https://www.openbankingvalue.platformable.com/`} />
-      <meta property="og:site_name" content="platformable.com" />
+      <meta property="og:site_name" content="openbankingvalue.platformable.com" />
     </Head>
   );
 };
