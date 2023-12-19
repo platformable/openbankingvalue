@@ -9,11 +9,11 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name: ["demo-site"],
+  app_name: ["web-OpenBankingValueTool"],
   /**
    * Your New Relic license key.
    */
-  license_key: "eu01xxf218a8b8ff98d60b4f78af9cb80b7aNRAL",
+  license_key: process.env.NEXT_PUBLIC_NEW_RELIC_LICENSE_KEY,
   /**
    * This setting controls distributed tracing.
    * Distributed tracing lets you see the path that a request takes through your

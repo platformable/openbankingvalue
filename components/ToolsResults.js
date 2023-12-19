@@ -23,10 +23,8 @@ const ToolsResults = ({
   setInitialStates,
 }) => {
   const router = useRouter();
-  // console.log("router", router)
   const [user, setUser] = useContext(ValueContext);
   const { visitedPages } = user;
-  const [cardId, setCardId] = useState("");
 
   const handleNextPage = (offsetID) => {
     router.push({
@@ -34,43 +32,8 @@ const ToolsResults = ({
       query: { clientOffset: offsetID },
     });
   };
-  // Supongamos que tienes un array de objetos como este:
-  const objetos = [
-    { name: "Objeto1", sourceDate: "2023-01-15" },
-    { name: "Objeto2", sourceDate: "2022-12-20" },
-    { name: "Objeto3", sourceDate: "2023-02-10" },
-    { name: "Objeto4" }, // Sin sourceDate
-    { name: "Objeto5" }, // Sin sourceDate
-  ];
+  
 
-  // Usamos localeCompare para ordenar el array por sourceDate (asegurándonos de manejar los casos sin sourceDate)
-  objetos.sort((a, b) => {
-    // Comprobamos si a y b tienen sourceDate
-    if (a.sourceDate && b.sourceDate) {
-      return a.sourceDate.localeCompare(b.sourceDate);
-    } else if (a.sourceDate) {
-      return -1; // Mover objetos sin sourceDate al principio
-    } else if (b.sourceDate) {
-      return 1; // Mover objetos sin sourceDate al final
-    } else {
-      return 0; // Si ninguno tiene sourceDate, no cambia el orden relativo
-    }
-  });
-
-  console.log(objetos);
-  const handleSelected = (item) => {
-    const isFavorite = user.favorites.filter(
-      (favorites) => favorites.id === item.id
-    );
-    if (isFavorite?.length > 0) {
-      const result = user.favorites.filter(
-        (favorites) => favorites.id !== item.id
-      );
-      setUser({ ...user, favorites: result });
-    } else {
-      setUser({ ...user, favorites: [...user.favorites, item] });
-    }
-  };
   const printRef = React.useRef();
 
   const handleDownloadImage = async (element) => {
