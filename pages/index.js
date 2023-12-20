@@ -13,8 +13,7 @@ const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
   const [user, setUser] = useContext(ValueContext);
   const [filteredData, setFilteredData] = useState(data.records);
   const { selectedRegion, typeOfValues, visitedPages } = user;
-  const [valueCat, setValueCat] = useState([]);
-
+  const [valueRecords, setValueRecords] = useState([]);
   const [ismobile, setIsmobile] = useState(null);
 
   const addOffsetforPagination = (id) => {
@@ -74,7 +73,7 @@ const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
   };
   useEffect(() => {
     setInitialStates();
-    setValueCat(valueCategories.records);
+    setValueRecords(valueCategories?.records)
     
   }, []);
 
@@ -92,7 +91,7 @@ const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
         <Filters
           data={data}
           setFilteredData={setFilteredData}
-          valueCat={valueCat}
+          valueRecords={valueRecords}
         />
         {data && (
           <div className="flex flex-col">

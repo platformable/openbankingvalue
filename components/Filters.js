@@ -1,8 +1,8 @@
 import { useRef } from "react";
 import { ValueContext } from "../context/valueContext";
 import { useContext, useEffect, useState } from "react";
-export default function Filters({ setFilteredData, data, valueCat }) {
-  const [user, setUser, setTypeOfValue] = useContext(ValueContext);
+export default function Filters({ setFilteredData, data, valueRecords }) {
+  const [user, setUser, setTypeOfValue, setTypeOfValueAll] = useContext(ValueContext);
   const {
     selectedTypeOfValue,
     typeOfValues,
@@ -26,7 +26,7 @@ export default function Filters({ setFilteredData, data, valueCat }) {
   // }, [])
 
   useEffect(() => {
-    const newCategories = valueCat.map((value) => {
+    const newCategories = valueRecords.map((value) => {
       return value.fields["Cluster Category"];
     });
 
@@ -39,13 +39,13 @@ export default function Filters({ setFilteredData, data, valueCat }) {
         ...uniqueCategories.map((cluster) => ({ [cluster]: false }))
       )
     );
-  }, [valueCat]);
+  }, [valueRecords]);
 
   //here i created an empty object and filled it with the cluster category as a key which has an array that containts
   //all the value generation categories
   const groupedCategories = {};
 
-  valueCat.forEach((item) => {
+  valueRecords.forEach((item) => {
     const clusterCategory = item.fields["Cluster Category"];
     const valueGenerationCategory = item.fields["Value Generation Category"];
 
@@ -158,13 +158,19 @@ export default function Filters({ setFilteredData, data, valueCat }) {
           {Object.entries(groupedCategories).map(
             ([clusterCategory, values], index) => (
               <div key={index} className="">
-                <div className="flex justify-between items-center px-3 py-3">
+                <div className="flex justify-start items-center gap-2  px-3 py-3">
+                  <input type="checkbox" name="cluster-option" onChange={(e) => {
+                        // console.log(values)
+                        // setTypeOfValueAll(clusterCategories)val
+                        values.forEach(val => setTypeOfValue(val))
+
+                      }} />
                   <h3 className=" font-semibold ">
                     {clusterCategory}
                   </h3>
                   <button
                     type="button"
-                    className="relative rounded-md py-2 text-left cursor-default  sm:text-sm"
+                    className="relative rounded-md py-2 text-left cursor-default  sm:text-sm ml-auto"
                     onClick={() =>
                       setClusterCategories((prev) => ({
                         ...prev,
@@ -172,6 +178,7 @@ export default function Filters({ setFilteredData, data, valueCat }) {
                       }))
                     }
                   >
+                   
                     <img
                       src={
                         clusterCategories[clusterCategory]
