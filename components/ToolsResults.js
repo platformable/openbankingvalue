@@ -29,7 +29,7 @@ const ToolsResults = ({
   const handleNextPage = (offsetID) => {
     router.push({
       pathname: "/",
-      query: { clientOffset: offsetID },
+      query: offsetID ? { clientOffset: offsetID } : null,
     });
   };
   
@@ -58,7 +58,7 @@ const ToolsResults = ({
         <div className=" flex md:justify-between px-10 items-center justify-between ">
           <p className=" text-2xl">
             Showing <strong>{content?.length}</strong> success stories{" "}
-            <strong>of 166</strong>
+            <strong>of 170</strong>
           </p>
           <div className={`flex flex-1 justify-end p-3 pr-0 gap-x-2`}>
             {visitedPages.map((offsetID, index) => (

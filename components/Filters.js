@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { ValueContext } from "../context/valueContext";
 import { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 export default function Filters({ setFilteredData, data, valueRecords }) {
   const [user, setUser, setTypeOfValue, setTypeOfValueAll] = useContext(ValueContext);
   const {
@@ -10,7 +11,7 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
     selectedBeneficiaryId,
     checkOffset,
   } = user;
-
+  const router = useRouter()
   const [nav, setNav] = useState(null);
   useEffect(() => setNav(navigator), []);
   const [openRegionList, setRegionList] = useState(false);
@@ -159,11 +160,14 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
             ([clusterCategory, values], index) => (
               <div key={index} className="">
                 <div className="flex justify-start items-center gap-2  px-3 py-3">
-                  <input type="checkbox" name="cluster-option" onChange={(e) => {
+                  <input type="checkbox" name="cluster-option"  onChange={(e) => {
                         // console.log(values)
                         // setTypeOfValueAll(clusterCategories)val
                         values.forEach(val => setTypeOfValue(val))
-
+                        // router.push({
+                        //   pathname: "/",
+                        //   query: { filter: clusterCategory } ,
+                        // });
                       }} />
                   <h3 className=" font-semibold ">
                     {clusterCategory}

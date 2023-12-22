@@ -15,7 +15,13 @@ const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
   const { selectedRegion, typeOfValues, visitedPages } = user;
   const [valueRecords, setValueRecords] = useState([]);
   const [ismobile, setIsmobile] = useState(null);
+  // const router = useRouter()
+  // const { query } = router;
+  // useEffect(() => {
+  // console.log("router", router)
 
+  //   // router.replace('/home')
+  // }, [query])
   const addOffsetforPagination = (id) => {
     !visitedPages.includes(id) && setUser(prev => ({...prev, visitedPages: [...prev.visitedPages, id]}))
   }
@@ -81,7 +87,7 @@ const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
     if (pagination) addOffsetforPagination(pagination)
     setIsmobile(navigator?.userAgentData?.mobile);
   }, []);
-  // console.log(user)
+  // console.log(data)
   return (
     <Layout>
       <Meta />
@@ -115,8 +121,8 @@ export async function getServerSideProps(context) {
   const offset = "" || (await context.query.clientOffset);
   const url =
     offset === undefined
-      ? "https://api.airtable.com/v0/appHMNZpRfMeHIZGc/Value%20Generated?sort%5B0%5D%5Bfield%5D=Created&sort%5B0%5D%5Bdirection%5D=desc"
-      : `https://api.airtable.com/v0/appHMNZpRfMeHIZGc/Value%20Generated?sort%5B0%5D%5Bfield%5D=Created&sort%5B0%5D%5Bdirection%5D=desc&offset=${offset}`;
+      ? "https://api.airtable.com/v0/appHMNZpRfMeHIZGc/Value%20Generated?sort%5B0%5D%5Bfield%5D=Source+date&sort%5B0%5D%5Bdirection%5D=desc"
+      : `https://api.airtable.com/v0/appHMNZpRfMeHIZGc/Value%20Generated?sort%5B0%5D%5Bfield%5D=Source+date&sort%5B0%5D%5Bdirection%5D=desc&offset=${offset}`;
   /*   const res = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/api/engage?populate=*`
       );
