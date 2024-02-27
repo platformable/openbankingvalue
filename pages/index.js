@@ -8,10 +8,14 @@ import Filters from "../components/Filters";
 import Hero from "../components/Hero";
 import Meta from "../components/Meta";
 
+import Airtable, { FieldSet, Records } from 'airtable';
+import { getRecords } from "./api/hello";
+
 const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
+  // console.log("Data", data)
   
   const [user, setUser] = useContext(ValueContext);
-  const [filteredData, setFilteredData] = useState(data.records);
+  const [filteredData, setFilteredData] = useState(data);
   const { selectedRegion, typeOfValues, visitedPages } = user;
   const [valueRecords, setValueRecords] = useState([]);
   const [ismobile, setIsmobile] = useState(null);
@@ -56,8 +60,8 @@ const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
     }));
   const clearRegionsState = () => {
     const unrepeatedRegionValues = new Set(null);
-    data?.records?.forEach((row) => {
-      const rowRegions = row.fields["Region (from Country)"];
+    data?.forEach((row) => {
+      const rowRegions = row["Region (from Country)"];
 
       rowRegions?.forEach((region) => unrepeatedRegionValues.add(region));
     });
@@ -88,6 +92,7 @@ const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
     setIsmobile(navigator?.userAgentData?.mobile);
   }, []);
   // console.log(data)
+ 
   return (
     <Layout>
       <Meta />
@@ -129,14 +134,10 @@ export async function getServerSideProps(context) {
       const data = await res.json(); */
 
   try {
-    const [data, valueCategories, beneficiaries] = await Promise.all([
-      fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.PLATFORMABLE_AIRTABLE_KEY}`,
-        },
-      }).then((res) => res.json()),
+    const rawData= await getRecords()
+    // const z = await rawData.json()
+    const [ valueCategories, beneficiaries] = await Promise.all([
+     
       fetch(
         "https://api.airtable.com/v0/appHMNZpRfMeHIZGc/LOOKUP%20Value%20taxonomy",
         {
@@ -161,11 +162,11 @@ export async function getServerSideProps(context) {
     ]);
    
 
-    const pagination = (await data?.offset) || null;
+    const pagination = '' ;
     return {
       props: {
         pagination,
-        data,
+        data: rawData,
         valueCategories,
         beneficiaries,
       },

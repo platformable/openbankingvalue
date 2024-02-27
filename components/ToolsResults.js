@@ -58,7 +58,7 @@ const ToolsResults = ({
         <div className=" flex md:justify-between px-10 items-center justify-between ">
           <p className=" text-2xl">
             Showing <strong>{content?.length}</strong> success stories{" "}
-            <strong>of 170</strong>
+            {/* <strong>of 170</strong> */}
           </p>
           <div className={`flex flex-1 justify-end p-3 pr-0 gap-x-2`}>
             {visitedPages.map((offsetID, index) => (
@@ -86,14 +86,17 @@ const ToolsResults = ({
       <div className="px-10">
         <div className="md:px-14 lg:px-0 card-container grid gap-4 xl:grid-cols-3 grid-cols-1 my-5 mb-20 ">
           {content?.length > 0 ? (
-            content.map((item, index, array) => (
-              <div
+            content.map((item, index, array) => 
+              {
+                console.log('item description', item)
+                return(
+                  <div
                 id={item.id}
                 key={index}
-                className="card shadow-md rounded-md flex flex-col w-96gap-5 rounded py-5 px-5 md:mx-0 " /* onClick={()=>handleSelected(item)} */
+                className="card shadow-md rounded-md flex flex-col  gap-5 rounded py-5 px-5 md:mx-0 " /* onClick={()=>handleSelected(item)} */
               >
-                {/* <p>{item.fields["Source date"]}</p> */}
-                <div className="md:w-7/12 card-top flex justify-center lg:w-full mx-auto   ">
+                {/* <p>{item?.["Source date"]}</p> */}
+                <div className="card-top flex justify-center  mx-auto   ">
                   {/* <div className="flex  md:justify-end justify-center mb-5 mr-5">
                     <p className="bg-red-orange-dark text-white text-xs pt-2 pb-2 px-5 rounded">
                       {selectedTypeOfValue === "All"
@@ -101,17 +104,17 @@ const ToolsResults = ({
                         : selectedTypeOfValue}
                     </p>
                   </div> */}
-                  {item.fields["Logo (from Fintech involved)"] ||
-                  item.fields["Logo (from Banks involved)"] ? (
+                  {item?.["Logo (from Fintech involved)"] ||
+                  item?.["Logo (from Banks involved)"] ? (
                     <img
                       src={
-                        item.fields["Logo (from Banks involved)"]?.[0]
+                        item?.["Logo (from Banks involved)"]?.[0]
                           .thumbnails.large.url ||
-                        item.fields["Logo (from Fintech involved)"]?.[0]
+                        item?.["Logo (from Fintech involved)"]?.[0]
                           .thumbnails.large.url
                       }
                       alt="Fintech logo"
-                      className="h-20 "
+                      className="h-20"
                       crossOrigin="*"
                     />
                   ) : (
@@ -125,13 +128,13 @@ const ToolsResults = ({
                 </div>
                 <div className="flex flex-col  ">
                   <p className="leading-relaxed text-sm md:text-2xl font-black text-main-color title-font mt-8">
-                    {item.fields["Data point"] == ""
+                    {item?.["Data point"] == ""
                       ? "numbers"
-                      : item.fields["Data point"]}
+                      : item?.["Data point"]}
                   </p>
                   <div className="leading-relaxed text-sm data-point my-5">
                     <ReactMarkdown
-                      children={item.fields["Data point narrative"]}
+                      children={item?.["Data point narrative"]}
                     />
                   </div>
                 </div>
@@ -164,7 +167,7 @@ const ToolsResults = ({
                     /> */}
 
                   <Link
-                    href={`${item.fields["Source link"] || '#'}`}
+                    href={`${item?.["Source link"] || '#'}`}
                     target="_blank"
                   >
                     <div
@@ -180,7 +183,7 @@ const ToolsResults = ({
                   </Link>
 
                   <Link
-                    href={item.fields["DownloadLink"] || "#"}
+                    href={item?.["DownloadLink"] || "#"}
                     target="_blank"
                     className=""
                   >
@@ -197,7 +200,9 @@ const ToolsResults = ({
                   </Link>
                 </div>
               </div>
-            ))
+                )
+              }
+            )
           ) : (
             <div className="container mx auto w-[500px]">
               <h1 className=" ">No Values</h1>

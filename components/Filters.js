@@ -47,8 +47,8 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
   const groupedCategories = {};
 
   valueRecords.forEach((item) => {
-    const clusterCategory = item.fields["Cluster Category"];
-    const valueGenerationCategory = item.fields["Value Generation Category"];
+    const clusterCategory = item.fields?.["Cluster Category"];
+    const valueGenerationCategory = item.fields?.["Value Generation Category"];
 
     if (!groupedCategories[clusterCategory]) {
       groupedCategories[clusterCategory] = [];
@@ -64,13 +64,13 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
     //   if (typeOfValues["All"]["isSelected"] === true) return true;
     //   return Object.values(typeOfValues)
     //     ?.filter((value) => value.isSelected === true)
-    //     .every((value) => item.fields["Value Category"]?.includes(value.id));
+    //     .every((value) => item.fields?.["Value Category"]?.includes(value.id));
     // },
     (item) => {
       if (Object.values(typeOfValues).every(value => value.isSelected === false)) return true;
       return Object.values(typeOfValues)
         ?.filter((value) => value.isSelected === true)
-        .some((value) => item.fields["Value Category"]?.includes(value.id));
+        .some((value) => item?.["Value Category"]?.includes(value.id));
     },
 
     // Filter for each value of fields array (fields.[])
@@ -80,7 +80,7 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
     //   return Object.entries(selectedRegion)
     //     ?.filter(([key, value]) => value === true)
     //     .every(([key, value]) =>
-    //       item.fields["Region (from Country)"]?.includes(key)
+    //       item.fields?.["Region (from Country)"]?.includes(key)
     //     );
     // },
     (item) => {
@@ -88,7 +88,7 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
       return Object.entries(selectedRegion)
         ?.filter(([key, value]) => value === true)
         .some(([key, value]) =>
-          item.fields["Region (from Country)"]?.includes(key)
+          item?.["Region (from Country)"]?.includes(key)
         );
     },
     // Filter for each value of fields array (fields.[])
@@ -97,13 +97,13 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
     //   if (selectedBeneficiaryId["All"]["isSelected"] === true) return true;
     //   return Object.values(selectedBeneficiaryId)
     //     ?.filter((value) => value.isSelected === true)
-    //     .every((value) => item.fields["Who benefits?"]?.includes(value.id));
+    //     .every((value) => item.fields?.["Who benefits?"]?.includes(value.id));
     // },
     (item) => {
       if (Object.values(selectedBeneficiaryId).every(value => value.isSelected === false)) return true;
       return Object.values(selectedBeneficiaryId)
         ?.filter((value) => value.isSelected === true)
-        .some((value) => item.fields["Who benefits?"]?.includes(value.id));
+        .some((value) => item?.["Who benefits?"]?.includes(value.id));
     },
   ];
   //Recursive function
@@ -121,7 +121,7 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
 
   useEffect(() => {
     // Repopulate from Server records to avoid empty data
-    filterResults(arrayOfFIlters, data?.records);
+    filterResults(arrayOfFIlters, data);
   }, [
     // selectedTypeOfValue,
     data,
@@ -216,7 +216,7 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
                           // onChange={() => {
                           //   setTypeOfValue(valueGenCategory);
                           // }}
-                          checked={typeOfValues[valueGenCategory].isSelected}
+                          checked={typeOfValues[valueGenCategory]?.isSelected}
                           role="option"
                         />
                         <div  className="">
