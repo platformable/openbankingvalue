@@ -123,6 +123,7 @@ const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
 export default Home;
 
 export async function getServerSideProps(context) {
+  console.log("server side",context.query)
   const offset = "" || (await context.query.clientOffset);
   const url =
     offset === undefined

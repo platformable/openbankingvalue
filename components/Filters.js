@@ -18,13 +18,36 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
   const [openValuesList, setValuesList] = useState(false);
   const [openBeneficiaryList, setBeneficiaryList] = useState(false);
   const [clusterCategories, setClusterCategories] = useState([]);
-  // const [ulrEncoded,setUrlEncoded] = useState()
-  // useEffect(() => {
-  //   var encode = "encodeURIComponent";
-  //   encode = encodeURIComponent("{Region (from Country)}=UK".trim());
-  //   console.log(encode)
-  //   // const dispEl =  encode;
-  // }, [])
+  
+  const [filters, setFilters] = useState({
+    values: [],
+    regions: [],
+    stakeholders: [],
+  });
+  // console.log('stakeholders', selectedBeneficiaryId)
+  // console.log('filters', filters)
+
+  const applyFilters = () => {
+    // params.set('showDialog', 'yes');
+    const params = new URLSearchParams()
+    const createParamsString = () => {
+      Object.entries(filters).map(([key, value]) => {
+        if (value.length === 0) return;
+        const filterStringQuery = value.join(",");
+        params.set(key, filterStringQuery);
+      });
+
+
+      return params.toString();
+    };
+    const string = createParamsString()
+    console.log("String params", string) 
+    router.replace(`?${createParamsString()}`, undefined,{ scroll: false });
+    // let timeOutID = setTimeout(() => {
+    //   params.delete('showDialog')
+    //   router.push(`?${createParamsString()}`)
+    // }, 1500)
+  };
 
   useEffect(() => {
     const newCategories = valueRecords.map((value) => {
@@ -268,18 +291,40 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
                   return (
                     <li
                       key={index}
-                      onClick={() =>
-                        setUser((prev) => ({
+                      onClick={() => {
+
+                        //Testing if we need to filter by the query params from nocodb api
+
+                        // setUser((prev) => ({
+                        //   ...prev,
+                        //   selectedBeneficiaryId: {
+                        //     ...prev.selectedBeneficiaryId,
+                        //     [beneficiaryKey]: {
+                        //       ...beneficaryValue,
+                        //       isSelected: !beneficaryValue.isSelected,
+                        //     },
+                        //   },
+                        // }))
+
+                        const newSetValues = new Set(filters.stakeholders)
+                        if (newSetValues.has(beneficiaryKey)) {
+
+                          newSetValues.delete(beneficiaryKey)
+                          
+                        } else {
+                          newSetValues.add(beneficiaryKey)
+                        }
+                       
+                        setFilters(prev => ({
                           ...prev,
-                          selectedBeneficiaryId: {
-                            ...prev.selectedBeneficiaryId,
-                            [beneficiaryKey]: {
-                              ...beneficaryValue,
-                              isSelected: !beneficaryValue.isSelected,
-                            },
-                          },
+                          stakeholders: Array.from(newSetValues)
                         }))
-                      }
+                        // applyFilters()
+                        router.replace({
+                          pathname: router.pathname,
+                          query: { ...router.query, stakeholder: Array.from(newSetValues) },
+                        }, undefined,{ scroll: false });
+                      }}
                       className="hover:bg-[var(--light-yellow)] flex items-center select-none  py-2 px-3 cursor-pointer "
                       id="listbox-option-0"
                       role="option"
@@ -288,7 +333,7 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
                         type="checkbox"
                         className="orange-checkbox"
                         // defaultChecked={beneficaryValue?.isSelected}
-                        checked={beneficaryValue?.isSelected}
+                        checked={filters.stakeholders.includes(beneficiaryKey)}
                         // onChange={() =>
                         //   setUser((prev) => ({
                         //     ...prev,

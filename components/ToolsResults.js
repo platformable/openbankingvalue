@@ -88,7 +88,6 @@ const ToolsResults = ({
           {content?.length > 0 ? (
             content.map((item, index, array) => 
               {
-                console.log('item description', item)
                 return(
                   <div
                 id={item.id}
