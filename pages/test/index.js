@@ -33,7 +33,7 @@ console.log("filtered data res",filteredData)
   return (
     <Layout>
       
-      <section className="sm:grid sm:grid-rows-1 lg:grid lg:grid-cols-[1fr_3fr] container mx-auto mt-5">
+      <section className="sm:grid sm:grid-rows-1 lg:grid lg:grid-cols-[1fr_3fr] container mx-auto mt-5 gap-10">
       <Filters
           data={data}
           setFilteredData={setFilteredData}
@@ -47,7 +47,7 @@ console.log("filtered data res",filteredData)
         {filteredData && (
           <div className="flex flex-col">
             <section className="pagination flex flex-col ">
-            <div className=" flex md:justify-between px-10 items-center justify-between ">
+            <div className=" flex md:justify-between items-center justify-between ">
               <p className=" text-2xl">
                 Showing <strong>{filteredData?.length}</strong> success stories{" "}
                 {/* <strong>of 170</strong> */}

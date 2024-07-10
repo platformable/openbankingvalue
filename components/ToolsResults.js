@@ -59,7 +59,7 @@ const ToolsResults = ({
 
       {/* Those are the result cards */}
 
-      <div className="px-10">
+      <div className="">
         <div className="md:px-14 lg:px-0 card-container grid gap-4 xl:grid-cols-3 grid-cols-1 my-5 mb-20 ">
           {content?.length > 0 ? (
             content.map((item, index, array) => 
