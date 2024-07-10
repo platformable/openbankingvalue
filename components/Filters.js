@@ -183,7 +183,9 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
             ([clusterCategory, values], index) => (
               <div key={index} className="">
                 <div className="flex justify-start items-center gap-2  px-3 py-3">
-                  <input type="checkbox" name="cluster-option"  onChange={(e) => {
+                  <input type="checkbox" name="cluster-option" 
+                   checked={values?.every(item => typeOfValues[item]?.isSelected)}
+                  onChange={(e) => {
                         // console.log(values)
                         // setTypeOfValueAll(clusterCategories)val
                         values.forEach(val => setTypeOfValue(val))
@@ -295,35 +297,35 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
 
                         //Testing if we need to filter by the query params from nocodb api
 
-                        // setUser((prev) => ({
-                        //   ...prev,
-                        //   selectedBeneficiaryId: {
-                        //     ...prev.selectedBeneficiaryId,
-                        //     [beneficiaryKey]: {
-                        //       ...beneficaryValue,
-                        //       isSelected: !beneficaryValue.isSelected,
-                        //     },
-                        //   },
-                        // }))
-
-                        const newSetValues = new Set(filters.stakeholders)
-                        if (newSetValues.has(beneficiaryKey)) {
-
-                          newSetValues.delete(beneficiaryKey)
-                          
-                        } else {
-                          newSetValues.add(beneficiaryKey)
-                        }
-                       
-                        setFilters(prev => ({
+                        setUser((prev) => ({
                           ...prev,
-                          stakeholders: Array.from(newSetValues)
+                          selectedBeneficiaryId: {
+                            ...prev.selectedBeneficiaryId,
+                            [beneficiaryKey]: {
+                              ...beneficaryValue,
+                              isSelected: !beneficaryValue.isSelected,
+                            },
+                          },
                         }))
-                        // applyFilters()
-                        router.replace({
-                          pathname: router.pathname,
-                          query: { ...router.query, stakeholder: Array.from(newSetValues) },
-                        }, undefined,{ scroll: false });
+
+                        // const newSetValues = new Set(filters.stakeholders)
+                        // if (newSetValues.has(beneficiaryKey)) {
+
+                        //   newSetValues.delete(beneficiaryKey)
+                          
+                        // } else {
+                        //   newSetValues.add(beneficiaryKey)
+                        // }
+                       
+                        // setFilters(prev => ({
+                        //   ...prev,
+                        //   stakeholders: Array.from(newSetValues)
+                        // }))
+                        // // applyFilters()
+                        // router.replace({
+                        //   pathname: router.pathname,
+                        //   query: { ...router.query, stakeholder: Array.from(newSetValues) },
+                        // }, undefined,{ scroll: false });
                       }}
                       className="hover:bg-[var(--light-yellow)] flex items-center select-none  py-2 px-3 cursor-pointer "
                       id="listbox-option-0"
@@ -332,8 +334,8 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
                       <input
                         type="checkbox"
                         className="orange-checkbox"
-                        // defaultChecked={beneficaryValue?.isSelected}
-                        checked={filters.stakeholders.includes(beneficiaryKey)}
+                        checked={beneficaryValue?.isSelected}
+                        // checked={filters.stakeholders.includes(beneficiaryKey)}
                         // onChange={() =>
                         //   setUser((prev) => ({
                         //     ...prev,

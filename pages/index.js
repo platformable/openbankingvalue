@@ -22,7 +22,7 @@ const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
   // const router = useRouter()
   // const { query } = router;
   // useEffect(() => {
-  // console.log("router", router)
+  console.log("dmsadsa", typeOfValues, selectedRegion)
 
   //   // router.replace('/home')
   // }, [query])

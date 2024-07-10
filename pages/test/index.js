@@ -1,75 +1,32 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
+import React, { useState, useEffect, useContext, useMemo,  } from "react";
 import Layout from  '../../components/Layout'
-import { ValueContext } from "../../context/valueContext";
 
 
 
 import { getValuesGenerated } from "../api/nocodb";
 import { getValuesTaxonomy } from "../api/nocodb-value-taxonomy";
 import { getStakeholders } from "../api/nocodb-stakeholders";
+import ToolsResults from "../../components/ToolsResults";
+import AppliedFiltersLabels from "../../components/AppliedFiltersLabels";
 
-const Test = ({ data, valueCategories, beneficiaries, regions }) => {
-  // console.log(regions)
+const initialState = {
+  values: [],
+  regions: [],
+  stakeholders: [],
+}
+const Test = ({ data, valueCategories, stakeholders, regions,  }) => {
   const [filteredData, setFilteredData] = useState(data);
-  const [valueRecords, setValueRecords] = useState([]);
+  const [valueRecords, setValueRecords] = useState(valueCategories);
+  const [filters, setFilters] = useState(initialState);
 
-  const [user, setUser] = useContext(ValueContext);
-  const { selectedRegion, typeOfValues, visitedPages } = user;
   // console.log(valueCategories)
-  const clearTypeOfValuesState = () =>
-  setUser((prev) => ({
-    ...prev,
-    typeOfValues: Object.assign(
-      {},
-      prev.typeOfValues,
-      ...valueCategories?.map((value) => ({
-        [value["ValueGenerationCategory"]]: {
-          // id: value.id,
-          isSelected: false,
-        },
-      }))
-    ),
-  }));
-const clearBenefieciarieSelectedState = () =>
-  setUser((prev) => ({
-    ...prev,
-    selectedBeneficiaryId: Object.assign(
-      {},
-      prev.selectedBeneficiaryId,
-      ...beneficiaries?.map((beneficiary) => ({
-        [beneficiary["Segment"]]: {
-          // id: beneficiary.id,
-          isSelected: false,
-        },
-      }))
-    ),
-  }));
-const clearRegionsState = () => {
-  // const unrepeatedRegionValues = new Set(null);
-  // data?.forEach((row) => {
-  //   const rowRegions = row["Region"];
 
-  //   rowRegions?.forEach((region) => unrepeatedRegionValues.add(region));
-  // });
-  // console.log(Array.from(unrepeatedRegionValues))
-  setUser((prev) => ({
-    ...prev,
-    selectedRegion: Object.assign(
-      {},
-      prev.selectedRegion,
-      ...regions?.map((value) => ({[value.Region]:  false}) )
-      ) 
-     
-  }));
-};
 const setInitialStates = () => {
-  clearTypeOfValuesState();
-  clearBenefieciarieSelectedState();
-  clearRegionsState();
+  setFilters(initialState)
 };
 useEffect(() => {
   setInitialStates();
-  setValueRecords(valueCategories)
+  // setValueRecords(valueCategories)
   
 }, []);
 console.log("filtered data res",filteredData)
@@ -81,12 +38,48 @@ console.log("filtered data res",filteredData)
           data={data}
           setFilteredData={setFilteredData}
           valueRecords={valueRecords}
+          stakeholders={stakeholders}
+          regions={regions}
+          filters={filters}
+          setFilters={setFilters}
         />
+        
         {filteredData && (
           <div className="flex flex-col">
-          {filteredData.length} values
+            <section className="pagination flex flex-col ">
+            <div className=" flex md:justify-between px-10 items-center justify-between ">
+              <p className=" text-2xl">
+                Showing <strong>{filteredData?.length}</strong> success stories{" "}
+                {/* <strong>of 170</strong> */}
+              </p>
+              {/* <div className={`flex flex-1 justify-end p-3 pr-0 gap-x-2`}>
+                {visitedPages.map((offsetID, index) => (
+                  <button
+                    className={`${
+                      visitedPages.indexOf(router?.query?.clientOffset || "") ===
+                      index
+                        ? "bg-[#9978F0]"
+                        : "bg-[var(--purple-medium)]"
+                    }  btn w-10 py-2 rounded text-white`}
+                    onClick={() => handleNextPage(offsetID)}
+                    key={index}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
+              </div> */}
+            </div>
+            <AppliedFiltersLabels setInitialStates={setInitialStates} filters={filters} 
+              />
+        </section>
+            <ToolsResults
+              // typeOfValues={typeOfValues}
+              content={filteredData}
+              // selectedRegion={selectedRegion}
+              // setInitialStates={setInitialStates}
+            />
           </div>
-        )} 
+        )}
       </section>
       <div className="footer-top-bar h-12"></div>
     </Layout>
@@ -109,7 +102,7 @@ export async function getServerSideProps(context) {
       props: {
         data: dataResponse.list,
         valueCategories: valuesTaxonomy.list,
-        beneficiaries : stakeholders.list,
+        stakeholders : stakeholders.list,
         regions: regions.list
       },
     };
@@ -123,17 +116,9 @@ export async function getServerSideProps(context) {
 import { useRouter } from "next/navigation";
 import { getRegions } from "../api/nocodb-regions";
  
-function Filters({ setFilteredData, data, valueRecords }) {
+function Filters({ setFilteredData, data, valueRecords, filters, setFilters, stakeholders, regions }) {
 
 
-  const [user, setUser, setTypeOfValue, setTypeOfValueAll] = useContext(ValueContext);
-  const {
-    selectedTypeOfValue,
-    typeOfValues,
-    selectedRegion,
-    selectedBeneficiaryId,
-    checkOffset,
-  } = user;
   const router = useRouter()
 
   const [openRegionList, setRegionList] = useState(false);
@@ -141,13 +126,8 @@ function Filters({ setFilteredData, data, valueRecords }) {
   const [openBeneficiaryList, setBeneficiaryList] = useState(false);
   const [clusterCategories, setClusterCategories] = useState([]);
   
-  const [filters, setFilters] = useState({
-    values: [],
-    regions: [],
-    stakeholders: [],
-  });
-  // console.log('stakeholders', selectedBeneficiaryId)
-  console.log('filters', filters)
+  console.log('fitlters', filters)
+  // console.log('filters', filters)
 
   const applyFilters = () => {
     // params.set('showDialog', 'yes');
@@ -211,10 +191,13 @@ function Filters({ setFilteredData, data, valueRecords }) {
   useEffect(() => {
       // Repopulate from Server records to avoid empty data
     const queryParams = applyFilters()
-    if (queryParams) {
+    // console.log("filter query params result",queryParams)
+
+    // if (queryParams) are now present is ok, we are doing the verification on api routes
+
      fetch('/api/nocodb?' + queryParams).then(res => res.json()).then(data => setFilteredData(data))
 
-    }
+    
     }, [
       // selectedTypeOfValue,
       data,
@@ -270,7 +253,7 @@ function Filters({ setFilteredData, data, valueRecords }) {
   //   selectedRegion,
   //   selectedBeneficiaryId,
   // ]);
-console.log(groupedCategories)
+// console.log(groupedCategories)
   return (
     <div
       id="filter-container"
@@ -301,10 +284,28 @@ console.log(groupedCategories)
             ([clusterCategory, values], index) => (
               <div key={index} className="">
                 <div className="flex justify-start items-center gap-2  px-3 py-3">
-                  <input type="checkbox" name="cluster-option"  onChange={(e) => {
+                  <input type="checkbox" name="cluster-option"  
+                  checked={values.every(val => filters.values?.includes(val))}
+                  onChange={(e) => {
                         // console.log(values)
                         // setTypeOfValueAll(clusterCategories)val
-                        values.forEach(val => setTypeOfValue(val))
+                        const set = new Set(filters.values)
+
+                        filters?.values.includes(clusterCategory) ? set.delete(clusterCategory) : set.add(clusterCategory)
+                        
+                        values.forEach(val => {
+                          !set.has(clusterCategory) ? set.delete(val) : set.add(val)
+                        })
+
+
+                        setFilters(prev => ({
+                          ...prev,
+                          values: [...Array.from(set)]
+                        }))
+                        // setFilters(prev => ({
+                        //   ...prev,
+                        //   values: [...prev.values, ...values]
+                        // }))
                         // router.push({
                         //   pathname: "/",
                         //   query: { filter: clusterCategory } ,
@@ -418,8 +419,8 @@ console.log(groupedCategories)
               aria-activedescendant="listbox-option-3"
               // onMouseLeave={() => setBeneficiaryList((prev) => !prev)}
             >
-              {Object.entries(selectedBeneficiaryId)?.map(
-                ([beneficiaryKey, beneficaryValue], index) => {
+              {stakeholders?.map(
+                (stakeholderKey, index) => {
                   return (
                     <li
                       key={index}
@@ -431,7 +432,7 @@ console.log(groupedCategories)
                         //   ...prev,
                         //   selectedBeneficiaryId: {
                         //     ...prev.selectedBeneficiaryId,
-                        //     [beneficiaryKey]: {
+                        //     [stakeholderKey.Segment]: {
                         //       ...beneficaryValue,
                         //       isSelected: !beneficaryValue.isSelected,
                         //     },
@@ -439,12 +440,12 @@ console.log(groupedCategories)
                         // }))
 
                         const newSetValues = new Set(filters.stakeholders)
-                        if (newSetValues.has(beneficiaryKey)) {
+                        if (newSetValues.has(stakeholderKey.Segment)) {
 
-                          newSetValues.delete(beneficiaryKey)
+                          newSetValues.delete(stakeholderKey.Segment)
                           
                         } else {
-                          newSetValues.add(beneficiaryKey)
+                          newSetValues.add(stakeholderKey.Segment)
                         }
                        
                         setFilters(prev => ({
@@ -452,10 +453,10 @@ console.log(groupedCategories)
                           stakeholders: Array.from(newSetValues)
                         }))
                         // applyFilters()
-                        router.replace({
-                          pathname: router.pathname,
-                          query: { ...router.query, stakeholder: Array.from(newSetValues) },
-                        }, undefined,{ scroll: false });
+                        // router.replace({
+                        //   pathname: router.pathname,
+                        //   query: { ...router.query, stakeholder: Array.from(newSetValues) },
+                        // }, undefined,{ scroll: false });
                       }}
                       className="hover:bg-[var(--light-yellow)] flex items-center select-none  py-2 px-3 cursor-pointer "
                       id="listbox-option-0"
@@ -465,13 +466,13 @@ console.log(groupedCategories)
                         type="checkbox"
                         className="orange-checkbox"
                         // defaultChecked={beneficaryValue?.isSelected}
-                        checked={filters.stakeholders.includes(beneficiaryKey)}
+                        checked={filters.stakeholders.includes(stakeholderKey.Segment)}
                         // onChange={() =>
                         //   setUser((prev) => ({
                         //     ...prev,
                         //     selectedBeneficiaryId: {
                         //       ...prev.selectedBeneficiaryId,
-                        //       [beneficiaryKey]: {
+                        //       [stakeholderKey.Segment]: {
                         //         ...beneficaryValue,
                         //         isSelected: !beneficaryValue.isSelected,
                         //       },
@@ -481,7 +482,7 @@ console.log(groupedCategories)
                       />
                       <div className="flex items-center">
                         <span className="font-normal ml-3 ">
-                          {beneficiaryKey}
+                          {stakeholderKey.Segment}
                         </span>
                       </div>
                     </li>
@@ -523,18 +524,32 @@ console.log(groupedCategories)
               aria-activedescendant="listbox-option-3"
               // onMouseLeave={(prev) => setSelectedRegion(!prev)}
             >
-              {Object.keys(selectedRegion).map((regionKey, index) => {
+              {regions?.map((regionKey, index) => {
                 return (
                   <li
                     key={index}
-                    onClick={() =>
-                      setUser((prev) => ({
+                    onClick={() =>  {
+                      // setUser((prev) => ({
+                      //   ...prev,
+                      //   selectedRegion: {
+                      //     ...prev.selectedRegion,
+                      //     [regionKey.Region]: !prev.selectedRegion[regionKey.Region],
+                      //   },
+                      // }))
+                      const newSetValues = new Set(filters.regions)
+                      if (newSetValues.has(regionKey.Region)) {
+
+                        newSetValues.delete(regionKey.Region)
+                        
+                      } else {
+                        newSetValues.add(regionKey.Region)
+                      }
+                     
+                      setFilters(prev => ({
                         ...prev,
-                        selectedRegion: {
-                          ...prev.selectedRegion,
-                          [regionKey]: !prev.selectedRegion[regionKey],
-                        },
+                        regions: Array.from(newSetValues)
                       }))
+                    }
                     }
                     className=" hover:bg-[var(--light-purple)] flex items-center select-none py-2 px-3 cursor-pointer "
                     id="listbox-option-0"
@@ -543,11 +558,11 @@ console.log(groupedCategories)
                     <input
                       type="checkbox"
                       className="purple-checkbox"
-                      checked={selectedRegion[regionKey] === true}
+                      checked={filters.regions.includes(regionKey.Region)}
                       
                     />
                     <div className="flex items-center">
-                      <span className="font-normal ml-3 ">{regionKey}</span>
+                      <span className="font-normal ml-3 ">{regionKey.Region}</span>
                     </div>
                   </li>
                 );

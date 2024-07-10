@@ -21,7 +21,7 @@ export async function getValuesGenerated(queryParams) {
       []
     )
     .join("~and");
-
+    console.log("server params", paramsString)
   const api = new Api({
     baseURL: process.env.NEXT_PUBLIC_NOCODB_API_URL,
     headers: {
@@ -33,7 +33,7 @@ export async function getValuesGenerated(queryParams) {
       "noco",
       "Core Dataset Prod",
       "ValuesGenerated",
-      "Dev",
+      "ValuesGenerated",
       {
         offset: 0,
         limit: 200,

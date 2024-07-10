@@ -54,31 +54,7 @@ const ToolsResults = ({
 
   return (
     <>
-      <section className="pagination flex flex-col ">
-        <div className=" flex md:justify-between px-10 items-center justify-between ">
-          <p className=" text-2xl">
-            Showing <strong>{content?.length}</strong> success stories{" "}
-            {/* <strong>of 170</strong> */}
-          </p>
-          <div className={`flex flex-1 justify-end p-3 pr-0 gap-x-2`}>
-            {visitedPages.map((offsetID, index) => (
-              <button
-                className={`${
-                  visitedPages.indexOf(router?.query?.clientOffset || "") ===
-                  index
-                    ? "bg-[#9978F0]"
-                    : "bg-[var(--purple-medium)]"
-                }  btn w-10 py-2 rounded text-white`}
-                onClick={() => handleNextPage(offsetID)}
-                key={index}
-              >
-                {index + 1}
-              </button>
-            ))}
-          </div>
-        </div>
-        <AppliedFiltersLabels setInitialStates={setInitialStates} />
-      </section>
+      
       {/* end of pagination */}
 
       {/* Those are the result cards */}
@@ -127,13 +103,13 @@ const ToolsResults = ({
                 </div>
                 <div className="flex flex-col  ">
                   <p className="leading-relaxed text-sm md:text-2xl font-black text-main-color title-font mt-8">
-                    {item?.["Data point"] == ""
+                    {item?.["DataPoint"] == ""
                       ? "numbers"
-                      : item?.["Data point"]}
+                      : item?.["DataPoint"]}
                   </p>
                   <div className="leading-relaxed text-sm data-point my-5">
                     <ReactMarkdown
-                      children={item?.["Data point narrative"]}
+                      children={item?.["DataPointNarrative"]}
                     />
                   </div>
                 </div>
@@ -166,14 +142,14 @@ const ToolsResults = ({
                     /> */}
 
                   <Link
-                    href={`${item?.["Source link"] || '#'}`}
+                    href={`${item?.["SourceLink"] || '#'}`}
                     target="_blank"
                   >
                     <div
                       className={`bg-[var(--purple-medium)] w-full pr-2 text-white h-10 w-4/6 rounded text-xs flex items-center `}
                     >
                       <img src="./open-use-case.svg" className="pt-2 pl-1" />
-                      {/* {item?.fields["Source link"]?.slice(0, 30)}... */}
+                      {/* {item?.fields["SourceLink"]?.slice(0, 30)}... */}
                       <span className="hidden md:inline-block">
                         Source link
                       </span>
@@ -210,7 +186,7 @@ const ToolsResults = ({
 
           {/* end of card */}
         </div>
-        <div className={`flex flex-1  p-3 pr-0 justify-center gap-x-2`}>
+        {/* <div className={`flex flex-1  p-3 pr-0 justify-center gap-x-2`}>
           {visitedPages.map((offsetID, index) => (
             <button
               className={`${
@@ -225,7 +201,7 @@ const ToolsResults = ({
               {index + 1}
             </button>
           ))}
-        </div>
+        </div> */}
       </div>
     </>
   );
