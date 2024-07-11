@@ -33,6 +33,7 @@ const ToolsResults = ({
     });
   };
   
+  console.log("content", content)
 
   const printRef = React.useRef();
 
@@ -77,26 +78,24 @@ const ToolsResults = ({
                         : selectedTypeOfValue}
                     </p>
                   </div> */}
-                  {item?.["Logo (from Fintech involved)"] ||
-                  item?.["Logo (from Banks involved)"] ? (
+                  {item?.EntityLogo?.[0]? (
+                    <div className="max-h-20">
                     <img
                       src={
-                        item?.["Logo (from Banks involved)"]?.[0]
-                          .thumbnails.large.url ||
-                        item?.["Logo (from Fintech involved)"]?.[0]
-                          .thumbnails.large.url
+                        item?.EntityLogo?.[0]?.url
                       }
                       alt="Fintech logo"
-                      className="h-20"
+                      className="max-w-20"
                       crossOrigin="*"
-                    />
+                    /></div> 
                   ) : (
+                    <div className="">
                     <img
                       src="/no_logo.svg"
                       alt="Fintech logo"
                       crossOrigin="*"
-                      className="h-20"
-                    />
+                      className="h-12"
+                    /></div> 
                   )}
                 </div>
                 <div className="flex flex-col  ">
