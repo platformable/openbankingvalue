@@ -17,7 +17,7 @@ const initialState = {
 const Index = ({ data, valueCategories, stakeholders, regions,  }) => {
   const [filteredData, setFilteredData] = useState(data);
   const [filters, setFilters] = useState(initialState);
-
+  const [loading, setLoading] = useState(false)
 //  console.log(data, valueCategories, stakeholders, regions)
 // console.log("filtered data res",filteredData)
 
@@ -32,7 +32,16 @@ useEffect(() => {
     <Layout>
       <Meta />
       <Hero />
-      <section className="sm:grid sm:grid-rows-1 lg:grid lg:grid-cols-[1fr_3fr] container mx-auto mt-5 gap-10">
+      {loading === true && (
+        <>
+        <div className="h-screen fixed z-10 overflow-hidden top-0 left-0 w-full bg-gray-800/50 flex justify-center items-center">
+        <img src="/spinner.gif" alt="" />
+      </div>
+        </>
+      )}
+      
+
+      <section className="relative sm:grid sm:grid-rows-1 lg:grid lg:grid-cols-[1fr_3fr] container mx-auto mt-5 gap-10">
       <Filters
           data={data}
           setFilteredData={setFilteredData}
@@ -41,8 +50,9 @@ useEffect(() => {
           regions={regions}
           filters={filters}
           setFilters={setFilters}
+          setLoading={setLoading}
         />
-        
+
         {filteredData && (
           <div className="flex flex-col">
             <section className="pagination flex flex-col ">
@@ -93,7 +103,7 @@ export async function getServerSideProps(context) {
 
 
  
-function Filters({ setFilteredData, data, valueCategories, filters, setFilters, stakeholders, regions }) {
+function Filters({ setFilteredData, data, valueCategories, filters, setFilters, stakeholders, regions, setLoading }) {
 
   const [openRegionList, setRegionList] = useState(false);
   const [openValuesList, setValuesList] = useState(false);
@@ -163,15 +173,17 @@ function Filters({ setFilteredData, data, valueCategories, filters, setFilters, 
   });
   useEffect(() => {
     const queryParams = applyFilters()
-    // console.log("filter query params result",queryParams)
 
     // if (queryParams) are now present is ok, we are doing the verification on api routes
-
-     fetch('/api/nocodb?' + queryParams)
-     .then(res => res.json())
-     .then(data => setFilteredData(data))
-     .catch(error => console.log(error))
-
+    if (queryParams !== '') {
+      setLoading(true)
+      fetch('/api/nocodb?' + queryParams)
+      .then(res => res.json())
+      .then(data => setFilteredData(data))
+      .catch(error => console.log(error))
+     .finally(() => setLoading(false))
+    }
+      
     
     }, [
       data,
