@@ -36,27 +36,26 @@ const ToolsResults = ({
 
   const printRef = React.useRef();
 
-  const handleDownloadImage = async (element) => {
-    const item = document.getElementById(element.id);
-    const canvas = await html2canvas(item, { allowTaint: true, useCORS: true });
+  // const handleDownloadImage = async (element) => {
 
-    const data = canvas.toDataURL("image/png", 1);
-    const link = document.createElement("a");
+  //   const item = document.getElementById(element.id);
+  //   const canvas = await html2canvas(item, { allowTaint: true, useCORS: true });
 
-    if (typeof link.download === "string") {
-      link.href = data;
-      link.download = "card.png";
-      link.click();
-    } else {
-      window.open(data);
-    }
-  };
+  //   const data = canvas.toDataURL("image/png", 1);
+  //   const link = document.createElement("a");
+
+  //   if (typeof link.download === "string") {
+  //     link.href = data;
+  //     link.download = "card.png";
+  //     link.click();
+  //   } else {
+  //     window.open(data);
+  //   }
+  // };
 
   return (
     <>
       
-      {/* end of pagination */}
-
       {/* Those are the result cards */}
 
       <div className="">

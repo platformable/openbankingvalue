@@ -3,7 +3,7 @@
 import { Api } from "nocodb-sdk";
 
 export async function getValuesGenerated(queryParams) {
-  console.log("query in server", queryParams);
+  // console.log("query in server", queryParams);
   // const {typeOfValues,selectedRegion,selectedBeneficiaryId} = queryParams
   const hasParams = queryParams ? true : false;
 

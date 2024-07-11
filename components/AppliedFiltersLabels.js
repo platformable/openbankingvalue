@@ -40,7 +40,7 @@ const AppliedFiltersLabels = ({ setInitialStates, initialState, filters }) => {
   return (
     <>
       {anySelection && (
-        <div className="hidden md:flex flex-wrap text-sm px-10 my-10 gap-x-3 md:gap-3">
+        <div className="hidden md:flex flex-wrap text-sm my-10 gap-x-3 md:gap-3">
           {/* Render "Clear All" label */}
           <div
             className={`bg-[var(--purple-medium)] py-1 px-3 flex justify-between gap-3 lg:gap-5 rounded-sm text-white`}
