@@ -185,6 +185,7 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
                 <div className="flex justify-start items-center gap-2  px-3 py-3">
                   <input type="checkbox" name="cluster-option" 
                    checked={values?.every(item => typeOfValues[item]?.isSelected)}
+
                   onChange={(e) => {
                         // console.log(values)
                         // setTypeOfValueAll(clusterCategories)val

@@ -55,7 +55,6 @@ const ToolsResults = ({
 
   return (
     <>
-      
       {/* Those are the result cards */}
 
       <div className="">
