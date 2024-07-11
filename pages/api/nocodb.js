@@ -13,7 +13,7 @@ export async function getValuesGenerated(queryParams) {
 
   const paramsString = Object.entries({
     ValueCategory: valuesQuery,
-    Region: regionsQuery,
+    RegionDetail: regionsQuery,
     StakeholdersList: stakeholdersQuery,
   })
     .reduce(
