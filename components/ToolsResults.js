@@ -36,64 +36,40 @@ const ToolsResults = ({
 
   const printRef = React.useRef();
 
-  const handleDownloadImage = async (element) => {
-    const item = document.getElementById(element.id);
-    const canvas = await html2canvas(item, { allowTaint: true, useCORS: true });
+  // const handleDownloadImage = async (element) => {
 
-    const data = canvas.toDataURL("image/png", 1);
-    const link = document.createElement("a");
+  //   const item = document.getElementById(element.id);
+  //   const canvas = await html2canvas(item, { allowTaint: true, useCORS: true });
 
-    if (typeof link.download === "string") {
-      link.href = data;
-      link.download = "card.png";
-      link.click();
-    } else {
-      window.open(data);
-    }
-  };
+  //   const data = canvas.toDataURL("image/png", 1);
+  //   const link = document.createElement("a");
+
+  //   if (typeof link.download === "string") {
+  //     link.href = data;
+  //     link.download = "card.png";
+  //     link.click();
+  //   } else {
+  //     window.open(data);
+  //   }
+  // };
 
   return (
     <>
-      <section className="pagination flex flex-col ">
-        <div className=" flex md:justify-between px-10 items-center justify-between ">
-          <p className=" text-2xl">
-            Showing <strong>{content?.length}</strong> success stories{" "}
-            <strong>of 175</strong>
-          </p>
-          <div className={`flex flex-1 justify-end p-3 pr-0 gap-x-2`}>
-            {visitedPages.map((offsetID, index) => (
-              <button
-                className={`${
-                  visitedPages.indexOf(router?.query?.clientOffset || "") ===
-                  index
-                    ? "bg-[#9978F0]"
-                    : "bg-[var(--purple-medium)]"
-                }  btn w-10 py-2 rounded text-white`}
-                onClick={() => handleNextPage(offsetID)}
-                key={index}
-              >
-                {index + 1}
-              </button>
-            ))}
-          </div>
-        </div>
-        <AppliedFiltersLabels setInitialStates={setInitialStates} />
-      </section>
-      {/* end of pagination */}
-
       {/* Those are the result cards */}
 
-      <div className="px-10">
+      <div className="">
         <div className="md:px-14 lg:px-0 card-container grid gap-4 xl:grid-cols-3 grid-cols-1 my-5 mb-20 ">
           {content?.length > 0 ? (
-            content.map((item, index, array) => (
-              <div
+            content.map((item, index, array) => 
+              {
+                return(
+                  <div
                 id={item.id}
                 key={index}
-                className="card shadow-md rounded-md flex flex-col w-96gap-5 rounded py-5 px-5 md:mx-0 " /* onClick={()=>handleSelected(item)} */
+                className="card shadow-md rounded-md flex flex-col  gap-5 rounded py-5 px-5 md:mx-0 " /* onClick={()=>handleSelected(item)} */
               >
-                {/* <p>{item.fields["Source date"]}</p> */}
-                <div className="md:w-7/12 card-top flex justify-center lg:w-full mx-auto   ">
+                {/* <p>{item?.["Source date"]}</p> */}
+                <div className="card-top flex justify-center  mx-auto   ">
                   {/* <div className="flex  md:justify-end justify-center mb-5 mr-5">
                     <p className="bg-red-orange-dark text-white text-xs pt-2 pb-2 px-5 rounded">
                       {selectedTypeOfValue === "All"
@@ -101,17 +77,17 @@ const ToolsResults = ({
                         : selectedTypeOfValue}
                     </p>
                   </div> */}
-                  {item.fields["Logo (from Fintech involved)"] ||
-                  item.fields["Logo (from Banks involved)"] ? (
+                  {item?.["Logo (from Fintech involved)"] ||
+                  item?.["Logo (from Banks involved)"] ? (
                     <img
                       src={
-                        item.fields["Logo (from Banks involved)"]?.[0]
+                        item?.["Logo (from Banks involved)"]?.[0]
                           .thumbnails.large.url ||
-                        item.fields["Logo (from Fintech involved)"]?.[0]
+                        item?.["Logo (from Fintech involved)"]?.[0]
                           .thumbnails.large.url
                       }
                       alt="Fintech logo"
-                      className="h-20 "
+                      className="h-20"
                       crossOrigin="*"
                     />
                   ) : (
@@ -125,13 +101,13 @@ const ToolsResults = ({
                 </div>
                 <div className="flex flex-col  ">
                   <p className="leading-relaxed text-sm md:text-2xl font-black text-main-color title-font mt-8">
-                    {item.fields["Data point"] == ""
+                    {item?.["DataPoint"] == ""
                       ? "numbers"
-                      : item.fields["Data point"]}
+                      : item?.["DataPoint"]}
                   </p>
                   <div className="leading-relaxed text-sm data-point my-5">
                     <ReactMarkdown
-                      children={item.fields["Data point narrative"]}
+                      children={item?.["DataPointNarrative"]}
                     />
                   </div>
                 </div>
@@ -164,14 +140,14 @@ const ToolsResults = ({
                     /> */}
 
                   <Link
-                    href={`${item.fields["Source link"] || '#'}`}
+                    href={`${item?.["SourceLink"] || '#'}`}
                     target="_blank"
                   >
                     <div
                       className={`bg-[var(--purple-medium)] w-full pr-2 text-white h-10 w-4/6 rounded text-xs flex items-center `}
                     >
                       <img src="./open-use-case.svg" className="pt-2 pl-1" />
-                      {/* {item?.fields["Source link"]?.slice(0, 30)}... */}
+                      {/* {item?.fields["SourceLink"]?.slice(0, 30)}... */}
                       <span className="hidden md:inline-block">
                         Source link
                       </span>
@@ -180,7 +156,7 @@ const ToolsResults = ({
                   </Link>
 
                   <Link
-                    href={item.fields["DownloadLink"] || "#"}
+                    href={item?.["DownloadLink"] || "#"}
                     target="_blank"
                     className=""
                   >
@@ -197,7 +173,9 @@ const ToolsResults = ({
                   </Link>
                 </div>
               </div>
-            ))
+                )
+              }
+            )
           ) : (
             <div className="container mx auto w-[500px]">
               <h1 className=" ">No Values</h1>
@@ -206,7 +184,7 @@ const ToolsResults = ({
 
           {/* end of card */}
         </div>
-        <div className={`flex flex-1  p-3 pr-0 justify-center gap-x-2`}>
+        {/* <div className={`flex flex-1  p-3 pr-0 justify-center gap-x-2`}>
           {visitedPages.map((offsetID, index) => (
             <button
               className={`${
@@ -221,7 +199,7 @@ const ToolsResults = ({
               {index + 1}
             </button>
           ))}
-        </div>
+        </div> */}
       </div>
     </>
   );

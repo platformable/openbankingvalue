@@ -18,13 +18,36 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
   const [openValuesList, setValuesList] = useState(false);
   const [openBeneficiaryList, setBeneficiaryList] = useState(false);
   const [clusterCategories, setClusterCategories] = useState([]);
-  // const [ulrEncoded,setUrlEncoded] = useState()
-  // useEffect(() => {
-  //   var encode = "encodeURIComponent";
-  //   encode = encodeURIComponent("{Region (from Country)}=UK".trim());
-  //   console.log(encode)
-  //   // const dispEl =  encode;
-  // }, [])
+  
+  const [filters, setFilters] = useState({
+    values: [],
+    regions: [],
+    stakeholders: [],
+  });
+  // console.log('stakeholders', selectedBeneficiaryId)
+  // console.log('filters', filters)
+
+  const applyFilters = () => {
+    // params.set('showDialog', 'yes');
+    const params = new URLSearchParams()
+    const createParamsString = () => {
+      Object.entries(filters).map(([key, value]) => {
+        if (value.length === 0) return;
+        const filterStringQuery = value.join(",");
+        params.set(key, filterStringQuery);
+      });
+
+
+      return params.toString();
+    };
+    const string = createParamsString()
+    console.log("String params", string) 
+    router.replace(`?${createParamsString()}`, undefined,{ scroll: false });
+    // let timeOutID = setTimeout(() => {
+    //   params.delete('showDialog')
+    //   router.push(`?${createParamsString()}`)
+    // }, 1500)
+  };
 
   useEffect(() => {
     const newCategories = valueRecords.map((value) => {
@@ -47,8 +70,8 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
   const groupedCategories = {};
 
   valueRecords.forEach((item) => {
-    const clusterCategory = item.fields["Cluster Category"];
-    const valueGenerationCategory = item.fields["Value Generation Category"];
+    const clusterCategory = item.fields?.["Cluster Category"];
+    const valueGenerationCategory = item.fields?.["Value Generation Category"];
 
     if (!groupedCategories[clusterCategory]) {
       groupedCategories[clusterCategory] = [];
@@ -64,13 +87,13 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
     //   if (typeOfValues["All"]["isSelected"] === true) return true;
     //   return Object.values(typeOfValues)
     //     ?.filter((value) => value.isSelected === true)
-    //     .every((value) => item.fields["Value Category"]?.includes(value.id));
+    //     .every((value) => item.fields?.["Value Category"]?.includes(value.id));
     // },
     (item) => {
       if (Object.values(typeOfValues).every(value => value.isSelected === false)) return true;
       return Object.values(typeOfValues)
         ?.filter((value) => value.isSelected === true)
-        .some((value) => item.fields["Value Category"]?.includes(value.id));
+        .some((value) => item?.["Value Category"]?.includes(value.id));
     },
 
     // Filter for each value of fields array (fields.[])
@@ -80,7 +103,7 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
     //   return Object.entries(selectedRegion)
     //     ?.filter(([key, value]) => value === true)
     //     .every(([key, value]) =>
-    //       item.fields["Region (from Country)"]?.includes(key)
+    //       item.fields?.["Region (from Country)"]?.includes(key)
     //     );
     // },
     (item) => {
@@ -88,7 +111,7 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
       return Object.entries(selectedRegion)
         ?.filter(([key, value]) => value === true)
         .some(([key, value]) =>
-          item.fields["Region (from Country)"]?.includes(key)
+          item?.["Region (from Country)"]?.includes(key)
         );
     },
     // Filter for each value of fields array (fields.[])
@@ -97,13 +120,13 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
     //   if (selectedBeneficiaryId["All"]["isSelected"] === true) return true;
     //   return Object.values(selectedBeneficiaryId)
     //     ?.filter((value) => value.isSelected === true)
-    //     .every((value) => item.fields["Who benefits?"]?.includes(value.id));
+    //     .every((value) => item.fields?.["Who benefits?"]?.includes(value.id));
     // },
     (item) => {
       if (Object.values(selectedBeneficiaryId).every(value => value.isSelected === false)) return true;
       return Object.values(selectedBeneficiaryId)
         ?.filter((value) => value.isSelected === true)
-        .some((value) => item.fields["Who benefits?"]?.includes(value.id));
+        .some((value) => item?.["Who benefits?"]?.includes(value.id));
     },
   ];
   //Recursive function
@@ -121,7 +144,7 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
 
   useEffect(() => {
     // Repopulate from Server records to avoid empty data
-    filterResults(arrayOfFIlters, data?.records);
+    filterResults(arrayOfFIlters, data);
   }, [
     // selectedTypeOfValue,
     data,
@@ -161,7 +184,8 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
               <div key={index} className="">
                 <div className="flex justify-start items-center gap-2  px-3 py-3">
                   <input type="checkbox" name="cluster-option" 
-                  checked={values?.every(item => typeOfValues[item]?.isSelected)}
+                   checked={values?.every(item => typeOfValues[item]?.isSelected)}
+
                   onChange={(e) => {
                         // console.log(values)
                         // setTypeOfValueAll(clusterCategories)val
@@ -218,7 +242,7 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
                           // onChange={() => {
                           //   setTypeOfValue(valueGenCategory);
                           // }}
-                          checked={typeOfValues[valueGenCategory].isSelected}
+                          checked={typeOfValues[valueGenCategory]?.isSelected}
                           role="option"
                         />
                         <div  className="">
@@ -270,7 +294,10 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
                   return (
                     <li
                       key={index}
-                      onClick={() =>
+                      onClick={() => {
+
+                        //Testing if we need to filter by the query params from nocodb api
+
                         setUser((prev) => ({
                           ...prev,
                           selectedBeneficiaryId: {
@@ -281,7 +308,26 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
                             },
                           },
                         }))
-                      }
+
+                        // const newSetValues = new Set(filters.stakeholders)
+                        // if (newSetValues.has(beneficiaryKey)) {
+
+                        //   newSetValues.delete(beneficiaryKey)
+                          
+                        // } else {
+                        //   newSetValues.add(beneficiaryKey)
+                        // }
+                       
+                        // setFilters(prev => ({
+                        //   ...prev,
+                        //   stakeholders: Array.from(newSetValues)
+                        // }))
+                        // // applyFilters()
+                        // router.replace({
+                        //   pathname: router.pathname,
+                        //   query: { ...router.query, stakeholder: Array.from(newSetValues) },
+                        // }, undefined,{ scroll: false });
+                      }}
                       className="hover:bg-[var(--light-yellow)] flex items-center select-none  py-2 px-3 cursor-pointer "
                       id="listbox-option-0"
                       role="option"
@@ -289,8 +335,8 @@ export default function Filters({ setFilteredData, data, valueRecords }) {
                       <input
                         type="checkbox"
                         className="orange-checkbox"
-                        // defaultChecked={beneficaryValue?.isSelected}
                         checked={beneficaryValue?.isSelected}
+                        // checked={filters.stakeholders.includes(beneficiaryKey)}
                         // onChange={() =>
                         //   setUser((prev) => ({
                         //     ...prev,
