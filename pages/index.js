@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useMemo,  } from "react";
 import Layout from  '../components/Layout'
-
-
+import Hero from "../components/Hero";
+import Meta from "../components/Meta";
 import { getRegions } from "./api/nocodb-regions";
 import { getValuesGenerated } from "./api/nocodb";
 import { getValuesTaxonomy } from "./api/nocodb-value-taxonomy";
@@ -30,7 +30,8 @@ useEffect(() => {
 }, []);
   return (
     <Layout>
-      
+      <Meta />
+      <Hero />
       <section className="sm:grid sm:grid-rows-1 lg:grid lg:grid-cols-[1fr_3fr] container mx-auto mt-5 gap-10">
       <Filters
           data={data}
