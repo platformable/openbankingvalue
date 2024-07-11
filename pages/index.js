@@ -22,7 +22,6 @@ const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
   // const router = useRouter()
   // const { query } = router;
   // useEffect(() => {
-  console.log("dmsadsa", typeOfValues, selectedRegion)
 
   //   // router.replace('/home')
   // }, [query])
@@ -91,7 +90,6 @@ const Home = ({ data, pagination, valueCategories, beneficiaries }) => {
     if (pagination) addOffsetforPagination(pagination)
     setIsmobile(navigator?.userAgentData?.mobile);
   }, []);
-  // console.log(data)
  
   return (
     <Layout>
