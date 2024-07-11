@@ -433,12 +433,12 @@ function Filters({ setFilteredData, data, valueCategories, filters, setFilters, 
                     key={index}
                     onClick={() =>  {
                       const newSetValues = new Set(filters.regions)
-                      if (newSetValues.has(regionKey.Region)) {
+                      if (newSetValues.has(regionKey.RegionDetail)) {
 
-                        newSetValues.delete(regionKey.Region)
+                        newSetValues.delete(regionKey.RegionDetail)
                         
                       } else {
-                        newSetValues.add(regionKey.Region)
+                        newSetValues.add(regionKey.RegionDetail)
                       }
                      
                       setFilters(prev => ({
@@ -454,15 +454,15 @@ function Filters({ setFilteredData, data, valueCategories, filters, setFilters, 
                     <input
                       type="checkbox"
                       className="purple-checkbox"
-                      checked={filters.regions.includes(regionKey.Region)}
+                      checked={filters.regions.includes(regionKey.RegionDetail)}
                       onChange={(e) => {
                         const newSetValues = new Set(filters.regions)
-                      if (newSetValues.has(regionKey.Region)) {
+                      if (newSetValues.has(regionKey.RegionDetail)) {
 
-                        newSetValues.delete(regionKey.Region)
+                        newSetValues.delete(regionKey.RegionDetail)
                         
                       } else {
-                        newSetValues.add(regionKey.Region)
+                        newSetValues.add(regionKey.RegionDetail)
                       }
                      
                       setFilters(prev => ({
@@ -472,7 +472,7 @@ function Filters({ setFilteredData, data, valueCategories, filters, setFilters, 
                       }}
                     />
                     <div className="flex items-center">
-                      <span className="font-normal ml-3 ">{regionKey.Region}</span>
+                      <span className="font-normal ml-3 ">{regionKey.RegionDetail}</span>
                     </div>
                   </li>
                 );

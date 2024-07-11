@@ -18,10 +18,10 @@ export async function getRegions() {
       "Core Dataset Prod",
       "Region",
       "Region", {
-        fields: ['Region'],
+        fields: ['RegionDetail'],
         "offset": 0,
         "limit": 20,
-        "where":  '(Region,neq,Eastern Europe & Russia)'
+        "where":  '(RegionDetail,neq,Russia & Belarus)'
     })
     // const data = res.json()
     // console.log(data.list.length)
