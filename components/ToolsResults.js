@@ -33,6 +33,7 @@ const ToolsResults = ({
     });
   };
   
+  console.log("content", content)
 
   const printRef = React.useRef();
 
@@ -77,30 +78,28 @@ const ToolsResults = ({
                         : selectedTypeOfValue}
                     </p>
                   </div> */}
-                  {item?.["Logo (from Fintech involved)"] ||
-                  item?.["Logo (from Banks involved)"] ? (
+                  {item?.EntityLogo?.[0]? (
+                    <div className="h-14 flex items-center justify-center">
                     <img
                       src={
-                        item?.["Logo (from Banks involved)"]?.[0]
-                          .thumbnails.large.url ||
-                        item?.["Logo (from Fintech involved)"]?.[0]
-                          .thumbnails.large.url
+                        item?.EntityLogo?.[0]?.url
                       }
                       alt="Fintech logo"
-                      className="h-20"
+                      className="object-scale-down max-w-16 max-h-14"
                       crossOrigin="*"
-                    />
+                    /></div> 
                   ) : (
+                    <div className="h-14 flex items-center justify-center">
                     <img
                       src="/no_logo.svg"
                       alt="Fintech logo"
                       crossOrigin="*"
-                      className="h-20"
-                    />
+                      className="object-scale-down max-w-16 max-h-14"
+                    /></div> 
                   )}
                 </div>
                 <div className="flex flex-col  ">
-                  <p className="leading-relaxed text-sm md:text-2xl font-black text-main-color title-font mt-8">
+                  <p className="leading-relaxed text-sm md:text-2xl font-black text-main-color title-font ">
                     {item?.["DataPoint"] == ""
                       ? "numbers"
                       : item?.["DataPoint"]}

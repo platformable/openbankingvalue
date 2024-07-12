@@ -8,6 +8,7 @@ import { getValuesTaxonomy } from "./api/nocodb-value-taxonomy";
 import { getStakeholders } from "./api/nocodb-stakeholders";
 import ToolsResults from ".././components/ToolsResults";
 import AppliedFiltersLabels from "../components/AppliedFiltersLabels";
+import Loader from "../components/Loader";
 
 const initialState = {
   values: [],
@@ -17,6 +18,7 @@ const initialState = {
 const Index = ({ data, valueCategories, stakeholders, regions,  }) => {
   const [filteredData, setFilteredData] = useState(data);
   const [filters, setFilters] = useState(initialState);
+  const [loading,setLoading]=useState(false)
 //  console.log(data, valueCategories, stakeholders, regions)
 // console.log("filtered data res",filteredData)
 
@@ -43,6 +45,8 @@ useEffect(() => {
           regions={regions}
           filters={filters}
           setFilters={setFilters}
+          loading={loading}
+          setLoading={setLoading}
         />
 
         {filteredData && (
@@ -54,12 +58,13 @@ useEffect(() => {
               </p>
               
             </div>
-            <AppliedFiltersLabels setInitialStates={setInitialStates} filters={filters} 
+            <AppliedFiltersLabels setInitialStates={setInitialStates} filters={filters} setFilters={setFilters}
               />
         </section>
-            <ToolsResults
+       {loading ? <Loader/>:<ToolsResults
               content={filteredData}
-            />
+            /> }
+            
           </div>
         )}
       </section>
@@ -95,12 +100,13 @@ export async function getServerSideProps(context) {
 
 
  
-function Filters({ setFilteredData, data, valueCategories, filters, setFilters, stakeholders, regions }) {
+function Filters({ setFilteredData, data, valueCategories, filters, setFilters, stakeholders, regions, setLoading, loading }) {
 
   const [openRegionList, setRegionList] = useState(false);
   const [openValuesList, setValuesList] = useState(false);
   const [openBeneficiaryList, setBeneficiaryList] = useState(false);
   const [clusterCategories, setClusterCategories] = useState([]);
+
   
   // console.log('filters', filters)
 
@@ -169,16 +175,19 @@ function Filters({ setFilteredData, data, valueCategories, filters, setFilters, 
 
     // if (queryParams) are now present is ok, we are doing the verification on api routes
       setLoading(true)
-     fetch('/api/nocodb?' + queryParams)
-     .then(res => res.json())
-     .then(data => setFilteredData(data))
-     .catch(error => console.log(error))
-    .finally(() => setLoading(false))
+      fetch('/api/nocodb?' + queryParams)
+      .then(res => res.json())
+      .then(data => setFilteredData(data))
+      // .then(res=>setLoading(false))
+      .catch(error => console.log(error))
+     .finally(() => setLoading(false))
+      
     
     }, [
       data,
       filters
   ]);
+
  
   return (
     <div

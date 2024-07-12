@@ -2,7 +2,7 @@ import { ValueContext } from "../context/valueContext";
 import { useContext } from "react";
 import style from "../styles/Tools.module.css";
 
-const AppliedFiltersLabels = ({ setInitialStates, initialState, filters }) => {
+const AppliedFiltersLabels = ({ setInitialStates, filters, setFilters }) => {
   const [user, setUser] = useContext(ValueContext);
   const {
     selectedTypeOfValue,
@@ -26,14 +26,16 @@ const AppliedFiltersLabels = ({ setInitialStates, initialState, filters }) => {
     values.length > 0 || stakeholders.length > 0 || regions.length > 0
     ;
 
-  const deleteFilter = (stateName, valueKey) => {
-    setUser((prev) => ({
+  const deleteFilter = (filterName, filterValue) => {
+    const set = new Set(filters?.[filterName])
+                          
+    set.has(filterValue) ? set.delete(filterValue) : set.add(filterValue)
+
+    setFilters(prev => ({
       ...prev,
-      [stateName]: {
-        ...prev[stateName],
-        [valueKey]: !prev[stateName][valueKey],
-      },
-    }));
+      [filterName]: [...Array.from(set)]
+    }))
+
   };
 
  
@@ -66,18 +68,7 @@ const AppliedFiltersLabels = ({ setInitialStates, initialState, filters }) => {
                 <div
                   key={index}
                   className={`bg-[var(--light-pink)] text-black py-1 px-3 flex justify-between items-center gap-3 lg:gap-5 rounded-sm`}
-                  // onClick={() =>
-                    // setUser((prev) => ({
-                    //   ...prev,
-                    //   typeOfValues: {
-                    //     ...prev["typeOfValues"],
-                    //     [key]: {
-                    //       ...value,
-                    //       isSelected: !value.isSelected,
-                    //     },
-                    //   },
-                    // }))
-                  // }
+                  onClick={() => deleteFilter('values', value)}
                 >
                   {value}
                   <span className="uppercase cursor-pointer">X</span>
@@ -94,16 +85,7 @@ const AppliedFiltersLabels = ({ setInitialStates, initialState, filters }) => {
               <div
                 key={index}
                 className={`bg-[var(--light-yellow)] text-black py-1 px-3 flex justify-between gap-3 lg:gap-5 rounded-sm`}
-                // onClick={() =>
-                //   //Different deletion process than other because state is different structure
-                //   setUser((prev) => ({
-                //     ...prev,
-                //     selectedBeneficiaryId: {
-                //       ...prev["selectedBeneficiaryId"],
-                //       [key]: !prev["selectedBeneficiaryId"][key],
-                //     },
-                //   }))
-                // }
+                onClick={() => deleteFilter('stakeholders', stakeholder)}
               >
                 {stakeholder}
                 <span className="uppercase cursor-pointer">X</span>
@@ -116,7 +98,8 @@ const AppliedFiltersLabels = ({ setInitialStates, initialState, filters }) => {
               <div
                 key={index}
                 className={`bg-[var(--light-purple)] text-black py-1 px-3 flex justify-between gap-3 lg:gap-5 rounded-sm`}
-                // onClick={() => deleteFilter("selectedRegion", array[0])}
+                onClick={() => deleteFilter('regions', region)}
+
               >
                 {region}
                 <span className="uppercase cursor-pointer">X</span>
