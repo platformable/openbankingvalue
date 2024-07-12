@@ -33,7 +33,10 @@ useEffect(() => {
     <Layout>
       <Meta />
       <Hero />
-      <section className="sm:grid sm:grid-rows-1 lg:grid lg:grid-cols-[1fr_3fr] container mx-auto mt-5 gap-10">
+      
+      
+
+      <section className="relative sm:grid sm:grid-rows-1 lg:grid lg:grid-cols-[1fr_3fr] container mx-auto mt-5 gap-10">
       <Filters
           data={data}
           setFilteredData={setFilteredData}
@@ -45,7 +48,7 @@ useEffect(() => {
           loading={loading}
           setLoading={setLoading}
         />
-        
+
         {filteredData && (
           <div className="flex flex-col">
             <section className="pagination flex flex-col ">
@@ -55,7 +58,7 @@ useEffect(() => {
               </p>
               
             </div>
-            <AppliedFiltersLabels setInitialStates={setInitialStates} filters={filters} 
+            <AppliedFiltersLabels setInitialStates={setInitialStates} filters={filters} setFilters={setFilters}
               />
         </section>
        {loading ? <Loader/>:<ToolsResults
@@ -172,17 +175,19 @@ function Filters({ setFilteredData, data, valueCategories, filters, setFilters, 
 
     // if (queryParams) are now present is ok, we are doing the verification on api routes
       setLoading(true)
-     fetch('/api/nocodb?' + queryParams)
-     .then(res => res.json())
-     .then(data => setFilteredData(data))
-     .then(res=>setLoading(false))
-     .catch(error => console.log(error))
-
+      fetch('/api/nocodb?' + queryParams)
+      .then(res => res.json())
+      .then(data => setFilteredData(data))
+      // .then(res=>setLoading(false))
+      .catch(error => console.log(error))
+     .finally(() => setLoading(false))
+      
     
     }, [
       data,
       filters
   ]);
+
  
   return (
     <div

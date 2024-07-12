@@ -79,27 +79,27 @@ const ToolsResults = ({
                     </p>
                   </div> */}
                   {item?.EntityLogo?.[0]? (
-                    <div className="max-h-20">
+                    <div className="h-14 flex items-center justify-center">
                     <img
                       src={
                         item?.EntityLogo?.[0]?.url
                       }
                       alt="Fintech logo"
-                      className="max-w-20"
+                      className="object-scale-down max-w-16 max-h-14"
                       crossOrigin="*"
                     /></div> 
                   ) : (
-                    <div className="">
+                    <div className="h-14 flex items-center justify-center">
                     <img
                       src="/no_logo.svg"
                       alt="Fintech logo"
                       crossOrigin="*"
-                      className="h-12"
+                      className="object-scale-down max-w-16 max-h-14"
                     /></div> 
                   )}
                 </div>
                 <div className="flex flex-col  ">
-                  <p className="leading-relaxed text-sm md:text-2xl font-black text-main-color title-font mt-8">
+                  <p className="leading-relaxed text-sm md:text-2xl font-black text-main-color title-font ">
                     {item?.["DataPoint"] == ""
                       ? "numbers"
                       : item?.["DataPoint"]}
