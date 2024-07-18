@@ -5,7 +5,8 @@ module.exports = {
         'digitaloceanspaces.com',
         'https://datasetstorage.ams3',
         'http://localhost:3000',
-        'https://datasetstorage.ams3.digitaloceanspaces.com/nc/uploads/noco/Core%20Dataset%20Prod/Entities/Logo/'
+        'https://datasetstorage.ams3.digitaloceanspaces.com/nc/uploads/noco/Core%20Dataset%20Prod/Entities/Logo/',
+        'https://openbankingvalue.platformable.com/'
       ],
     },
   }
