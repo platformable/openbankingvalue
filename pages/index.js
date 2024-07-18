@@ -15,7 +15,7 @@ const initialState = {
   regions: [],
   stakeholders: [],
 }
-const Index = ({ data, valueCategories, stakeholders, regions,  }) => {
+const HomePage = ({ data, valueCategories, stakeholders, regions,  }) => {
   const [filteredData, setFilteredData] = useState(data);
   const [filters, setFilters] = useState(initialState);
   const [loading,setLoading]=useState(false)
@@ -73,7 +73,7 @@ useEffect(() => {
   );
 };
 
-export default Index;
+export default HomePage;
 
 export async function getServerSideProps(context) {
 
