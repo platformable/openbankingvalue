@@ -32,8 +32,8 @@ export async function getValuesGenerated(queryParams) {
     const data = await api.dbViewRow.list(
       "noco",
       "Core Dataset Prod",
-      "ValuesGenerated",
-      "ValuesGenerated",
+      "ValueGeneratedTool",
+      "ValueGeneratedTool",
       {
         offset: 0,
         limit: 200,

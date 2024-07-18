@@ -29,6 +29,8 @@ useEffect(() => {
   setInitialStates();
   
 }, []);
+
+console.log("filteredData",filteredData)
   return (
     <Layout>
       <Meta />
@@ -83,7 +85,7 @@ export async function getServerSideProps(context) {
     const stakeholders = await getStakeholders()
     const regions = await getRegions()
 
-
+/* console.log("valuetaxonomy", valuesTaxonomy) */
     return {
       props: {
         data: dataResponse.list,
@@ -159,7 +161,7 @@ function Filters({ setFilteredData, data, valueCategories, filters, setFilters, 
   //all the value generation categories
   const groupedCategories = {};
 
-  valueCategories.forEach((item) => {
+  valueCategories?.forEach((item) => {
     const clusterCategory = item["ClusterList"][0];
     const valueGenerationCategory = item["ValueGenerationCategory"];
 
