@@ -33,7 +33,7 @@ const ToolsResults = ({
     });
   };
   
-  console.log("content", content)
+/*   console.log("content", content) */
 
   const printRef = React.useRef();
 
@@ -61,7 +61,8 @@ const ToolsResults = ({
       <div className="">
         <div className="md:px-14 lg:px-0 card-container grid gap-4 xl:grid-cols-3 grid-cols-1 my-5 mb-20 ">
           {content?.length > 0 ? (
-            content.map((item, index, array) => 
+            
+            content?.map((item, index, array) => 
               {
                 return(
                   <div
