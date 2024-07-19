@@ -1,8 +1,40 @@
-User-agent: GPTBot
+
+User-agent: GoogleBot-Mobile
+Allow: /
+
+User-agent: GoogleBot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: BingPreview
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: Yahoo Pipes 2.0
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: SiteAuditBot
+Crawl-delay: 5
+Allow: /
+
+User-agent: Semrushbot-SI
+Allow: /
+
+User-agent: 008
 Disallow: /
-‍User-agent: ChatGPT-User
-Disallow: /
-‍User-agent: CCBot
-Disallow: /
-‍User-agent: anthropic-ai
-Disallow: /
+
+User-agent: *
+Crawl-delay: 10
+Disallow: /blog/draft
+
+Sitemap: https://openbankingvalue.platformable.com/sitemap.xml
