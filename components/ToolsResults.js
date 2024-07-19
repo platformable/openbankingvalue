@@ -64,6 +64,7 @@ const ToolsResults = ({
             
             content?.map((item, index, array) => 
               {
+                console.log(item)
                 return(
                   <div
                 id={item.id}
@@ -71,7 +72,7 @@ const ToolsResults = ({
                 className="card shadow-md rounded-md flex flex-col  gap-5 rounded py-5 px-5 md:mx-0 " /* onClick={()=>handleSelected(item)} */
               >
                 {/* <p>{item?.["Source date"]}</p> */}
-                <div className="card-top flex justify-center  mx-auto   ">
+                <div className="card-top flex justify-center  mx-auto">
                   {/* <div className="flex  md:justify-end justify-center mb-5 mr-5">
                     <p className="bg-red-orange-dark text-white text-xs pt-2 pb-2 px-5 rounded">
                       {selectedTypeOfValue === "All"
@@ -85,7 +86,7 @@ const ToolsResults = ({
                       src={
                         item?.EntityLogo?.[0]?.url
                       }
-                      alt="Fintech logo"
+                      alt="Entity logo"
                       className="object-scale-down max-w-16 max-h-14"
                       crossOrigin="*"
                     /></div> 
@@ -93,16 +94,16 @@ const ToolsResults = ({
                     <div className="h-14 flex items-center justify-center">
                     <img
                       src="/no_logo.svg"
-                      alt="Fintech logo"
+                      alt="Entity logo"
                       crossOrigin="*"
                       className="object-scale-down max-w-16 max-h-14"
                     /></div> 
                   )}
                 </div>
-                <div className="flex flex-col  ">
+                <div className="flex flex-col  mt-4">
                   <p className="leading-relaxed text-sm md:text-2xl font-black text-main-color title-font ">
                     {item?.["DataPoint"] == ""
-                      ? "numbers"
+                      ? ""
                       : item?.["DataPoint"]}
                   </p>
                   <div className="leading-relaxed text-sm data-point my-5">
@@ -146,7 +147,7 @@ const ToolsResults = ({
                     <div
                       className={`bg-[var(--purple-medium)] w-full pr-2 text-white h-10 w-4/6 rounded text-xs flex items-center `}
                     >
-                      <img src="./open-use-case.svg" className="pt-2 pl-1" />
+                      <img src="./open-use-case.svg" alt="source link icon" className="pt-2 pl-1" />
                       {/* {item?.fields["SourceLink"]?.slice(0, 30)}... */}
                       <span className="hidden md:inline-block">
                         Source link
@@ -163,7 +164,7 @@ const ToolsResults = ({
                     <div
                       className={`bg-[var(--purple-medium)] w-full pr-2 flex items-center text-white h-10 rounded text-xs w-4/6`}
                     >
-                      <img src="./copy-in-slides.svg" className="pt-2 pl-1" />
+                      <img src="./copy-in-slides.svg" alt="open slide icon" className="pt-2 pl-1" />
 
                       <span className="hidden md:inline-block">
                         Open as a slide

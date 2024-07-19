@@ -6,7 +6,7 @@ const BannerTop = () => {
   return (
     <section className={`${styles.bg_banner_top} py-5`}>
       <div className="container mx-auto text-white text-xl 2xl:text-3xl flex flex-col gap-y-5 lg:flex-row justify-between items-center">
-        <img src="/banner_logo.svg" alt="data products logo" />
+        <img src="/banner_logo.svg" alt="Platformable data products" />
         <div className="max-md:text-center">
           <span className="mr-3 ">
             <strong>Want more open banking data?</strong>
@@ -34,10 +34,10 @@ const Hero = () => {
             <h1 className="title-font sm:text-4xl text-3xl mb-4 font-bold ">
               Open Banking Value Tool
             </h1>
-            <p className="mb-8 leading-relaxed text-2xl ">
+            <h2 className="mb-8 leading-relaxed text-2xl ">
               What evidence do we have that open banking is really creating
               impactful benefits for all stakeholders across the ecosystem?
-            </p>
+            </h2>
             {/*   <div className="flex justify-center">
               <button className="inline-flex text-white bg-btn-russian-violet border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
                 <Link href="/tool">Learn More</Link>
@@ -47,7 +47,7 @@ const Hero = () => {
           <div className="lg:w-3/6 flex justify-end">
             <Image
               src={heroImg}
-              alt="Open Banking value tool"
+              alt="Open Banking value tool schema"
               // width={350}
               // height={300}
             />
