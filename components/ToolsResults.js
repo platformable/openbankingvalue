@@ -64,7 +64,6 @@ const ToolsResults = ({
             
             content?.map((item, index, array) => 
               {
-                console.log(item)
                 return(
                   <div
                 id={item.id}
@@ -179,7 +178,7 @@ const ToolsResults = ({
             )
           ) : (
             <div className="container mx auto w-[500px]">
-              <h1 className=" ">No Values</h1>
+              <span className="">No Values</span>
             </div>
           )}
 
