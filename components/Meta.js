@@ -4,10 +4,10 @@ const Meta = ({ title, keywords,excerpt, data }) => {
   return (
     <Head>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <meta name="keywords" content={'open banking use cases discover API'} />
+      <meta name="keywords" content={keywords} />
       <meta
         name="description"
-        content={'What evidence do we have that open banking is really creating impactful benefits for all stakeholders across the ecosystem?'}
+        content={excerpt}
       />
       <meta charSet="utf-8" />
       <link rel="icon" href="/favicon.ico" />
@@ -16,18 +16,16 @@ const Meta = ({ title, keywords,excerpt, data }) => {
       {/* Twitter Meta Tags */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={'Open Banking Value Tool'} />
-      {/* <meta
+      <meta
         name="twitter:description"
-        content={data?.excerpt?.replace(/(<([^>]+)>)/gi, "")}
-      /> */}
-      {/* <meta name="twitter:site" content={`https://www.openbankingvalue.platformable.com/blog/${data?.slug}`} />
+        content={excerpt?.replace(/(<([^>]+)>)/gi, "")}
+      />
+      {/* <meta name="twitter:site" content={`https://www.openbankingvalue.platformable.com/blog/${data?.slug}`} /> */}
       <meta
         name="twitter:image"
-        content={
-          data?.featured_img?.data?.attributes?.formats?.small?.url ||
-          "https://res.cloudinary.com/platformable/image/upload/v1692982725/platformablewebsite2023/value_model_1280x720_ae8a224428.png"
-        }
-      /> */}
+        content={'/obof_preview.png'}
+
+      /> 
 
       {/* Open Graph Meta Tags */}
       <meta property="og:title" content={title} />
@@ -56,8 +54,8 @@ Meta.defaultProps = {
   title: "Platformable: Open Banking Value Tool",
   keywords:
     "platformable, data, api, open ecosystems, open banking, open finance, open health, value generated, benefits, outcomes",
-  description:
-    "Platformable's Open Banking Value Tool describes the benefits and outcomes that have been achieved in the global open banking and open finance ecosystem",
+    excerpt:
+    "What evidence do we have that open banking is really creating impactful benefits for all stakeholders across the ecosystem ?",
 };
 
 export default Meta;

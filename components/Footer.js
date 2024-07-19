@@ -12,14 +12,14 @@ export default function Footer() {
           © This tool is developed and maintained by{' '}
           <img
             src="/platformable_logo_footer.png"
-            alt="platformable logo"
+            alt="Platformable logo"
             className="inline-block drop-shadow"
           />
           {' '}
           <strong>Platformable.com</strong>
           <img
             src="/heart-fixed-icon.png"
-            alt="pride heart"
+            alt="pride heart icon"
             className="inline-block drop-shadow"
           />
           proudly based in Barcelona

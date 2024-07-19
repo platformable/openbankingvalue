@@ -1,16 +1,6 @@
-import { ValueContext } from "../context/valueContext";
-import { useContext } from "react";
-import style from "../styles/Tools.module.css";
 
 const AppliedFiltersLabels = ({ setInitialStates, filters, setFilters }) => {
-  const [user, setUser] = useContext(ValueContext);
-  const {
-    selectedTypeOfValue,
-    selectedRegion,
-    typeOfValues,
-    favorites,
-    selectedBeneficiaryId,
-  } = user;
+ 
   const {values, stakeholders, regions} = filters
   // const anySelection = //Check if any exist any selection from the user diffferent thant 'All'
   //   Object.entries(typeOfValues).some(([key, value]) =>
@@ -57,10 +47,7 @@ const AppliedFiltersLabels = ({ setInitialStates, filters, setFilters }) => {
           </div>
 
           {
-          // Object.entries(typeOfValues)
-          //   ?.filter(([key, value]) =>
-          //     key === "All" ? false : value?.isSelected === true
-          //   )
+        
 
             values.map((value, index) => {
               // console.log("array ", array)
@@ -77,10 +64,7 @@ const AppliedFiltersLabels = ({ setInitialStates, filters, setFilters }) => {
             })}
           
           {
-          // Object.entries(selectedBeneficiaryId)
-          //   ?.filter(([key, value]) =>
-          //     key === "All" ? false : value?.isSelected === true
-          //   )
+         
             stakeholders.map((stakeholder, index) => (
               <div
                 key={index}
@@ -92,8 +76,7 @@ const AppliedFiltersLabels = ({ setInitialStates, filters, setFilters }) => {
               </div>
             ))}
             {
-            // Object.entries(selectedRegion)
-            // ?.filter(([key, value]) => (key === "All" ? false : value === true))
+        
             regions.map((region, index) => (
               <div
                 key={index}

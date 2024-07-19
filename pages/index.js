@@ -19,8 +19,7 @@ const HomePage = ({ data, valueCategories, stakeholders, regions,  }) => {
   const [filteredData, setFilteredData] = useState(data);
   const [filters, setFilters] = useState(initialState);
   const [loading,setLoading]=useState(false)
-//  console.log(data, valueCategories, stakeholders, regions)
-// console.log("filtered data res",filteredData)
+
 
 const setInitialStates = () => {
   setFilters(initialState)
@@ -30,7 +29,6 @@ useEffect(() => {
   
 }, []);
 
-console.log("filteredData",filteredData)
   return (
     <Layout>
       <Meta />
