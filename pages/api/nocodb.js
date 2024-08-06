@@ -1,15 +1,14 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 import { Api } from "nocodb-sdk";
-
+const LIMIT_PAGINATION_NUMBER = 30
 export async function getValuesGenerated(queryParams) {
   // console.log("query in server", queryParams);
-  // const {typeOfValues,selectedRegion,selectedBeneficiaryId} = queryParams
-  const hasParams = queryParams ? true : false;
-
-  const valuesQuery = hasParams ? queryParams.get("values") : "";
-  const regionsQuery = hasParams ? queryParams.get("regions") : "";
-  const stakeholdersQuery = hasParams ? queryParams.get("stakeholders") : "";
+  const valuesQuery = queryParams ? queryParams.get("values") : "";
+  const regionsQuery = queryParams ? queryParams.get("regions") : "";
+  const stakeholdersQuery = queryParams ? queryParams.get("stakeholders") : "";
+  const paginationCounterQuery = queryParams ? queryParams.get("paginationCounter") : 0
+  
 
   const paramsString = Object.entries({
     ValueCategory: valuesQuery,
@@ -21,7 +20,6 @@ export async function getValuesGenerated(queryParams) {
       []
     )
     .join("~and");
-    console.log("server params", paramsString)
   const api = new Api({
     baseURL: process.env.NEXT_PUBLIC_NOCODB_API_URL,
     headers: {
@@ -35,13 +33,11 @@ export async function getValuesGenerated(queryParams) {
       "ValueGeneratedTool",
       "ValueGeneratedTool",
       {
-        offset: 0,
-        limit: 200,
+        offset: Number(paginationCounterQuery)*LIMIT_PAGINATION_NUMBER,
+        limit: LIMIT_PAGINATION_NUMBER,
         where: paramsString,
       }
     );
-    // const data = res.json()
-    // console.log(data.list.length)
     return data;
   } catch (error) {
     console.log(error);
@@ -52,5 +48,5 @@ export default async function handler(req, res) {
 
   const data = await getValuesGenerated(params);
 
-  return res.status(200).send(data.list);
+  return res.status(200).send(data);
 }
