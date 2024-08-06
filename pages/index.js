@@ -9,6 +9,7 @@ import { getStakeholders } from "./api/nocodb-stakeholders";
 import ToolsResults from ".././components/ToolsResults";
 import AppliedFiltersLabels from "../components/AppliedFiltersLabels";
 import Loader from "../components/Loader";
+import PaginationButtons from "../components/PaginationButtons";
 
 const initialState = {
   values: [],
@@ -16,7 +17,7 @@ const initialState = {
   stakeholders: [],
   paginationCounter: 0
 }
-const HomePage = ({ data, valueCategories, stakeholders, regions }) => {
+const HomePage = ({  valueCategories, stakeholders, regions }) => {
   const [filteredData, setFilteredData] = useState();
   const [paginationInfo, setPaginationInfo] = useState();
   const [filters, setFilters] = useState(initialState);
@@ -28,7 +29,6 @@ useEffect(() => {
   setInitialStates();
   
 }, []);
-
   return (
     <Layout>
       <Meta />
@@ -51,32 +51,12 @@ useEffect(() => {
 
         {filteredData && (
           <div className="flex flex-col">
-            <section className="pagination flex flex-col ">
-            <div className=" flex md:justify-between items-center justify-between ">
+            <section className="pagination flex flex-col mt-5 md:mt-0">
+            <div className=" flex flex-col md:flex-row gap-y-5 md:justify-between items-center ">
               <p className=" text-2xl">
-                Showing <strong>{filteredData?.length}</strong> success stories{" "}
+                Showing {((paginationInfo?.pageSize * filters?.paginationCounter) + 1) + ' - ' + (paginationInfo?.pageSize * paginationInfo?.page)} of <strong>{paginationInfo?.totalRows}</strong> success stories{" "}
               </p>
-              <div className="text-black flex items-center gap-x-2">
-                <button className="p-2 rounded font-bold text-black shadow border border-[var(--purple-medium)] " onClick={() => {
-                  if (paginationInfo?.isFirstPage) return;
-                  setFilters((prev) => ({...prev, paginationCounter:(prev.paginationCounter - 1)}))
-                }}>
-                  <img src="/left-arrow-white.svg" alt="left arrow icon" className="w-3 h-3"/>
-                </button>
-                {paginationInfo && 
-                paginationInfo?.page} of {Math.ceil(paginationInfo?.totalRows / paginationInfo?.pageSize) || 1 
-                }
-                <button className="p-2 rounded font-bold text-black shadow border border-[var(--purple-medium)]"
-                onClick={() => {
-                  if (paginationInfo?.isLastPage) return;
-                  setFilters((prev) => ({...prev, paginationCounter:(prev.paginationCounter + 1)}))
-                }}
-                >
-                  <img src="/right-arrow-white.svg" alt="right arrow icon" className="w-3 h-3"/>
-
-                </button>
-                
-                </div>
+              <PaginationButtons setFilters={setFilters} paginationInfo={paginationInfo}/>
             </div>
             <AppliedFiltersLabels setInitialStates={setInitialStates} filters={filters} setFilters={setFilters}
               />
@@ -84,6 +64,7 @@ useEffect(() => {
        {loading ? <Loader/>:<ToolsResults
               content={filteredData}
             /> }
+              <PaginationButtons setFilters={setFilters} paginationInfo={paginationInfo}/>
             
           </div>
         )}
@@ -215,7 +196,7 @@ function Filters({ setFilteredData, valueCategories, filters, setFilters, stakeh
       <div id="values-list" className="bg-[#FBC6FD]">
         <label
           id="listbox-label"
-          className="block text-sm font-medium  flex justify-between md:px-3 py-3 items-center "
+          className="block text-sm font-medium cursor-pointer flex justify-between px-3 py-3 items-center "
         >
           <strong className="text-lg">Value generated categories</strong>
           <button
@@ -346,13 +327,13 @@ function Filters({ setFilteredData, valueCategories, filters, setFilters, stakeh
       <div id="beneficiary-list" className="bg-[var(--light-yellow)]">
         <label
           id="listbox-label"
-          className="block text-sm font-medium  flex justify-between md:px-3 py-3 items-center "
+          className="block text-sm font-medium cursor-pointer flex justify-between px-3 py-3 items-center "
         >
           <strong className="text-lg">Who Benefits?</strong>
 
           <button
             type="button"
-            className="relative   rounded-md  py-2 text-left cursor-default focus:outline-none  sm:text-sm"
+            className="relative   rounded-md  py-2 text-left cursor-pointer focus:outline-none  sm:text-sm"
             onClick={() => setBeneficiaryList((prev) => !prev)}
           >
             <img
@@ -439,13 +420,13 @@ function Filters({ setFilteredData, valueCategories, filters, setFilters, stakeh
       <div id="region-list" className="bg-[var(--light-purple)]">
         <label
           id="listbox-label"
-          className="block text-sm font-medium  flex justify-between md:px-3 py-3 items-center "
+          className="block text-sm font-medium cursor-pointer flex justify-between px-3 py-3 items-center "
         >
           <strong className="text-lg">List of regions</strong>
 
           <button
             type="button"
-            className="relative   rounded-md  py-2 text-left cursor-default focus:outline-none  sm:text-sm"
+            className="relative   rounded-md  py-2 text-left cursor-pointer focus:outline-none  sm:text-sm"
             onClick={() => setRegionList((prev) => !prev)}
           >
             <img
