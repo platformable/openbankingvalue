@@ -14,13 +14,13 @@ const initialState = {
   values: [],
   regions: [],
   stakeholders: [],
+  paginationCounter: 0
 }
-const HomePage = ({ data, valueCategories, stakeholders, regions,  }) => {
-  const [filteredData, setFilteredData] = useState(data);
+const HomePage = ({ data, valueCategories, stakeholders, regions }) => {
+  const [filteredData, setFilteredData] = useState();
+  const [paginationInfo, setPaginationInfo] = useState();
   const [filters, setFilters] = useState(initialState);
   const [loading,setLoading]=useState(false)
-
-
 const setInitialStates = () => {
   setFilters(initialState)
 };
@@ -38,7 +38,6 @@ useEffect(() => {
 
       <section className="relative sm:grid sm:grid-rows-1 lg:grid lg:grid-cols-[1fr_3fr] container mx-auto mt-5 gap-10">
       <Filters
-          data={data}
           setFilteredData={setFilteredData}
           valueCategories={valueCategories}
           stakeholders={stakeholders}
@@ -47,6 +46,7 @@ useEffect(() => {
           setFilters={setFilters}
           loading={loading}
           setLoading={setLoading}
+          setPaginationInfo={setPaginationInfo}
         />
 
         {filteredData && (
@@ -56,7 +56,27 @@ useEffect(() => {
               <p className=" text-2xl">
                 Showing <strong>{filteredData?.length}</strong> success stories{" "}
               </p>
-              
+              <div className="text-black flex items-center gap-x-2">
+                <button className="p-2 rounded font-bold text-black shadow border border-[var(--purple-medium)] " onClick={() => {
+                  if (paginationInfo?.isFirstPage) return;
+                  setFilters((prev) => ({...prev, paginationCounter:(prev.paginationCounter - 1)}))
+                }}>
+                  <img src="/left-arrow-white.svg" alt="left arrow icon" className="w-3 h-3"/>
+                </button>
+                {paginationInfo && 
+                paginationInfo?.page} of {Math.ceil(paginationInfo?.totalRows / paginationInfo?.pageSize) || 1 
+                }
+                <button className="p-2 rounded font-bold text-black shadow border border-[var(--purple-medium)]"
+                onClick={() => {
+                  if (paginationInfo?.isLastPage) return;
+                  setFilters((prev) => ({...prev, paginationCounter:(prev.paginationCounter + 1)}))
+                }}
+                >
+                  <img src="/right-arrow-white.svg" alt="right arrow icon" className="w-3 h-3"/>
+
+                </button>
+                
+                </div>
             </div>
             <AppliedFiltersLabels setInitialStates={setInitialStates} filters={filters} setFilters={setFilters}
               />
@@ -78,18 +98,17 @@ export default HomePage;
 export async function getServerSideProps(context) {
 
   try {
-    const dataResponse = await getValuesGenerated()
+    // const dataResponse = await getValuesGenerated()
     const valuesTaxonomy = await getValuesTaxonomy()
     const stakeholders = await getStakeholders()
     const regions = await getRegions()
 
-/* console.log("valuetaxonomy", valuesTaxonomy) */
     return {
       props: {
-        data: dataResponse.list,
+        // data: dataResponse.list,
         valueCategories: valuesTaxonomy.list,
         stakeholders : stakeholders.list,
-        regions: regions.list
+        regions: regions.list,
       },
     };
   } catch (error) {
@@ -100,7 +119,7 @@ export async function getServerSideProps(context) {
 
 
  
-function Filters({ setFilteredData, data, valueCategories, filters, setFilters, stakeholders, regions, setLoading, loading }) {
+function Filters({ setFilteredData, valueCategories, filters, setFilters, stakeholders, regions, setLoading, loading, setPaginationInfo,  }) {
 
   const [openRegionList, setRegionList] = useState(false);
   const [openValuesList, setValuesList] = useState(false);
@@ -108,24 +127,23 @@ function Filters({ setFilteredData, data, valueCategories, filters, setFilters, 
   const [clusterCategories, setClusterCategories] = useState([]);
 
   
-  // console.log('filters', filters)
 
   const applyFilters = () => {
-    // params.set('showDialog', 'yes');
     const params = new URLSearchParams()
     const createParamsString = () => {
       Object.entries(filters).map(([key, value]) => {
-        if (value.length === 0) return;
-        const filterStringQuery = value.join(",");
-        params.set(key, filterStringQuery);
+        if (typeof value === 'object') {
+          const filterStringQuery = value.join(",");
+          params.set(key, filterStringQuery);  
+        } else {
+          params.set(key, value); 
+        }
       });
 
 
       return params.toString();
     };
     const string = createParamsString()
-    // console.log("String params", string) 
-    // console.log("path", pathname) 
     
     // window.history.replaceState(null, '', `?${createParamsString()}`)
     // router.replace(`?${string}`, undefined,{ scroll: false });
@@ -171,20 +189,20 @@ function Filters({ setFilteredData, data, valueCategories, filters, setFilters, 
   });
   useEffect(() => {
     const queryParams = applyFilters()
-    // console.log("filter query params result",queryParams)
 
     // if (queryParams) are now present is ok, we are doing the verification on api routes
       setLoading(true)
       fetch('/api/nocodb?' + queryParams)
       .then(res => res.json())
-      .then(data => setFilteredData(data))
-      // .then(res=>setLoading(false))
+      .then(data => {
+        setFilteredData(data?.list)
+        setPaginationInfo(data?.pageInfo)
+      })
       .catch(error => console.log(error))
-     .finally(() => setLoading(false))
+      .finally(() => setLoading(false))
       
-    
     }, [
-      data,
+      // data,
       filters
   ]);
 
@@ -234,7 +252,8 @@ function Filters({ setFilteredData, data, valueCategories, filters, setFilters, 
 
                         setFilters(prev => ({
                           ...prev,
-                          values: [...Array.from(set)]
+                          values: [...Array.from(set)],
+                          paginationCounter: 0
                         }))
                         
                       }} />
@@ -282,7 +301,8 @@ function Filters({ setFilteredData, data, valueCategories, filters, setFilters, 
 
                           setFilters(prev => ({
                             ...prev,
-                            values: [...Array.from(set)]
+                            values: [...Array.from(set)],
+                            paginationCounter: 0
                           }))
 
                         }}
@@ -301,7 +321,9 @@ function Filters({ setFilteredData, data, valueCategories, filters, setFilters, 
   
                             setFilters(prev => ({
                               ...prev,
-                              values: [...Array.from(set)]
+                              values: [...Array.from(set)],
+                              paginationCounter: 0
+
                             }))
   
                           }}
@@ -367,7 +389,9 @@ function Filters({ setFilteredData, data, valueCategories, filters, setFilters, 
                        
                         setFilters(prev => ({
                           ...prev,
-                          stakeholders: Array.from(newSetValues)
+                          stakeholders: Array.from(newSetValues),
+                          paginationCounter: 0
+
                         }))
                      
                       }}
@@ -391,7 +415,9 @@ function Filters({ setFilteredData, data, valueCategories, filters, setFilters, 
                          
                           setFilters(prev => ({
                             ...prev,
-                            stakeholders: Array.from(newSetValues)
+                            stakeholders: Array.from(newSetValues),
+                            paginationCounter: 0
+
                           }))
                         }
                         }
@@ -454,7 +480,9 @@ function Filters({ setFilteredData, data, valueCategories, filters, setFilters, 
                      
                       setFilters(prev => ({
                         ...prev,
-                        regions: Array.from(newSetValues)
+                        regions: Array.from(newSetValues),
+                        paginationCounter: 0
+
                       }))
                     }
                     }
@@ -478,7 +506,9 @@ function Filters({ setFilteredData, data, valueCategories, filters, setFilters, 
                      
                       setFilters(prev => ({
                         ...prev,
-                        regions: Array.from(newSetValues)
+                        regions: Array.from(newSetValues),
+                        paginationCounter: 0
+
                       }))
                       }}
                     />
