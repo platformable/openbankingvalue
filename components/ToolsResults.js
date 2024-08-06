@@ -1,4 +1,3 @@
-import React, { useEffect, useState, useContext, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -6,36 +5,20 @@ import ReactMarkdown from "react-markdown";
 import html2canvas from "html2canvas";
 import { HeroResume } from "./HeroResume";
 
-import { ValueContext } from "../context/valueContext";
 
-import socIcon from "../public/societyIcon.png";
-import AppliedFiltersLabels from "./AppliedFiltersLabels";
 
-import style from "../styles/Tools.module.css";
 
 //I didnt install the formatter yet, i thought i would ask u first
 // const { format } = require("date-fns");
 
 const ToolsResults = ({
   content,
-  handleBackPage,
-  routerLocation,
-  setInitialStates,
 }) => {
   const router = useRouter();
-  const [user, setUser] = useContext(ValueContext);
-  const { visitedPages } = user;
-
-  const handleNextPage = (offsetID) => {
-    router.push({
-      pathname: "/",
-      query: offsetID ? { clientOffset: offsetID } : null,
-    });
-  };
+ 
   
 /*   console.log("content", content) */
 
-  const printRef = React.useRef();
 
   // const handleDownloadImage = async (element) => {
 
