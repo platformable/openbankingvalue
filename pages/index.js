@@ -17,7 +17,7 @@ const initialState = {
   stakeholders: [],
   paginationCounter: 0
 }
-const HomePage = ({ data, valueCategories, stakeholders, regions }) => {
+const HomePage = ({  valueCategories, stakeholders, regions }) => {
   const [filteredData, setFilteredData] = useState();
   const [paginationInfo, setPaginationInfo] = useState();
   const [filters, setFilters] = useState(initialState);
@@ -29,7 +29,6 @@ useEffect(() => {
   setInitialStates();
   
 }, []);
-
   return (
     <Layout>
       <Meta />
@@ -55,7 +54,7 @@ useEffect(() => {
             <section className="pagination flex flex-col mt-5 md:mt-0">
             <div className=" flex flex-col md:flex-row gap-y-5 md:justify-between items-center ">
               <p className=" text-2xl">
-                Showing <strong>{filteredData?.length}</strong> success stories{" "}
+                Showing {((paginationInfo?.pageSize * filters?.paginationCounter) + 1) + ' - ' + (paginationInfo?.pageSize * paginationInfo?.page)} of <strong>{paginationInfo?.totalRows}</strong> success stories{" "}
               </p>
               <PaginationButtons setFilters={setFilters} paginationInfo={paginationInfo}/>
             </div>
