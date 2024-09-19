@@ -15,7 +15,7 @@ export async function getRegions() {
   try {
     const data = await api.dbViewRow.list(
       "noco",
-      "Core Dataset Prod",
+      "[DATASET] - Core ",
       "Region",
       "Region", {
         fields: ['RegionDetail'],

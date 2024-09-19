@@ -87,9 +87,9 @@ export async function getServerSideProps(context) {
     return {
       props: {
         // data: dataResponse.list,
-        valueCategories: valuesTaxonomy.list,
-        stakeholders : stakeholders.list,
-        regions: regions.list,
+        valueCategories: valuesTaxonomy?.list,
+        stakeholders : stakeholders?.list,
+        regions: regions?.list,
       },
     };
   } catch (error) {
