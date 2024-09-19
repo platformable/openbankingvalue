@@ -47,6 +47,7 @@ const ToolsResults = ({
             
             content?.map((item, index, array) => 
               {
+         
                 return(
                   <div
                 id={item.id}

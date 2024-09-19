@@ -15,7 +15,7 @@ export async function getValuesTaxonomy() {
   try {
     const data = await api.dbViewRow.list(
       "noco",
-      "Core Dataset Prod",
+      "[DATASET] - Core ",
       "ValueTaxonomy",
       "ValueTaxonomy", {
         list: ['ValueGenerationCategory'],

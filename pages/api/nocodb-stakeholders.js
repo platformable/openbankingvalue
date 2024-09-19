@@ -15,7 +15,7 @@ export async function getStakeholders() {
   try {
     const data = await api.dbViewRow.list(
       "noco",
-      "Core Dataset Prod",
+      "[DATASET] - Core ",
       "Stakeholders",
       "Stakeholders", {
         fields: ['Segment'],
