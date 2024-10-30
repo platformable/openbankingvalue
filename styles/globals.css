@@ -148,6 +148,10 @@ a {
   background-color: var(--gradient-obof);
 }
 
+.card-wrapper {
+  content-visibility: auto;
+}
+
 
 /* SPINER */
 
