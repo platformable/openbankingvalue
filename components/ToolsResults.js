@@ -2,14 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 import ReactMarkdown from "react-markdown";
-import html2canvas from "html2canvas";
-import { HeroResume } from "./HeroResume";
 
-
-
-
-//I didnt install the formatter yet, i thought i would ask u first
-// const { format } = require("date-fns");
 
 const ToolsResults = ({
   content,
@@ -42,7 +35,7 @@ const ToolsResults = ({
       {/* Those are the result cards */}
 
       <div className="">
-        <div className="md:px-14 lg:px-0 card-container grid gap-4 xl:grid-cols-3 grid-cols-1 my-5 mb-20 ">
+        <div className="md:px-14 lg:px-0 card-container grid gap-4 xl:grid-cols-3 grid-cols-1 md:grid-cols-2 my-5 mb-20 ">
           {content?.length > 0 ? (
             
             content?.map((item, index, array) => 
@@ -52,7 +45,7 @@ const ToolsResults = ({
                   <div
                 id={item.id}
                 key={index}
-                className="card shadow-md rounded-md flex flex-col  gap-5 rounded py-5 px-5 md:mx-0 " /* onClick={()=>handleSelected(item)} */
+                className="card-wrapper card shadow-md rounded-md flex flex-col  gap-5 rounded py-5 px-5 md:mx-0 " /* onClick={()=>handleSelected(item)} */
               >
                 {/* <p>{item?.["Source date"]}</p> */}
                 <div className="card-top flex justify-center  mx-auto">
