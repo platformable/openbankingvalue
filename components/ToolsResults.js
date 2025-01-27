@@ -1,35 +1,11 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
-
 import ReactMarkdown from "react-markdown";
-
 
 const ToolsResults = ({
   content,
 }) => {
-  const router = useRouter();
+  // const router = useRouter();
  
-  
-/*   console.log("content", content) */
-
-
-  // const handleDownloadImage = async (element) => {
-
-  //   const item = document.getElementById(element.id);
-  //   const canvas = await html2canvas(item, { allowTaint: true, useCORS: true });
-
-  //   const data = canvas.toDataURL("image/png", 1);
-  //   const link = document.createElement("a");
-
-  //   if (typeof link.download === "string") {
-  //     link.href = data;
-  //     link.download = "card.png";
-  //     link.click();
-  //   } else {
-  //     window.open(data);
-  //   }
-  // };
-
   return (
     <>
       {/* Those are the result cards */}
@@ -40,12 +16,11 @@ const ToolsResults = ({
             
             content?.map((item, index, array) => 
               {
-         
                 return(
                   <div
-                id={item.id}
+                id={`${item.Autonumber}`}
                 key={index}
-                className="card-wrapper card shadow-md rounded-md flex flex-col  gap-5 rounded py-5 px-5 md:mx-0 " /* onClick={()=>handleSelected(item)} */
+                className="card-wrapper card shadow-xl md:shadow-md rounded-md flex flex-col  gap-5 rounded py-5 px-5 md:mx-0 " /* onClick={()=>handleSelected(item)} */
               >
                 {/* <p>{item?.["Source date"]}</p> */}
                 <div className="card-top flex justify-center  mx-auto">
@@ -91,7 +66,7 @@ const ToolsResults = ({
 
                 <div
                   // className="md:w-6/12 card-bottom flex lg:w-full h-full items-end gap-x-11"
-                  className="card-bottom w-full grid items-between gap-x-2  h-full items-end gap-y-1 flex-col md:grid-cols-2 "
+                  className="card-bottom w-full grid items-between gap-x-2  h-full items-end gap-y-1 flex-col grid-cols-2 "
                   data-html2canvas-ignore
                 >
                   {/* <div
@@ -161,22 +136,7 @@ const ToolsResults = ({
 
           {/* end of card */}
         </div>
-        {/* <div className={`flex flex-1  p-3 pr-0 justify-center gap-x-2`}>
-          {visitedPages.map((offsetID, index) => (
-            <button
-              className={`${
-                visitedPages.indexOf(router?.query?.clientOffset || "") ===
-                index
-                  ? "bg-[#9978F0]"
-                  : "bg-[var(--purple-medium)]"
-              }  btn w-10 py-2 rounded text-white`}
-              onClick={() => handleNextPage(offsetID)}
-              key={index}
-            >
-              {index + 1}
-            </button>
-          ))}
-        </div> */}
+       
       </div>
     </>
   );
