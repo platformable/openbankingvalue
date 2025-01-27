@@ -13,7 +13,7 @@ const Hero = () => {
             <h1 className="title-font sm:text-4xl text-3xl mb-4 font-bold ">
               Open Banking Value Tool
             </h1>
-            <h2 className="md:mb-8  text-2xl no-italic">
+            <h2 className="md:mb-8  text-2xl">
               What evidence do we have that open banking is really creating
               impactful benefits for all stakeholders across the ecosystem?
             </h2>
