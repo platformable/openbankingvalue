@@ -10,6 +10,7 @@
   "dependencies": {
     "@netlify/plugin-nextjs": "^4.40.2",
     "@newrelic/next": "^0.7.0",
+    "@next/font": "^14.2.15",
     "eslint-config-next": "^13.4.6",
     "fs": "^0.0.1-security",
     "html2canvas": "^1.3.3",
