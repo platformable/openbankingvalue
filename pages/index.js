@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useContext, useMemo,  } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from  '../components/Layout'
 import Hero from "../components/Hero";
 import Meta from "../components/Meta";
 import { getRegions } from "./api/nocodb-regions";
-import { getValuesGenerated } from "./api/nocodb";
 import { getValuesTaxonomy } from "./api/nocodb-value-taxonomy";
 import { getStakeholders } from "./api/nocodb-stakeholders";
 import ToolsResults from ".././components/ToolsResults";
@@ -11,6 +10,9 @@ import AppliedFiltersLabels from "../components/AppliedFiltersLabels";
 import Loader from "../components/Loader";
 import PaginationButtons from "../components/PaginationButtons";
 import Filters from "../components/Filters";
+import ValueGeneratedFilter from "../components/filters/ValueGeneratedFilter";
+import BeneficiariesFilter from "../components/filters/BeneficiariesFilter";
+import RegionFilter from "../components/filters/RegionFilter";
 
 const initialState = {
   values: [],
@@ -25,13 +27,13 @@ const HomePage = ({  valueCategories, stakeholders, regions }) => {
   const [loading,setLoading]=useState(false)
 
   const setInitialStates = () => {
-  setFilters(initialState)
-};
+    setFilters(initialState)
+  };
 
-useEffect(() => {
-  setInitialStates();
-  
-}, []);
+  useEffect(() => {
+    setInitialStates();
+    
+  }, []);
   return (
     <Layout>
       <Meta />
@@ -42,15 +44,15 @@ useEffect(() => {
       <section className="relative sm:grid sm:grid-rows-1 lg:grid lg:grid-cols-[1fr_3fr] container mx-auto mt-5 gap-10">
       <Filters
           setFilteredData={setFilteredData}
-          valueCategories={valueCategories}
-          stakeholders={stakeholders}
-          regions={regions}
           filters={filters}
           setFilters={setFilters}
-          loading={loading}
           setLoading={setLoading}
           setPaginationInfo={setPaginationInfo}
-        />
+        >
+          <ValueGeneratedFilter valueCategories={valueCategories} filters={filters} setFilters={setFilters} />
+          <BeneficiariesFilter stakeholders={stakeholders} filters={filters} setFilters={setFilters} />
+          <RegionFilter regions={regions} filters={filters} setFilters={setFilters} />
+        </Filters>
 
         {filteredData && (
           <div className="flex flex-col">
@@ -64,9 +66,10 @@ useEffect(() => {
             <AppliedFiltersLabels setInitialStates={setInitialStates} filters={filters} setFilters={setFilters}
               />
         </section>
-       {loading ? <Loader/>:<ToolsResults
-              content={filteredData}
-            /> }
+            {loading ? <Loader/>:
+                  <ToolsResults
+                    content={filteredData}
+                  /> }
               <PaginationButtons setFilters={setFilters} paginationInfo={paginationInfo}/>
             
           </div>
