@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
-import ValueGeneratedFilter from "./filters/ValueGeneratedFilter";
-import BeneficiariesFilter from "./filters/BeneficiariesFilter";
-import RegionFilter from "./filters/RegionFilter";
 
-function Filters({ setFilteredData, valueCategories, filters, setFilters, stakeholders, regions, setLoading, setPaginationInfo,  }) {
+
+function Filters({ children ,setFilteredData, filters, setFilters, setLoading, setPaginationInfo,  }) {
 
 
 
@@ -58,9 +56,7 @@ function Filters({ setFilteredData, valueCategories, filters, setFilters, stakeh
       className="lg:pr-0 flex flex-col  grid-cols-1 "
     >
       
-      <ValueGeneratedFilter valueCategories={valueCategories} filters={filters} setFilters={setFilters} />
-      <BeneficiariesFilter stakeholders={stakeholders} filters={filters} setFilters={setFilters} />
-      <RegionFilter regions={regions} filters={filters} setFilters={setFilters} />
+     {children}
 
     </div>
   );
