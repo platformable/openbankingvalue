@@ -3,7 +3,7 @@ import ValueGeneratedFilter from "./filters/ValueGeneratedFilter";
 import BeneficiariesFilter from "./filters/BeneficiariesFilter";
 import RegionFilter from "./filters/RegionFilter";
 
-function Filters({ setFilteredData, valueCategories, filters, setFilters, stakeholders, regions, setLoading, loading, setPaginationInfo,  }) {
+function Filters({ setFilteredData, valueCategories, filters, setFilters, stakeholders, regions, setLoading, setPaginationInfo,  }) {
 
 
 

@@ -47,7 +47,6 @@ useEffect(() => {
           regions={regions}
           filters={filters}
           setFilters={setFilters}
-          loading={loading}
           setLoading={setLoading}
           setPaginationInfo={setPaginationInfo}
         />
