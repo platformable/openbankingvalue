@@ -11,6 +11,7 @@ module.exports = {
       "https://datasetstorage.ams3.digitaloceanspaces.com/nc/uploads/noco/Core%20Dataset%20Prod/Entities/Logo/",
       "https://openbankingvalue.platformable.com",
       "http://ukk84w4ws8so0csw8g8o08o8.51.89.10.204.sslip.io",
+      "https://obvtool.platformable.com/",
     ],
   },
 }
