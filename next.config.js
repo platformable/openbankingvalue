@@ -13,5 +13,13 @@ module.exports = {
       "http://ukk84w4ws8so0csw8g8o08o8.51.89.10.204.sslip.io",
       "https://obvtool.platformable.com/",
     ],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "datasetstorage.ams3.digitaloceanspaces.com",
+        port: "",
+        pathname: "/nc/uploads/noco/Core%20Dataset%20Prod/Entities/Logo/**",
+      },
+    ],
   },
 }
